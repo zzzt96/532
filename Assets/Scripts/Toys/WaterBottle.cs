@@ -12,10 +12,7 @@ public class WaterBottle : ToyBase
     [Header("Knockdown")]
     public float knockImpulse = 2.5f;
     public float knockTorque = 2.0f;
-
-    [Header("Physics")]
-    public Rigidbody rb;
-
+    
     // 记录初始 Z，掉落时锁定
     private float lockedZ;
 
@@ -24,8 +21,9 @@ public class WaterBottle : ToyBase
         if (rb == null) rb = GetComponent<Rigidbody>();
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();  
         canBePossessed = false;
         
         lockedZ = transform.position.z;

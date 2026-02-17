@@ -33,8 +33,9 @@ public class BunnyToy : ToyBase
 
     private float ropeStartY;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         canBePossessed = false;
     }
 

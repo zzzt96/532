@@ -15,15 +15,15 @@ public class ToyCar : ToyBase
     [Header("Shelf Detection")]
     public WoodenShelf targetShelf;
     public float shelfHitDistance = 2.0f;
-
-    private Rigidbody rb;
+    
     private float lockedZ;
     private float dropTimer = 0f;
     private bool hasHitShelf = false;
     private float debugTimer = 0f;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();  
         canBePossessed = false;
         lockedZ = transform.position.z;
         rb = GetComponent<Rigidbody>();

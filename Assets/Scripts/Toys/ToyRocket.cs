@@ -28,8 +28,9 @@ public class ToyRocket : ToyBase
     private bool hasHitClock = false;
     private float debugTimer = 0f;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         canBePossessed = false;
         lockedZ = transform.position.z;
         lockedY = transform.position.y;
@@ -84,7 +85,7 @@ public class ToyRocket : ToyBase
                 if (debugTimer > 1f)
                 {
                     debugTimer = 0f;
-                    TableClock found = FindObjectOfType<TableClock>();
+                    TableClock found = FindFirstObjectByType<TableClock>();
                     if (found != null)
                     {
                         targetClock = found;

@@ -21,8 +21,9 @@ public class Ball : ToyBase
     private float startY;
     private float jumpProgress = 0f;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         canBePossessed = true;
     }
 
