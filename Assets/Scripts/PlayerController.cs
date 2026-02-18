@@ -50,6 +50,14 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        // 1. 隐藏系统鼠标指针
+        Cursor.visible = false;
+
+        // 2. 将鼠标限制在游戏窗口内（推荐！）
+        // 防止玩家猛甩鼠标时点到游戏外面的桌面或其他软件
+        Cursor.lockState = CursorLockMode.Confined;
+
+
         mainCam = Camera.main;
         rend = GetComponent<Renderer>();
         if (rend) rend.material.color = normalColor;
