@@ -2,17 +2,19 @@ using UnityEngine;
 
 /// <summary>
 /// 可交互物体基类
-/// 所有可交互物体（电灯、网球、篮球等）都继承这个类
 /// </summary>
 public abstract class ToyBase : MonoBehaviour
 {
     [Header("Possession")]
-    public bool canBePossessed = true; // 是否可被附身
-    public bool isPossessed = false;   // 是否正在被附身
+    public bool canBePossessed = true; 
+    public bool isPossessed = false;  
 
     [Header("Visual Feedback")]
     public Color hoverColor = Color.yellow;
     public Color possessColor = Color.cyan;
+    
+    [Header("Camera")]
+    public float cameraYOffset = 0f;
 
     protected Rigidbody rb;
     protected Renderer rend;

@@ -28,8 +28,8 @@ public class BunnyToy : ToyBase
     [Header("3. Drop Settings")]
     public Transform boardPosition;
     public float dropThreshold = 1.5f;
-    public float bunnyDropForce = 6f;       // 兔子砸木板的力度（比水杯的12小）
-    public CarDropBoard carDropBoard;       // ★ 直接拖入 CarDropBoard
+    public float bunnyDropForce = 6f; 
+    public CarDropBoard carDropBoard;     
 
     private float ropeStartY;
 
@@ -162,7 +162,7 @@ public class BunnyToy : ToyBase
 
         Debug.Log("[BunnyToy] Dropped to board!");
 
-        // ★ 直接触发小车掉落（不需要碰撞检测）
+        // 直接触发小车掉落（不需要碰撞检测）
         if (carDropBoard != null)
         {
             carDropBoard.TriggerDrop(bunnyDropForce);

@@ -5,7 +5,7 @@ using System.Linq;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    public float mouseFollowSmoothing = 3f;
+    public float mouseFollowSmoothing = 3f; 
 
     [Header("Movement Bounds")]
     public float minX = -40f;
@@ -35,28 +35,18 @@ public class PlayerController : MonoBehaviour
     public Color normalColor = new Color(0.35f, 0.58f, 0.55f, 0.6f);
     public Color activeColor = new Color(1f, 0.8f, 0.8f, 1f);
 
-    [Header("Camera Zoom")]
-    public float normalFOV = 60f;
-    public float possessFOV = 35f;
-    public float fovSmoothSpeed = 5f;
-
-    [Header("Ghost Juice (Visual Effects)")]
-    public bool enableJuice = true;
-    public float bobAmplitude = 0.3f;    // 上下浮动的幅度
-    public float bobFrequency = 2.5f;    // 上下浮动的频率
-    public float scaleAmplitude = 0.05f; // 呼吸缩放的比例 (0.05 = 5%)
-    public float scaleFrequency = 2f;    // 呼吸缩放的频率
+    [Header("Ghost Visibility")]
+    public float ghostZOffset = -1.5f;  // 幽灵 Z 偏移（负值 = 靠近相机 = 不被遮挡）
+    public float normalFOV = 60f;           
+    public float possessFOV = 35f;         
+    public float fovSmoothSpeed = 5f;   
 
     private Camera mainCam;
     private Renderer rend;
     private List<ToyBase> availableToys = new List<ToyBase>();
     private int currentToyIndex = 0;
     private float targetZ;
-    private float targetFOV;
-
-    // Juice internal variables
-    private Vector3 originalScale;
-    private float currentBobOffset = 0f;
+    private float targetFOV;     
 
     void Start()
     {
@@ -64,14 +54,16 @@ public class PlayerController : MonoBehaviour
         rend = GetComponent<Renderer>();
         if (rend) rend.material.color = normalColor;
 
-        transform.position = new Vector3(0, 1, defaultZ);
+        transform.position = new Vector3(0, 1, defaultZ + ghostZOffset);
         targetZ = defaultZ;
 
+        // 初始化 FOV
         targetFOV = normalFOV;
         if (mainCam) mainCam.fieldOfView = normalFOV;
 
-        // 记录初始缩放用于表现恢复
-        originalScale = transform.localScale;
+        //  隐藏鼠标光标（only Build 生效）
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void Update()
@@ -93,6 +85,7 @@ public class PlayerController : MonoBehaviour
             SwitchToNextToy();
         }
 
+        // 平滑过渡 FOV
         if (mainCam && Mathf.Abs(mainCam.fieldOfView - targetFOV) > 0.1f)
         {
             mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, targetFOV, Time.deltaTime * fovSmoothSpeed);
@@ -100,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         if (isPossessing && currentToy != null)
         {
-            transform.position = currentToy.transform.position;
+            transform.position = currentToy.transform.position + new Vector3(0, currentToy.cameraYOffset, 0);
             currentToy.ToyUpdate();
             return;
         }
@@ -116,21 +109,14 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Vector3 pos = transform.position;
-                pos.z = defaultZ;
+                pos.z = defaultZ + ghostZOffset;
                 transform.position = pos;
             }
-
-            // 在核心位移逻辑完成后，叠加视觉果汁表现
-            ApplyGhostJuice();
         }
     }
 
     void HandleMouseMovement()
     {
-        // 1. 剔除上一帧的浮动偏移，获取鬼魂的"真实逻辑位置"
-        Vector3 logicalPos = transform.position;
-        logicalPos.y -= currentBobOffset;
-
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
         Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, transform.position.z));
         float distance;
@@ -142,29 +128,11 @@ public class PlayerController : MonoBehaviour
             float targetX = Mathf.Clamp(mouseWorldPos.x, minX, maxX);
             float targetY = Mathf.Clamp(mouseWorldPos.y, minY, maxY);
             Vector3 targetPos = new Vector3(targetX, targetY, transform.position.z);
-
-            // 2. 使用逻辑位置进行插值跟随
-            Vector3 newPos = Vector3.Lerp(logicalPos, targetPos, Time.deltaTime * mouseFollowSmoothing);
-
-            // 3. 计算这一帧的新浮动偏移
-            currentBobOffset = enableJuice ? Mathf.Sin(Time.time * bobFrequency) * bobAmplitude : 0f;
-
-            // 4. 将新的偏移加回去，完成最终定位
-            newPos.y += currentBobOffset;
+            
+            Vector3 newPos = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * mouseFollowSmoothing);
             newPos.z = transform.position.z;
             transform.position = newPos;
         }
-    }
-
-    void ApplyGhostJuice()
-    {
-        if (!enableJuice) return;
-
-        // 1. 呼吸感缩放 (Breathing)
-        float scaleOffset = Mathf.Sin(Time.time * scaleFrequency) * scaleAmplitude;
-        transform.localScale = originalScale * (1f + scaleOffset);
-
-        // （已将旋转相关的所有代码彻底移除）
     }
 
     void UpdateDynamicZ()
@@ -172,15 +140,23 @@ public class PlayerController : MonoBehaviour
         if (currentHover != null)
         {
             float newTargetZ = currentHover.transform.position.z;
+            if (Mathf.Abs(newTargetZ - targetZ) > 0.1f)
+            {
+                Debug.Log($"[Player] Z changing: {targetZ:F2} → {newTargetZ:F2} (Hover: {currentHover.name})");
+            }
             targetZ = newTargetZ;
         }
         else
         {
+            if (Mathf.Abs(defaultZ - targetZ) > 0.1f)
+            {
+                Debug.Log($"[Player] Z returning to default: {targetZ:F2} → {defaultZ:F2}");
+            }
             targetZ = defaultZ;
         }
 
         Vector3 pos = transform.position;
-        pos.z = Mathf.Lerp(pos.z, targetZ, Time.deltaTime * zSmoothSpeed);
+        pos.z = Mathf.Lerp(pos.z, targetZ + ghostZOffset, Time.deltaTime * zSmoothSpeed);
         transform.position = pos;
     }
 
@@ -215,6 +191,7 @@ public class PlayerController : MonoBehaviour
         {
             currentToyIndex = 0;
             SetHover(availableToys[0]);
+            Debug.Log($"[Player] Found {availableToys.Count} interactable objects. Hovering: {currentHover.name} at Z={currentHover.transform.position.z:F2}");
         }
     }
 
@@ -223,6 +200,7 @@ public class PlayerController : MonoBehaviour
         if (availableToys.Count == 0) return;
         currentToyIndex = (currentToyIndex + 1) % availableToys.Count;
         SetHover(availableToys[currentToyIndex]);
+        Debug.Log($"Switched to: {currentHover.name} ({currentToyIndex + 1}/{availableToys.Count})");
     }
 
     void SetHover(ToyBase toy)
@@ -256,11 +234,9 @@ public class PlayerController : MonoBehaviour
         currentToy.Possess();
         if (rend) rend.enabled = false;
 
+        // Zoom in
         targetFOV = possessFOV;
-
-        // 附身时重置缩放和偏移，完全不碰旋转
-        transform.localScale = originalScale;
-        currentBobOffset = 0f;
+        Debug.Log($"[Player] Possessed {currentToy.name}, zooming in to FOV={possessFOV}");
     }
 
     public void ExitPossess()
@@ -274,6 +250,8 @@ public class PlayerController : MonoBehaviour
             rend.material.color = normalColor;
         }
 
+        // Zoom out
         targetFOV = normalFOV;
+        Debug.Log("[Player] Exited possession, zooming out to FOV=" + normalFOV);
     }
 }

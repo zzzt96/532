@@ -4,17 +4,17 @@ public class CarDropBoard : MonoBehaviour
 {
     [Header("Car to Drop")]
     public GameObject toyCar;
-    public float dropForce = 10f;           // 水杯砸的默认力度（重）
-    public Vector3 dropDirection = new Vector3(-1f, -0.5f, 0f);
+    public float nudgeForce = 1.5f;     // 轻推力度
+    public Vector3 nudgeDirection = new Vector3(-1f, 0f, 0f); // 往左推一点
 
     [Header("State")]
     public bool hasTriggered = false;
-    
+
     public void TriggerDrop()
     {
-        TriggerDrop(dropForce);
+        TriggerDrop(nudgeForce);
     }
-    
+
     public void TriggerDrop(float force)
     {
         if (hasTriggered) return;
@@ -25,29 +25,12 @@ public class CarDropBoard : MonoBehaviour
         }
 
         hasTriggered = true;
-
-        Rigidbody carRb = toyCar.GetComponent<Rigidbody>();
-        if (carRb == null)
-        {
-            carRb = toyCar.AddComponent<Rigidbody>();
-        }
-
-        carRb.isKinematic = false;
-        carRb.useGravity = true;
-        carRb.interpolation = RigidbodyInterpolation.Interpolate;
-        carRb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        carRb.constraints = RigidbodyConstraints.FreezePositionZ
-                            | RigidbodyConstraints.FreezeRotationX
-                            | RigidbodyConstraints.FreezeRotationY;
-
-        carRb.AddForce(dropDirection.normalized * force, ForceMode.Impulse);
-
-        Debug.Log($"[CarDropBoard] Car dropped with force={force}!");
-
+        
         ToyCar car = toyCar.GetComponent<ToyCar>();
         if (car != null)
         {
-            car.Drop();
+            car.ActivateOnBoard();
+            Debug.Log($"[CarDropBoard] Car activated on board!");
         }
     }
 }

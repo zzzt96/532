@@ -1,134 +1,138 @@
 using UnityEngine;
+using System.Collections;
 
 public class WaterBottle : ToyBase
 {
     [Header("State")]
     public bool isKnockedDown = false;
 
-    [Header("Control (while possessed)")]
-    public float moveAccel = 18f;
-    public float maxXZSpeed = 3.5f;
+    [Header("Scripted Fall Path")]
+    public Transform tableEdgePoint;    // ★ 空物体1：桌子边缘（桌面高度，桌子最左/右端）
+    public Transform landingPoint;      // ★ 空物体2：木板上的落点（小车旁边）
+    public float rollDuration = 0.4f;   // 滚到桌边的时间
+    public float fallDuration = 0.3f;   // 掉落时间
+    public float bounceDuration = 0.15f;// 落地弹跳时间
 
-    [Header("Knockdown")]
-    public float knockImpulse = 2.5f;
-    public float knockTorque = 2.0f;
-    
-    // 记录初始 Z，掉落时锁定
-    private float lockedZ;
+    [Header("References")]
+    public CarDropBoard carDropBoard;
 
-    void Awake()
-    {
-        if (rb == null) rb = GetComponent<Rigidbody>();
-    }
+    public override void ToyUpdate() { }
 
     protected override void Start()
     {
-        base.Start();  
+        base.Start();
         canBePossessed = false;
-        
-        lockedZ = transform.position.z;
 
         if (rb != null)
         {
-            rb.useGravity = false;
             rb.isKinematic = true;
-            rb.interpolation = RigidbodyInterpolation.Interpolate;
-            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            rb.constraints = RigidbodyConstraints.None;
+            rb.useGravity = false;
         }
     }
 
     public void KnockDown(Vector3 hitDirection)
     {
         if (isKnockedDown) return;
-
         isKnockedDown = true;
-        canBePossessed = true;
-
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.useGravity = true;
-
-            // 冻结 Z 轴移动 + Z 轴旋转，水杯只能在 X-Y 平面运动
-            rb.constraints = RigidbodyConstraints.FreezePositionZ
-                           | RigidbodyConstraints.FreezeRotationX
-                           | RigidbodyConstraints.FreezeRotationY;
-
-            // 只给 X 方向的力，不给 Z 方向
-            Vector3 dir = hitDirection;
-            dir.z = 0f; // 清除 Z 方向分量
-            dir.y = 0f;
-            if (dir.sqrMagnitude < 0.001f) dir = Vector3.right;
-            dir = dir.normalized;
-
-            rb.AddForce(dir * knockImpulse, ForceMode.Impulse);
-            rb.AddTorque(Vector3.forward * knockTorque, ForceMode.Impulse);
-        }
-
-        Debug.Log("[WaterBottle] Knocked down! Now can possess. Z locked at: " + lockedZ);
+        canBePossessed = false;
+        StartCoroutine(ScriptedFall());
     }
 
-    public override void ToyUpdate()
+    IEnumerator ScriptedFall()
     {
-        if (!isKnockedDown || rb == null) return;
+        Vector3 startPos = transform.position;
+        Quaternion startRot = transform.rotation;
+        Quaternion tiltedRot = startRot * Quaternion.Euler(0, 0, -90f);
 
-        if (rb.isKinematic) rb.isKinematic = false;
-        if (!rb.useGravity) rb.useGravity = true;
+        // ========== 阶段1：在桌面上滚到桌边 ==========
+        Vector3 edgePos = (tableEdgePoint != null)
+            ? tableEdgePoint.position
+            : startPos + new Vector3(-2f, 0f, 0f);
 
-        // 保持 Z 轴冻结
-        if ((rb.constraints & RigidbodyConstraints.FreezePositionZ) == 0)
+        // 保持桌面高度（不穿模）
+        edgePos.y = startPos.y;
+        edgePos.z = startPos.z;
+
+        float elapsed = 0f;
+        while (elapsed < rollDuration)
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionZ
-                           | RigidbodyConstraints.FreezeRotationX
-                           | RigidbodyConstraints.FreezeRotationY;
+            elapsed += Time.deltaTime;
+            float t = elapsed / rollDuration;
+            float smooth = t * t * (3f - 2f * t);
+
+            transform.position = Vector3.Lerp(startPos, edgePos, smooth);
+            transform.rotation = Quaternion.Lerp(startRot, tiltedRot, smooth);
+            yield return null;
+        }
+        transform.position = edgePos;
+        transform.rotation = tiltedRot;
+
+        // ========== 阶段2：从桌边掉到木板落点 ==========
+        Vector3 fallStart = edgePos;
+        Vector3 landPos = (landingPoint != null)
+            ? landingPoint.position
+            : new Vector3(edgePos.x, edgePos.y - 3f, edgePos.z);
+        landPos.z = startPos.z; // 锁定 Z
+
+        elapsed = 0f;
+        while (elapsed < fallDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / fallDuration;
+            float gravity = t * t; // 加速下落
+
+            transform.position = Vector3.Lerp(fallStart, landPos, gravity);
+            transform.rotation = tiltedRot * Quaternion.Euler(0, 0, t * 180f);
+            yield return null;
+        }
+        transform.position = landPos;
+
+        // ========== 阶段3：落地弹跳（碰撞感） ==========
+        float bounceHeight = 0.3f;
+        Vector3 bounceUp = landPos + Vector3.up * bounceHeight;
+
+        // 弹起
+        elapsed = 0f;
+        float halfBounce = bounceDuration * 0.4f;
+        while (elapsed < halfBounce)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / halfBounce;
+            transform.position = Vector3.Lerp(landPos, bounceUp, t);
+            yield return null;
+        }
+        // 落回
+        elapsed = 0f;
+        float secondHalf = bounceDuration * 0.6f;
+        while (elapsed < secondHalf)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / secondHalf;
+            transform.position = Vector3.Lerp(bounceUp, landPos, t * t);
+            yield return null;
+        }
+        transform.position = landPos;
+
+        // ========== 触发小车 ==========
+        if (carDropBoard != null)
+        {
+            carDropBoard.TriggerDrop();
+            Debug.Log("[WaterBottle] Fall complete. Car triggered!");
         }
 
-        // AD 只控制 X 方向
-        float x = 0f;
-        if (Input.GetKey(KeyCode.A)) x = -1f;
-        if (Input.GetKey(KeyCode.D)) x = 1f;
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = false;
+    }
 
-        if (Mathf.Abs(x) > 0.01f)
-        {
-            rb.AddForce(Vector3.right * x * moveAccel, ForceMode.Acceleration);
-        }
-
-        // 限速（只限 X，Y 让重力自然处理）
-        Vector3 v = rb.linearVelocity;
-        if (Mathf.Abs(v.x) > maxXZSpeed)
-        {
-            rb.linearVelocity = new Vector3(Mathf.Sign(v.x) * maxXZSpeed, v.y, 0f);
-        }
-
-        // 强制锁定 Z 位置（双保险）
-        Vector3 pos = transform.position;
-        if (Mathf.Abs(pos.z - lockedZ) > 0.01f)
-        {
-            pos.z = lockedZ;
-            transform.position = pos;
-        }
+    void OnTriggerEnter(Collider other)
+    {
+        if (!isKnockedDown && other.CompareTag("Ball"))
+            KnockDown(transform.position - other.transform.position);
     }
 
     void OnCollisionEnter(Collision collision)
     {
         if (!isKnockedDown && collision.collider.CompareTag("Ball"))
-        {
-            Vector3 dir = (transform.position - collision.transform.position);
-            KnockDown(dir);
-            return;
-        }
-
-        if (isKnockedDown)
-        {
-            CarDropBoard board = collision.collider.GetComponent<CarDropBoard>();
-            if (board == null) board = collision.collider.GetComponentInParent<CarDropBoard>();
-
-            if (board != null)
-            {
-                board.TriggerDrop();
-                Debug.Log("[WaterBottle] Hit CarDropBoard!");
-            }
-        }
+            KnockDown(transform.position - collision.transform.position);
     }
 }

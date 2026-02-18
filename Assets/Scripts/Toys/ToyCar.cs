@@ -1,140 +1,158 @@
 using UnityEngine;
+using System.Collections;
 
 public class ToyCar : ToyBase
 {
     [Header("Movement")]
     public float moveSpeed = 3f;
+    public float minX = -35f;
+    public float maxX = 5f;
 
     [Header("State")]
-    public bool hasDropped = false;
-    public bool hasLanded = false;
+    public bool isActivated = false;    // 水杯触发后变 true
 
     [Header("Ground")]
-    public float landingY = 1.0f;
+    public float boardY = -100f;        // 自动记录木板高度
+    public float groundY = 0.5f;        
+    public float boardMinX = -22f;      
+    public float boardMaxX = -14f;      
+    public float fallSpeed = 10f;
 
     [Header("Shelf Detection")]
     public WoodenShelf targetShelf;
     public float shelfHitDistance = 2.0f;
-    
+
     private float lockedZ;
-    private float dropTimer = 0f;
+    private float originalZ;
     private bool hasHitShelf = false;
     private float debugTimer = 0f;
+    public float possessZOffset = 1.5f;
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();  
         canBePossessed = false;
         lockedZ = transform.position.z;
+        boardY = transform.position.y;  // 记录木板上的初始高度
         rb = GetComponent<Rigidbody>();
+
+        // 小车在木板上不需要物理，用 Transform 控制
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
     }
 
-    public void Drop()
+    /// <summary>
+    /// 水杯砸到木板后调用，小车震动一下 + 变为可附身
+    /// </summary>
+    public void ActivateOnBoard()
     {
-        if (hasDropped) return;
-        hasDropped = true;
-        dropTimer = 0f;
-        rb = GetComponent<Rigidbody>();
-        Debug.Log("[ToyCar] Dropped from board!");
+        if (isActivated) return;
+        isActivated = true;
+        canBePossessed = true;
+        StartCoroutine(ShakeEffect());
+        Debug.Log("[ToyCar] Activated on board! Ready to possess.");
+    }
+
+    System.Collections.IEnumerator ShakeEffect()
+    {
+        Vector3 originalPos = transform.position;
+        float duration = 0.3f;
+        float magnitude = 0.15f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float x = originalPos.x + Random.Range(-magnitude, magnitude);
+            float y = originalPos.y + Random.Range(-magnitude, magnitude);
+            transform.position = new Vector3(x, y, originalPos.z);
+            yield return null;
+        }
+
+        transform.position = originalPos;
     }
 
     void Update()
     {
-        // 掉落阶段：等落地
-        if (hasDropped && !hasLanded)
+        if (!isActivated) return;
+        
+        if (!hasHitShelf && targetShelf != null)
         {
-            dropTimer += Time.deltaTime;
+            float xDist = Mathf.Abs(transform.position.x - targetShelf.transform.position.x);
 
-            if (dropTimer > 0.5f && rb != null)
+            debugTimer += Time.deltaTime;
+            if (debugTimer > 0.5f)
             {
-                if (transform.position.y <= landingY && rb.linearVelocity.magnitude < 0.5f)
-                {
-                    OnLanded();
-                }
+                debugTimer = 0f;
+                Debug.Log($"[ToyCar] Car X={transform.position.x:F1}, Shelf X={targetShelf.transform.position.x:F1}, dist={xDist:F2}");
             }
 
-            if (dropTimer > 3f && !hasLanded)
+            if (xDist < shelfHitDistance)
             {
-                OnLanded();
-            }
-        }
-
-        // 架子检测放在 Update 里，不管是否附身都会检测
-        if (hasLanded && !hasHitShelf)
-        {
-            if (targetShelf == null)
-            {
-                debugTimer += Time.deltaTime;
-                if (debugTimer > 2f)
-                {
-                    debugTimer = 0f;
-                    Debug.LogWarning("[ToyCar] TARGET SHELF IS NULL! Drag WoodenShelf into Inspector!");
-                }
-            }
-            else
-            {
-                float xDist = Mathf.Abs(transform.position.x - targetShelf.transform.position.x);
-
-                debugTimer += Time.deltaTime;
-                if (debugTimer > 0.5f)
-                {
-                    debugTimer = 0f;
-                    Debug.Log($"[ToyCar] Car X={transform.position.x:F1}, Shelf X={targetShelf.transform.position.x:F1}, dist={xDist:F2}, need<{shelfHitDistance}");
-                }
-
-                if (xDist < shelfHitDistance)
-                {
-                    hasHitShelf = true;
-                    targetShelf.KnockDown();
-                    Debug.Log($"[ToyCar] HIT SHELF! dist={xDist:F2}");
-                }
+                hasHitShelf = true;
+                targetShelf.KnockDown();
+                Debug.Log($"[ToyCar] HIT SHELF!");
             }
         }
     }
 
-    void OnLanded()
+    public override void Possess()
     {
-        if (hasLanded) return;
-        hasLanded = true;
-        canBePossessed = true;
+        base.Possess();
+        originalZ = lockedZ;
+        lockedZ = originalZ + possessZOffset;
+        Debug.Log($"[ToyCar] Possessed! Z: {originalZ} → {lockedZ}");
+    }
 
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = true;
-            rb.useGravity = false;
-        }
-
-        Debug.Log($"[ToyCar] Landed at Y={transform.position.y}! Now can possess.");
+    public override void UnPossess()
+    {
+        base.UnPossess();
+        lockedZ = originalZ;
     }
 
     public override void ToyUpdate()
     {
-        if (!hasLanded) return;
+        if (!isActivated) return;
 
-        // 强制 kinematic
-        if (rb != null && !rb.isKinematic)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = true;
-            rb.useGravity = false;
-        }
-
-        // 锁定 Z
         Vector3 pos = transform.position;
         pos.z = lockedZ;
-        transform.position = pos;
 
-        // AD
+        // 判断是否还在木板上
+        bool onBoard = (pos.x >= boardMinX && pos.x <= boardMaxX);
+
+        if (onBoard)
+        {
+            // 在木板上：保持木板高度
+            pos.y = boardY;
+        }
+        else
+        {
+            // 离开木板：下落到地面
+            if (pos.y > groundY + 0.05f)
+            {
+                pos.y = Mathf.MoveTowards(pos.y, groundY, fallSpeed * Time.deltaTime);
+            }
+            else
+            {
+                pos.y = groundY;
+            }
+        }
+
+        transform.position = pos;
+        transform.rotation = Quaternion.Euler(0, 90, 0);
+
+        // AD 控制
         float move = 0f;
         if (Input.GetKey(KeyCode.A)) move = 1f;
         if (Input.GetKey(KeyCode.D)) move = -1f;
 
         if (Mathf.Abs(move) > 0.01f)
         {
-            transform.position += Vector3.right * move * moveSpeed * Time.deltaTime;
+            Vector3 newPos = transform.position + Vector3.right * move * moveSpeed * Time.deltaTime;
+            newPos.x = Mathf.Clamp(newPos.x, minX, maxX);
+            transform.position = newPos;
         }
     }
 

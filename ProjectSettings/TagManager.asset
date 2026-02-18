@@ -10,6 +10,7 @@ TagManager:
   - TableClock
   - IronHanger
   - 'Ball '
+  - Ghost
   layers:
   - Default
   - TransparentFX
