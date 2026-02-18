@@ -9,13 +9,17 @@ public class Ball : ToyBase
     public KeyCode jumpKey = KeyCode.Space;
     public float jumpHeight = 6f;
     public float jumpSpeed = 5f;
- 
+
     [Header("Table Bounds")]
     public float minX = -35f;
     public float maxX = -25f;
     public float minZ = -8f;
     public float maxZ = -4f;
     public float fixedY = 4.59f;
+
+    [Header("Audio")]
+    public AudioClip jumpSound; // 跳跃音效
+    public AudioClip hitSound;  // 撞击音效
 
     private bool isJumping = false;
     private float startY;
@@ -40,10 +44,10 @@ public class Ball : ToyBase
             UpdateJump();
             return; // 跳跃时不能水平移动
         }
-        
+
         float moveX = 0f;
         float moveZ = 0f;
-        
+
         if (Input.GetKey(KeyCode.W)) moveZ = -1f;
         if (Input.GetKey(KeyCode.S)) moveZ = 1f;
         if (Input.GetKey(KeyCode.A)) moveX = 1f;
@@ -64,6 +68,9 @@ public class Ball : ToyBase
         isJumping = true;
         startY = transform.position.y;
         jumpProgress = 0f;
+
+        // 播放跳跃音效
+        if (audioSrc && jumpSound) audioSrc.PlayOneShot(jumpSound);
     }
 
     void UpdateJump()
@@ -93,6 +100,9 @@ public class Ball : ToyBase
             WaterBottle bottle = other.GetComponent<WaterBottle>();
             if (bottle != null)
             {
+                // 播放碰撞音效
+                if (audioSrc && hitSound) audioSrc.PlayOneShot(hitSound);
+
                 // 传入一个方向，满足 KnockDown(Vector3)
                 Vector3 dir = (other.transform.position - transform.position).normalized;
                 if (dir.sqrMagnitude < 0.001f) dir = Vector3.right;
@@ -103,8 +113,10 @@ public class Ball : ToyBase
         }
         else if (other.CompareTag("IronHanger"))
         {
-            //  用 SendMessage 避免方法名不匹配导致编译失败
-            // 你 IronHanger 里不管是 ActivateBunny / ActivateBunnyInternal / Activate 都能兼容（有哪个就调用哪个）
+            // 播放碰撞音效
+            if (audioSrc && hitSound) audioSrc.PlayOneShot(hitSound);
+
+            // 用 SendMessage 避免方法名不匹配导致编译失败
             other.gameObject.SendMessage("ActivateBunny", SendMessageOptions.DontRequireReceiver);
             other.gameObject.SendMessage("ActivateBunnyInternal", SendMessageOptions.DontRequireReceiver);
             other.gameObject.SendMessage("Activate", SendMessageOptions.DontRequireReceiver);

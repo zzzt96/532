@@ -6,12 +6,15 @@ public class TableClock : MonoBehaviour
     public bool hasTriggered = false;
 
     [Header("Delay")]
-    public float alarmDelay = 1f;         
+    public float alarmDelay = 1f;
 
     [Header("Bounce Effect")]
     public float bounceHeight = 3f;
     public float bounceSpeed = 5f;
     public int bounceCount = 3;
+
+    [Header("Audio")]
+    public AudioClip alarmSound; // 闹铃响声
 
     private bool isWaiting = false;
     private float waitTimer = 0f;
@@ -20,6 +23,12 @@ public class TableClock : MonoBehaviour
     private int currentBounce = 0;
     private float startY;
     private float currentBounceHeight;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void TriggerAlarm()
     {
@@ -69,6 +78,9 @@ public class TableClock : MonoBehaviour
                 transform.position = pos;
                 Debug.Log("[TableClock] Bounce finished! Waking up girl now.");
 
+                // 停止闹铃音效
+                if (audioSource) audioSource.Stop();
+
                 if (GameManager.Instance != null)
                 {
                     GameManager.Instance.WakeUpGirl();
@@ -84,6 +96,14 @@ public class TableClock : MonoBehaviour
         currentBounce = 0;
         startY = transform.position.y;
         currentBounceHeight = bounceHeight;
+
+        // 开始播放闹铃音效
+        if (audioSource && alarmSound)
+        {
+            audioSource.clip = alarmSound;
+            audioSource.loop = true; // 循环播放，直到跳跃结束
+            audioSource.Play();
+        }
 
         Debug.Log("[TableClock] ALARM! Bouncing!");
     }

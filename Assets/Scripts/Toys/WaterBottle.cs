@@ -16,6 +16,9 @@ public class WaterBottle : ToyBase
     [Header("References")]
     public CarDropBoard carDropBoard;
 
+    [Header("Audio")]
+    public AudioClip dropGroundSound; // 掉落到地面的音效
+
     public override void ToyUpdate() { }
 
     protected override void Start()
@@ -86,6 +89,9 @@ public class WaterBottle : ToyBase
             yield return null;
         }
         transform.position = landPos;
+
+        // --- ★ 掉落到地面的瞬间播放音效 ★ ---
+        if (audioSrc && dropGroundSound) audioSrc.PlayOneShot(dropGroundSound);
 
         // ========== 阶段3：落地弹跳（碰撞感） ==========
         float bounceHeight = 0.3f;

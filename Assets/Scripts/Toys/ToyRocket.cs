@@ -21,12 +21,19 @@ public class ToyRocket : ToyBase
 
     [Header("Clock Detection")]
     public TableClock targetClock;
-    public float clockHitDistance = 2.0f;
+    public float clockHitDistance = 1.0f; // 调小了判定距离，需要靠得更近
+
+    [Header("Audio")]
+    public AudioClip hitClockSound; // 撞击闹钟音效
 
     private float lockedZ;
     private float lockedY;
     private bool hasHitClock = false;
     private float debugTimer = 0f;
+
+    // ★ 新增：防止刚附身就秒触发的变量
+    private float possessStartX;
+    private bool hasMovedSincePossess = false;
 
     protected override void Start()
     {
@@ -55,6 +62,29 @@ public class ToyRocket : ToyBase
         Debug.Log("[ToyRocket] Starting to fall over...");
     }
 
+    // ★ 重写附身方法：记录附身时的初始位置
+    public override void Possess()
+    {
+        base.Possess();
+        possessStartX = transform.position.x;
+        hasMovedSincePossess = false;
+    }
+
+    // 封装撞击闹钟的方法
+    void DoHitClock(TableClock clock)
+    {
+        if (clock != null && !hasHitClock)
+        {
+            hasHitClock = true;
+
+            // 播放撞击音效
+            if (audioSrc && hitClockSound) audioSrc.PlayOneShot(hitClockSound);
+
+            clock.TriggerAlarm();
+            Debug.Log("[ToyRocket] HIT CLOCK! Alarm triggered!");
+        }
+    }
+
     void Update()
     {
         if (isFalling)
@@ -76,8 +106,17 @@ public class ToyRocket : ToyBase
             return;
         }
 
-        // 只在被附身时才检测闹钟距离
-        if (isActivated && !hasHitClock && isPossessed)
+        // ★ 核心修复：检查玩家是否真的移动了火箭
+        if (isPossessed && !hasMovedSincePossess)
+        {
+            if (Mathf.Abs(transform.position.x - possessStartX) > 0.1f)
+            {
+                hasMovedSincePossess = true; // 玩家确实操作了火箭
+            }
+        }
+
+        // 只有被附身、且玩家确实移动了火箭之后，才检测距离
+        if (isActivated && !hasHitClock && isPossessed && hasMovedSincePossess)
         {
             if (targetClock == null)
             {
@@ -90,10 +129,6 @@ public class ToyRocket : ToyBase
                     {
                         targetClock = found;
                         Debug.Log("[ToyRocket] Auto-found TableClock: " + found.gameObject.name);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("[ToyRocket] TARGET CLOCK IS NULL!");
                     }
                 }
                 return;
@@ -110,9 +145,7 @@ public class ToyRocket : ToyBase
 
             if (xDist < clockHitDistance)
             {
-                hasHitClock = true;
-                targetClock.TriggerAlarm();
-                Debug.Log("[ToyRocket] HIT CLOCK! Alarm triggered!");
+                DoHitClock(targetClock);
             }
         }
     }
@@ -145,5 +178,26 @@ public class ToyRocket : ToyBase
 
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         transform.position = pos;
+    }
+
+    // 增加物理碰撞检测作为双保险
+    void OnCollisionEnter(Collision collision)
+    {
+        if (isPossessed && hasMovedSincePossess)
+        {
+            TableClock clock = collision.collider.GetComponent<TableClock>();
+            if (clock == null) clock = collision.collider.GetComponentInParent<TableClock>();
+            DoHitClock(clock);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (isPossessed && hasMovedSincePossess)
+        {
+            TableClock clock = other.GetComponent<TableClock>();
+            if (clock == null) clock = other.GetComponentInParent<TableClock>();
+            DoHitClock(clock);
+        }
     }
 }

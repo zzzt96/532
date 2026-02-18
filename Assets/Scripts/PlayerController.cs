@@ -4,8 +4,11 @@ using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Spawn Settings")]
+    public Vector2 startPosition = new Vector2(0, 1);
+
     [Header("Movement")]
-    public float mouseFollowSmoothing = 3f; 
+    public float mouseFollowSmoothing = 3f;
 
     [Header("Movement Bounds")]
     public float minX = -40f;
@@ -37,19 +40,38 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ghost Visibility")]
     public float ghostZOffset = -1.5f;  // 幽灵 Z 偏移（负值 = 靠近相机 = 不被遮挡）
-    public float normalFOV = 60f;           
-    public float possessFOV = 35f;         
-    public float fovSmoothSpeed = 5f;   
+    public float normalFOV = 60f;
+    public float possessFOV = 35f;
+    public float fovSmoothSpeed = 5f;
+
+    [Header("Ghost Juice (Visual Effects)")]
+    public bool enableJuice = true;
+    public float bobAmplitude = 0.3f;    // 上下浮动的幅度
+    public float bobFrequency = 2.5f;    // 上下浮动的频率
+    public float scaleAmplitude = 0.05f; // 呼吸缩放的比例 (0.05 = 5%)
+    public float scaleFrequency = 2f;    // 呼吸缩放的频率
+
+    [Header("Audio")]
+    public AudioClip possessEnterSound; // 附身时的音效
+    public AudioClip possessExitSound;  // 离开附身时的音效
 
     private Camera mainCam;
     private Renderer rend;
     private List<ToyBase> availableToys = new List<ToyBase>();
     private int currentToyIndex = 0;
     private float targetZ;
-    private float targetFOV;     
+    private float targetFOV;
+    private AudioSource audioSrc;
+
+    // Juice internal variables
+    private Vector3 originalScale;
+    private float currentBobOffset = 0f;
 
     void Start()
     {
+        // 获取自身的 AudioSource
+        audioSrc = GetComponent<AudioSource>();
+
         // 1. 隐藏系统鼠标指针
         Cursor.visible = false;
 
@@ -57,21 +79,19 @@ public class PlayerController : MonoBehaviour
         // 防止玩家猛甩鼠标时点到游戏外面的桌面或其他软件
         Cursor.lockState = CursorLockMode.Confined;
 
-
         mainCam = Camera.main;
         rend = GetComponent<Renderer>();
         if (rend) rend.material.color = normalColor;
 
-        transform.position = new Vector3(0, 1, defaultZ + ghostZOffset);
+        transform.position = new Vector3(startPosition.x, startPosition.y, defaultZ + ghostZOffset);
         targetZ = defaultZ;
 
         // 初始化 FOV
         targetFOV = normalFOV;
         if (mainCam) mainCam.fieldOfView = normalFOV;
 
-        //  隐藏鼠标光标（only Build 生效）
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        // 记录初始缩放用于表现恢复
+        originalScale = transform.localScale;
     }
 
     void Update()
@@ -101,6 +121,7 @@ public class PlayerController : MonoBehaviour
 
         if (isPossessing && currentToy != null)
         {
+            // 保留队友的 cameraYOffset 逻辑
             transform.position = currentToy.transform.position + new Vector3(0, currentToy.cameraYOffset, 0);
             currentToy.ToyUpdate();
             return;
@@ -120,11 +141,18 @@ public class PlayerController : MonoBehaviour
                 pos.z = defaultZ + ghostZOffset;
                 transform.position = pos;
             }
+
+            // 在核心位移逻辑完成后，叠加视觉果汁表现
+            ApplyGhostJuice();
         }
     }
 
     void HandleMouseMovement()
     {
+        // 1. 剔除上一帧的浮动偏移，获取鬼魂的"真实逻辑位置"
+        Vector3 logicalPos = transform.position;
+        logicalPos.y -= currentBobOffset;
+
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
         Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, transform.position.z));
         float distance;
@@ -136,11 +164,27 @@ public class PlayerController : MonoBehaviour
             float targetX = Mathf.Clamp(mouseWorldPos.x, minX, maxX);
             float targetY = Mathf.Clamp(mouseWorldPos.y, minY, maxY);
             Vector3 targetPos = new Vector3(targetX, targetY, transform.position.z);
-            
-            Vector3 newPos = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * mouseFollowSmoothing);
-            newPos.z = transform.position.z;
+
+            // 2. 使用逻辑位置进行插值跟随 (替换队友原来的直接插值)
+            Vector3 newPos = Vector3.Lerp(logicalPos, targetPos, Time.deltaTime * mouseFollowSmoothing);
+
+            // 3. 计算这一帧的新浮动偏移
+            currentBobOffset = enableJuice ? Mathf.Sin(Time.time * bobFrequency) * bobAmplitude : 0f;
+
+            // 4. 将新的偏移加回去，完成最终定位
+            newPos.y += currentBobOffset;
+            newPos.z = transform.position.z; // 保持Z轴逻辑不变
             transform.position = newPos;
         }
+    }
+
+    void ApplyGhostJuice()
+    {
+        if (!enableJuice) return;
+
+        // 呼吸感缩放 (Breathing)
+        float scaleOffset = Mathf.Sin(Time.time * scaleFrequency) * scaleAmplitude;
+        transform.localScale = originalScale * (1f + scaleOffset);
     }
 
     void UpdateDynamicZ()
@@ -164,6 +208,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 pos = transform.position;
+        // 保留队友加入的 ghostZOffset
         pos.z = Mathf.Lerp(pos.z, targetZ + ghostZOffset, Time.deltaTime * zSmoothSpeed);
         transform.position = pos;
     }
@@ -242,9 +287,16 @@ public class PlayerController : MonoBehaviour
         currentToy.Possess();
         if (rend) rend.enabled = false;
 
+        // 播放附身进入音效
+        if (audioSrc && possessEnterSound) audioSrc.PlayOneShot(possessEnterSound);
+
         // Zoom in
         targetFOV = possessFOV;
         Debug.Log($"[Player] Possessed {currentToy.name}, zooming in to FOV={possessFOV}");
+
+        // 附身时重置缩放和偏移
+        transform.localScale = originalScale;
+        currentBobOffset = 0f;
     }
 
     public void ExitPossess()
@@ -257,6 +309,9 @@ public class PlayerController : MonoBehaviour
             rend.enabled = true;
             rend.material.color = normalColor;
         }
+
+        // 播放附身退出音效
+        if (audioSrc && possessExitSound) audioSrc.PlayOneShot(possessExitSound);
 
         // Zoom out
         targetFOV = normalFOV;

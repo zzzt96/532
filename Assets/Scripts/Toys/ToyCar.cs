@@ -13,14 +13,17 @@ public class ToyCar : ToyBase
 
     [Header("Ground")]
     public float boardY = -100f;        // 自动记录木板高度
-    public float groundY = 0.5f;        
-    public float boardMinX = -22f;      
-    public float boardMaxX = -14f;      
+    public float groundY = 0.5f;
+    public float boardMinX = -22f;
+    public float boardMaxX = -14f;
     public float fallSpeed = 10f;
 
     [Header("Shelf Detection")]
     public WoodenShelf targetShelf;
     public float shelfHitDistance = 2.0f;
+
+    [Header("Audio")]
+    public AudioClip hitShelfSound; // 撞击架子音效
 
     private float lockedZ;
     private float originalZ;
@@ -28,12 +31,12 @@ public class ToyCar : ToyBase
     private float debugTimer = 0f;
     public float possessZOffset = 1.5f;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start(); // 确保调用父类 Start 获取 AudioSource
         canBePossessed = false;
         lockedZ = transform.position.z;
         boardY = transform.position.y;  // 记录木板上的初始高度
-        rb = GetComponent<Rigidbody>();
 
         // 小车在木板上不需要物理，用 Transform 控制
         if (rb != null)
@@ -74,10 +77,25 @@ public class ToyCar : ToyBase
         transform.position = originalPos;
     }
 
+    // 封装一个独立的撞倒架子的方法，避免多处代码重复
+    void DoHitShelf(WoodenShelf shelf)
+    {
+        if (shelf != null && !hasHitShelf)
+        {
+            hasHitShelf = true;
+            shelf.KnockDown();
+
+            // 播放撞击音效
+            if (audioSrc && hitShelfSound) audioSrc.PlayOneShot(hitShelfSound);
+
+            Debug.Log("[ToyCar] HIT SHELF!");
+        }
+    }
+
     void Update()
     {
         if (!isActivated) return;
-        
+
         if (!hasHitShelf && targetShelf != null)
         {
             float xDist = Mathf.Abs(transform.position.x - targetShelf.transform.position.x);
@@ -91,9 +109,7 @@ public class ToyCar : ToyBase
 
             if (xDist < shelfHitDistance)
             {
-                hasHitShelf = true;
-                targetShelf.KnockDown();
-                Debug.Log($"[ToyCar] HIT SHELF!");
+                DoHitShelf(targetShelf);
             }
         }
     }
@@ -160,23 +176,13 @@ public class ToyCar : ToyBase
     {
         WoodenShelf shelf = collision.collider.GetComponent<WoodenShelf>();
         if (shelf == null) shelf = collision.collider.GetComponentInParent<WoodenShelf>();
-        if (shelf != null && !hasHitShelf)
-        {
-            hasHitShelf = true;
-            shelf.KnockDown();
-            Debug.Log("[ToyCar] Hit WoodenShelf (collision)!");
-        }
+        DoHitShelf(shelf);
     }
 
     void OnTriggerEnter(Collider other)
     {
         WoodenShelf shelf = other.GetComponent<WoodenShelf>();
         if (shelf == null) shelf = other.GetComponentInParent<WoodenShelf>();
-        if (shelf != null && !hasHitShelf)
-        {
-            hasHitShelf = true;
-            shelf.KnockDown();
-            Debug.Log("[ToyCar] Hit WoodenShelf (trigger)!");
-        }
+        DoHitShelf(shelf);
     }
 }

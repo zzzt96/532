@@ -28,8 +28,11 @@ public class BunnyToy : ToyBase
     [Header("3. Drop Settings")]
     public Transform boardPosition;
     public float dropThreshold = 1.5f;
-    public float bunnyDropForce = 6f; 
-    public CarDropBoard carDropBoard;     
+    public float bunnyDropForce = 6f;
+    public CarDropBoard carDropBoard;
+
+    [Header("Audio")]
+    public AudioClip dropSound; // 兔子掉落的音效
 
     private float ropeStartY;
 
@@ -149,7 +152,7 @@ public class BunnyToy : ToyBase
             }
         }
     }
-    
+
     void DropToBoard()
     {
         currentState = BunnyState.Dropped;
@@ -159,6 +162,9 @@ public class BunnyToy : ToyBase
         {
             transform.position = boardPosition.position;
         }
+
+        // 播放掉落音效
+        if (audioSrc && dropSound) audioSrc.PlayOneShot(dropSound);
 
         Debug.Log("[BunnyToy] Dropped to board!");
 

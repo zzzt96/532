@@ -6,13 +6,13 @@ using UnityEngine;
 public abstract class ToyBase : MonoBehaviour
 {
     [Header("Possession")]
-    public bool canBePossessed = true; 
-    public bool isPossessed = false;  
+    public bool canBePossessed = true;
+    public bool isPossessed = false;
 
     [Header("Visual Feedback")]
     public Color hoverColor = Color.yellow;
     public Color possessColor = Color.cyan;
-    
+
     [Header("Camera")]
     public float cameraYOffset = 0f;
 
@@ -20,11 +20,15 @@ public abstract class ToyBase : MonoBehaviour
     protected Renderer rend;
     protected Color originalColor;
 
+    // [新增] 声音组件，供所有子类使用
+    protected AudioSource audioSrc;
+
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
         rend = GetComponent<Renderer>();
-        
+        audioSrc = GetComponent<AudioSource>(); // 获取自身挂载的AudioSource
+
         if (rend && rend.material)
             originalColor = rend.material.color;
     }
@@ -45,6 +49,8 @@ public abstract class ToyBase : MonoBehaviour
     {
         if (rend && !isPossessed)
             rend.material.color = originalColor;
+
+
     }
 
     /// <summary>
