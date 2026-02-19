@@ -14,30 +14,30 @@ public class TutorialToy : ToyBase
     protected override void Start()
     {
         base.Start();
-        // È·±£Ò»¿ªÊ¼¾Í¿ÉÒÔ±»¸½Éí
+        // È·ï¿½ï¿½Ò»ï¿½ï¿½Ê¼ï¿½Í¿ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½
         canBePossessed = true;
     }
 
     public override void ToyUpdate()
     {
-        // »ù´¡µÄ WASD ÒÆ¶¯
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ WASD ï¿½Æ¶ï¿½
         float moveX = 0f;
         float moveZ = 0f;
 
-        if (Input.GetKey(KeyCode.W)) moveZ = 1f;
-        if (Input.GetKey(KeyCode.S)) moveZ = -1f;
-        if (Input.GetKey(KeyCode.A)) moveX = -1f;
-        if (Input.GetKey(KeyCode.D)) moveX = 1f;
+        if (Input.GetKey(KeyCode.W)) moveZ = -1f;
+        if (Input.GetKey(KeyCode.S)) moveZ = 1f;
+        if (Input.GetKey(KeyCode.A)) moveX = 1f;
+        if (Input.GetKey(KeyCode.D)) moveX = -1f;
 
-        // ¹éÒ»»¯·½Ïò£¬·ÀÖ¹Ð±ÏòÒÆ¶¯¹ý¿ì
+        // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ò£¬·ï¿½Ö¹Ð±ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½
         Vector3 movement = new Vector3(moveX, 0, moveZ).normalized * moveSpeed * Time.deltaTime;
         transform.position += movement;
 
-        // ÏÞÖÆÒÆ¶¯·¶Î§
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½Î§
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.z = Mathf.Clamp(pos.z, minZ, maxZ);
-        // Ëø¶¨ Y Öá£¬·ÀÖ¹Ëü·ÉÆðÀ´»òµôÏÂÈ¥ (¼ÙÉèËüµÄ³õÊ¼¸ß¶È¾ÍÊÇÕýÈ·µÄ)
+        // ï¿½ï¿½ï¿½ï¿½ Y ï¿½á£¬ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½Ê¼ï¿½ß¶È¾ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½)
         pos.y = transform.position.y;
 
         transform.position = pos;

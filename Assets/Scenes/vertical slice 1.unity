@@ -7625,9 +7625,9 @@ MonoBehaviour:
   cameraYOffset: 0
   moveSpeed: 3
   minX: -65
-  maxX: -60
+  maxX: -61
   minZ: -10
-  maxZ: -5
+  maxZ: -6
 --- !u!1 &1662876248
 GameObject:
   m_ObjectHideFlags: 0
