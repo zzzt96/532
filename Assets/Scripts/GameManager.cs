@@ -12,6 +12,15 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     public LittleGirlControllerWakeUp littleGirl;
 
+    public void OnTutorialComplete()
+    {
+        isIntroPlaying = false;
+        Debug.Log("[GameManager] Tutorial complete, starting objective cutscene.");
+
+        if (CutsceneManager.Instance != null)
+            CutsceneManager.Instance.PlayObjectiveCutscene();
+    }
+    
     void Awake()
     {
         if (Instance == null)

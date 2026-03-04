@@ -14,13 +14,12 @@ public class TutorialToy : ToyBase
     protected override void Start()
     {
         base.Start();
-        // ȷ��һ��ʼ�Ϳ��Ա�����
         canBePossessed = true;
+        useXOnlyDetection = true; 
     }
 
     public override void ToyUpdate()
     {
-        // ������ WASD �ƶ�
         float moveX = 0f;
         float moveZ = 0f;
 
@@ -29,17 +28,12 @@ public class TutorialToy : ToyBase
         if (Input.GetKey(KeyCode.A)) moveX = 1f;
         if (Input.GetKey(KeyCode.D)) moveX = -1f;
 
-        // ��һ�����򣬷�ֹб���ƶ�����
         Vector3 movement = new Vector3(moveX, 0, moveZ).normalized * moveSpeed * Time.deltaTime;
         transform.position += movement;
 
-        // �����ƶ���Χ
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.z = Mathf.Clamp(pos.z, minZ, maxZ);
-        // ���� Y �ᣬ��ֹ�������������ȥ (�������ĳ�ʼ�߶Ⱦ�����ȷ��)
-        pos.y = transform.position.y;
-
         transform.position = pos;
     }
 }

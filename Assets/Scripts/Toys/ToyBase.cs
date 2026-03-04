@@ -8,7 +8,8 @@ public abstract class ToyBase : MonoBehaviour
     [Header("Possession")]
     public bool canBePossessed = true;
     public bool isPossessed = false;
-
+    public bool useXOnlyDetection = false; // TutorialToy专用，勾选后只比较X轴距离
+    
     [Header("Visual Feedback")]
     public Color hoverColor = Color.yellow;
     public Color possessColor = Color.cyan;
