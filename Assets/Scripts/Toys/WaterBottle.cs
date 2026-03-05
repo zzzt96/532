@@ -6,25 +6,58 @@ public class WaterBottle : ToyBase
     [Header("State")]
     public bool isKnockedDown = false;
 
-    [Header("Scripted Fall Path")]
-    public Transform tableEdgePoint;    // ★ 空物体1：桌子边缘（桌面高度，桌子最左/右端）
-    public Transform landingPoint;      // ★ 空物体2：木板上的落点（小车旁边）
-    public float rollDuration = 0.4f;   // 滚到桌边的时间
-    public float fallDuration = 0.3f;   // 掉落时间
-    public float bounceDuration = 0.15f;// 落地弹跳时间
+    [Header("WASD Movement on Table")]
+    public float moveSpeed = 2f;
+    public float minX = -1f;
+    public float maxX = 1f;
+    public float minZ = -0.5f;
+    public float maxZ = 0.5f;
+
+    [Header("Scripted Fall Heights")]
+    public float tableEdgeY = 1.2f;   // 桌面高度（在Inspector里对照实际桌面Y设置）
+    public float landingY = 0.1f;     // 地面落点高度
+    public float rollDuration = 0.4f;
+    public float fallDuration = 0.3f;
+    public float bounceDuration = 0.15f;
 
     [Header("References")]
-    public CarDropBoard carDropBoard;
+    public CatNPC cat;                // 拖入 Cat_L_Black
 
     [Header("Audio")]
-    public AudioClip dropGroundSound; // 掉落到地面的音效
+    public AudioClip dropGroundSound;
 
-    public override void ToyUpdate() { }
+    // 记录掉落时的X位置，用于动态计算落点
+    private float fallFromX;
+    private float fallFromZ;
+
+    public override void ToyUpdate()
+    {
+        float moveX = 0f;
+        float moveZ = 0f;
+
+        if (Input.GetKey(KeyCode.W)) moveZ = -1f;
+        if (Input.GetKey(KeyCode.S)) moveZ = 1f;
+        if (Input.GetKey(KeyCode.A)) moveX = 1f;
+        if (Input.GetKey(KeyCode.D)) moveX = -1f;
+
+        transform.position += new Vector3(moveX, 0, moveZ) * moveSpeed * Time.deltaTime;
+
+        Vector3 pos = transform.position;
+
+        // 超出桌面边界 → 触发掉落
+        if (pos.x < minX || pos.x > maxX || pos.z < minZ || pos.z > maxZ)
+        {
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player != null) player.ExitPossess();
+
+            KnockDown(Vector3.zero);
+        }
+    }
 
     protected override void Start()
     {
         base.Start();
-        canBePossessed = false;
+        canBePossessed = true;
 
         if (rb != null)
         {
@@ -38,6 +71,11 @@ public class WaterBottle : ToyBase
         if (isKnockedDown) return;
         isKnockedDown = true;
         canBePossessed = false;
+
+        // 记录当前X和Z，作为整个掉落路径的基准
+        fallFromX = transform.position.x;
+        fallFromZ = transform.position.z;
+
         StartCoroutine(ScriptedFall());
     }
 
@@ -47,14 +85,8 @@ public class WaterBottle : ToyBase
         Quaternion startRot = transform.rotation;
         Quaternion tiltedRot = startRot * Quaternion.Euler(0, 0, -90f);
 
-        // ========== 阶段1：在桌面上滚到桌边 ==========
-        Vector3 edgePos = (tableEdgePoint != null)
-            ? tableEdgePoint.position
-            : startPos + new Vector3(-2f, 0f, 0f);
-
-        // 保持桌面高度（不穿模）
-        edgePos.y = startPos.y;
-        edgePos.z = startPos.z;
+        // ========== 阶段1：在桌面倒下滚到边缘（保持当前X，Y锁定桌面高度）==========
+        Vector3 edgePos = new Vector3(fallFromX, tableEdgeY, fallFromZ);
 
         float elapsed = 0f;
         while (elapsed < rollDuration)
@@ -62,7 +94,6 @@ public class WaterBottle : ToyBase
             elapsed += Time.deltaTime;
             float t = elapsed / rollDuration;
             float smooth = t * t * (3f - 2f * t);
-
             transform.position = Vector3.Lerp(startPos, edgePos, smooth);
             transform.rotation = Quaternion.Lerp(startRot, tiltedRot, smooth);
             yield return null;
@@ -70,44 +101,36 @@ public class WaterBottle : ToyBase
         transform.position = edgePos;
         transform.rotation = tiltedRot;
 
-        // ========== 阶段2：从桌边掉到木板落点 ==========
-        Vector3 fallStart = edgePos;
-        Vector3 landPos = (landingPoint != null)
-            ? landingPoint.position
-            : new Vector3(edgePos.x, edgePos.y - 3f, edgePos.z);
-        landPos.z = startPos.z; // 锁定 Z
+        // ========== 阶段2：从桌边垂直落到地面（保持同一X）==========
+        Vector3 landPos = new Vector3(fallFromX, landingY, fallFromZ);
 
         elapsed = 0f;
         while (elapsed < fallDuration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / fallDuration;
-            float gravity = t * t; // 加速下落
-
-            transform.position = Vector3.Lerp(fallStart, landPos, gravity);
+            float gravity = t * t;
+            transform.position = Vector3.Lerp(edgePos, landPos, gravity);
             transform.rotation = tiltedRot * Quaternion.Euler(0, 0, t * 180f);
             yield return null;
         }
         transform.position = landPos;
 
-        // --- ★ 掉落到地面的瞬间播放音效 ★ ---
-        if (audioSrc && dropGroundSound) audioSrc.PlayOneShot(dropGroundSound);
+        // 落地音效
+        if (audioSrc && dropGroundSound)
+            audioSrc.PlayOneShot(dropGroundSound);
 
-        // ========== 阶段3：落地弹跳（碰撞感） ==========
-        float bounceHeight = 0.3f;
-        Vector3 bounceUp = landPos + Vector3.up * bounceHeight;
+        // ========== 阶段3：弹跳 ==========
+        Vector3 bounceUp = landPos + Vector3.up * 0.3f;
 
-        // 弹起
         elapsed = 0f;
         float halfBounce = bounceDuration * 0.4f;
         while (elapsed < halfBounce)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / halfBounce;
-            transform.position = Vector3.Lerp(landPos, bounceUp, t);
+            transform.position = Vector3.Lerp(landPos, bounceUp, elapsed / halfBounce);
             yield return null;
         }
-        // 落回
         elapsed = 0f;
         float secondHalf = bounceDuration * 0.6f;
         while (elapsed < secondHalf)
@@ -119,17 +142,18 @@ public class WaterBottle : ToyBase
         }
         transform.position = landPos;
 
-        // ========== 触发小车 ==========
-        if (carDropBoard != null)
+        // ========== 触发猫咪 ==========
+        if (cat != null)
         {
-            carDropBoard.TriggerDrop();
-            Debug.Log("[WaterBottle] Fall complete. Car triggered!");
+            cat.AttractedBySound(landPos);
+            Debug.Log("[WaterBottle] Sound triggered cat!");
         }
 
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = false;
     }
 
+    // 保留旧的球碰撞触发接口
     void OnTriggerEnter(Collider other)
     {
         if (!isKnockedDown && other.CompareTag("Ball"))

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Ball : ToyBase
 {
@@ -17,9 +18,16 @@ public class Ball : ToyBase
     public float maxZ = -4f;
     public float fixedY = 4.59f;
 
+    [Header("Knock Off Shelf")]
+    public Transform landingOnDeskTarget;  // 空物体：左边桌面上的落点
+    public float fallDuration = 0.4f;
+    public float bounceDuration = 0.15f;
+    private bool isKnockedOff = false;
+
     [Header("Audio")]
-    public AudioClip jumpSound; // 跳跃音效
-    public AudioClip hitSound;  // 撞击音效
+    public AudioClip jumpSound;
+    public AudioClip hitSound;
+    public AudioClip dropSound;
 
     private bool isJumping = false;
     private float startY;
@@ -28,21 +36,18 @@ public class Ball : ToyBase
     protected override void Start()
     {
         base.Start();
-        canBePossessed = true;
+        canBePossessed = false; // 默认不可附身，掉落后才可以
     }
 
     public override void ToyUpdate()
     {
-        // 跳跃逻辑（优先级最高）
         if (Input.GetKeyDown(jumpKey) && !isJumping)
-        {
             StartJump();
-        }
 
         if (isJumping)
         {
             UpdateJump();
-            return; // 跳跃时不能水平移动
+            return;
         }
 
         float moveX = 0f;
@@ -68,15 +73,12 @@ public class Ball : ToyBase
         isJumping = true;
         startY = transform.position.y;
         jumpProgress = 0f;
-
-        // 播放跳跃音效
         if (audioSrc && jumpSound) audioSrc.PlayOneShot(jumpSound);
     }
 
     void UpdateJump()
     {
         jumpProgress += jumpSpeed * Time.deltaTime;
-
         float height = Mathf.Sin(jumpProgress * Mathf.PI) * jumpHeight;
 
         Vector3 pos = transform.position;
@@ -91,6 +93,64 @@ public class Ball : ToyBase
         }
     }
 
+    // 猫撞击后调用
+    public void KnockOffShelf()
+    {
+        if (isKnockedOff) return;
+        isKnockedOff = true;
+        canBePossessed = false;
+        StartCoroutine(FallToDesk());
+    }
+
+    IEnumerator FallToDesk()
+    {
+        Vector3 startPos = transform.position;
+
+        // 落点：用 landingOnDeskTarget 的 XY，保持自身 Z
+        Vector3 landPos = landingOnDeskTarget != null
+            ? new Vector3(landingOnDeskTarget.position.x, landingOnDeskTarget.position.y, transform.position.z)
+            : new Vector3(startPos.x, 0f, transform.position.z);
+
+        // 掉落
+        float elapsed = 0f;
+        while (elapsed < fallDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / fallDuration;
+            transform.position = Vector3.Lerp(startPos, landPos, t * t); // 加速落下
+            yield return null;
+        }
+        transform.position = landPos;
+
+        // 落地音效
+        if (audioSrc && dropSound) audioSrc.PlayOneShot(dropSound);
+
+        // 弹跳
+        Vector3 bounceUp = landPos + Vector3.up * 0.4f;
+        elapsed = 0f;
+        float half = bounceDuration * 0.4f;
+        while (elapsed < half)
+        {
+            elapsed += Time.deltaTime;
+            transform.position = Vector3.Lerp(landPos, bounceUp, elapsed / half);
+            yield return null;
+        }
+        elapsed = 0f;
+        float secondHalf = bounceDuration * 0.6f;
+        while (elapsed < secondHalf)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / secondHalf;
+            transform.position = Vector3.Lerp(bounceUp, landPos, t * t);
+            yield return null;
+        }
+        transform.position = landPos;
+
+        // 落稳后玩家可以附身
+        canBePossessed = true;
+        Debug.Log("[Ball] Landed on desk, ready to possess!");
+    }
+
     void OnTriggerEnter(Collider other)
     {
         Debug.Log($"[Ball] Triggered: {other.name}, Tag: {other.tag}");
@@ -100,27 +160,19 @@ public class Ball : ToyBase
             WaterBottle bottle = other.GetComponent<WaterBottle>();
             if (bottle != null)
             {
-                // 播放碰撞音效
                 if (audioSrc && hitSound) audioSrc.PlayOneShot(hitSound);
-
-                // 传入一个方向，满足 KnockDown(Vector3)
                 Vector3 dir = (other.transform.position - transform.position).normalized;
                 if (dir.sqrMagnitude < 0.001f) dir = Vector3.right;
-
                 bottle.KnockDown(dir);
                 Debug.Log("[Ball] Hit water bottle!");
             }
         }
         else if (other.CompareTag("IronHanger"))
         {
-            // 播放碰撞音效
             if (audioSrc && hitSound) audioSrc.PlayOneShot(hitSound);
-
-            // 用 SendMessage 避免方法名不匹配导致编译失败
             other.gameObject.SendMessage("ActivateBunny", SendMessageOptions.DontRequireReceiver);
             other.gameObject.SendMessage("ActivateBunnyInternal", SendMessageOptions.DontRequireReceiver);
             other.gameObject.SendMessage("Activate", SendMessageOptions.DontRequireReceiver);
-
             Debug.Log("[Ball] Hit iron hanger!");
         }
     }
