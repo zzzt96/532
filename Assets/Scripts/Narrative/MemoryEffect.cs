@@ -17,6 +17,7 @@ public class MemoryEffect : MonoBehaviour
 
     public void ActivateEffect()
     {
+        Debug.Log("【特效管理器】收到了小猫的指令！开始播放特效！"); // 加上这句
         StartCoroutine(EffectRoutine());
     }
 

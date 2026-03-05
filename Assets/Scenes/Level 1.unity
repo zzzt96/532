@@ -4718,6 +4718,54 @@ Transform:
   - {fileID: 909071831}
   m_Father: {fileID: 1322262379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &804263034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 804263036}
+  - component: {fileID: 804263035}
+  m_Layer: 0
+  m_Name: MemoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &804263035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804263034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac259249f46f8d4596e051c4668863c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postProcessingVolume: {fileID: 408572368}
+  scenePlane: {fileID: 993439778}
+  displayDuration: 5
+  fadeDuration: 1.5
+--- !u!4 &804263036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804263034}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 937.468, y: 492.6973, z: -9.159128}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -8427,7 +8475,7 @@ MonoBehaviour:
   catLandTarget: {fileID: 528961228}
   ball: {fileID: 787035590}
   carDropBoard: {fileID: 697594695}
-  memoryEffect: {fileID: 1965449496}
+  memoryEffect: {fileID: 804263035}
   walkSpeed: 2.5
   arriveDistance: 0.5
   jumpHeight: 2
@@ -10252,7 +10300,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1965449494}
   - component: {fileID: 1965449495}
-  - component: {fileID: 1965449496}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -10291,22 +10338,6 @@ MonoBehaviour:
   isIntroPlaying: 0
   girlHasWokenUp: 0
   littleGirl: {fileID: 1949404771}
---- !u!114 &1965449496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1965449493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bac259249f46f8d4596e051c4668863c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  postProcessingVolume: {fileID: 408572368}
-  scenePlane: {fileID: 993439778}
-  displayDuration: 5
-  fadeDuration: 1.5
 --- !u!1 &1988354584
 GameObject:
   m_ObjectHideFlags: 0
@@ -41465,3 +41496,4 @@ SceneRoots:
   - {fileID: 528961228}
   - {fileID: 408572369}
   - {fileID: 993439780}
+  - {fileID: 804263036}
