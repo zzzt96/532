@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class QuickAnimSetting : EditorWindow
 {
 
@@ -185,3 +186,4 @@ public class QuickAnimSetting : EditorWindow
         EditorGUILayout.EndHorizontal();
     }
 }
+#endif
