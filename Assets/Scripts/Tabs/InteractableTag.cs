@@ -26,19 +26,23 @@ public class InteractableTag : MonoBehaviour
         if (highlightEffect != null) highlightEffect.SetHighlighted(false);
     }
 
-    // 接收管理器传来的颜色并执行高亮
-    public void SetHighlight(bool state, Color possessColor, Color interactColor)
+    // 接收管理器传来的按键状态和颜色
+    public void UpdateHighlight(bool isQPressed, bool isEPressed, Color possessColor, Color interactColor)
     {
         if (highlightEffect == null) return;
 
-        if (state)
+        // 判断当前物体是否满足亮起的条件
+        bool shouldShowPossess = isQPressed && canBePossessed;
+        bool shouldShowInteract = isEPressed && isInteractable;
+
+        if (shouldShowPossess || shouldShowInteract)
         {
-            // 优先级判断：如果又能附身又能交互，优先显示附身颜色（你可以根据需求调换顺序）
-            if (canBePossessed)
+            // 优先级判断：如果同时按下了Q和E，且这个物体刚好既能附身又能交互，优先显示黄色(附身)
+            if (shouldShowPossess)
             {
                 highlightEffect.outlineColor = possessColor;
             }
-            else if (isInteractable)
+            else if (shouldShowInteract)
             {
                 highlightEffect.outlineColor = interactColor;
             }
@@ -47,6 +51,7 @@ public class InteractableTag : MonoBehaviour
         }
         else
         {
+            // 如果都不满足，就熄灭
             highlightEffect.SetHighlighted(false);
         }
     }
