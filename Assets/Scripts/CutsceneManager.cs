@@ -28,8 +28,8 @@ public class CutsceneManager : MonoBehaviour
     public CanvasGroup objectivePanel;  // 包含 "Wake up the little girl!" 的 CanvasGroup
     public float fadeDuration = 0.5f;
     
-    [Header("Dev Tools")]
     #if UNITY_EDITOR
+    [Header("Dev Tools")]
     public bool skipCutscene = false;
     #endif
     
