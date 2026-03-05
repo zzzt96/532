@@ -11,7 +11,9 @@ public class InteractableTag : MonoBehaviour
     [Header("必须拖入该物体上的 Highlight Effect 组件")]
     public HighlightEffect highlightEffect;
 
-    // 静态注册表，供高亮管理器全局调用
+    // 记录是否正在被玩家附身（由 PlayerController 控制）
+    [HideInInspector] public bool isCurrentlyPossessed = false;
+
     public static readonly List<InteractableTag> All = new List<InteractableTag>();
 
     void OnEnable()
@@ -22,8 +24,26 @@ public class InteractableTag : MonoBehaviour
     void OnDisable()
     {
         All.Remove(this);
-        // 物体失活时确保关掉高亮，防止残留
         if (highlightEffect != null) highlightEffect.SetHighlighted(false);
+    }
+
+    // 新增：由 PlayerController 调用，强制锁定或解锁附身的高亮状态
+    public void SetPossessedState(bool state, Color possessColor)
+    {
+        isCurrentlyPossessed = state;
+
+        if (highlightEffect == null) return;
+
+        if (state)
+        {
+            highlightEffect.outlineColor = possessColor;
+            highlightEffect.SetHighlighted(true);
+        }
+        else
+        {
+            // 解除附身时，先把它关掉，下一帧如果玩家还按着Q/E，TabHighlighter会重新接管它
+            highlightEffect.SetHighlighted(false);
+        }
     }
 
     // 接收管理器传来的按键状态和颜色
@@ -31,13 +51,14 @@ public class InteractableTag : MonoBehaviour
     {
         if (highlightEffect == null) return;
 
-        // 判断当前物体是否满足亮起的条件
+        // 【核心修改】：如果正在被附身，直接无视按键状态，保持常亮，不执行下面的逻辑
+        if (isCurrentlyPossessed) return;
+
         bool shouldShowPossess = isQPressed && canBePossessed;
         bool shouldShowInteract = isEPressed && isInteractable;
 
         if (shouldShowPossess || shouldShowInteract)
         {
-            // 优先级判断：如果同时按下了Q和E，且这个物体刚好既能附身又能交互，优先显示黄色(附身)
             if (shouldShowPossess)
             {
                 highlightEffect.outlineColor = possessColor;
@@ -51,7 +72,6 @@ public class InteractableTag : MonoBehaviour
         }
         else
         {
-            // 如果都不满足，就熄灭
             highlightEffect.SetHighlighted(false);
         }
     }

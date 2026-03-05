@@ -26,7 +26,8 @@ public class PotIvy : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (hasBeenHit) return;
-        if (other.CompareTag("Ball") || other.GetComponent<Ball>() != null)
+        // 【修改这里】只用 GetComponent 检查，安全无报错！
+        if (other.GetComponent<Ball>() != null)
         {
             hasBeenHit = true;
             StartCoroutine(ShakeAndAttractCat());
@@ -36,7 +37,8 @@ public class PotIvy : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (hasBeenHit) return;
-        if (collision.collider.CompareTag("Ball") || collision.collider.GetComponent<Ball>() != null)
+        // 【修改这里】
+        if (collision.collider.GetComponent<Ball>() != null)
         {
             hasBeenHit = true;
             StartCoroutine(ShakeAndAttractCat());

@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [Header("Visual")]
     public Color normalColor = new Color(0.35f, 0.58f, 0.55f, 0.6f);
     public Color activeColor = new Color(1f, 0.8f, 0.8f, 1f);
+    public Color possessedHighlightColor = Color.yellow; // 新增：附身时的描边颜色
 
     [Header("Ghost Visibility")]
     public float ghostZOffset = -1.5f;
@@ -300,11 +301,29 @@ public class PlayerController : MonoBehaviour
 
         transform.localScale = originalScale;
         currentBobOffset = 0f;
+
+        // 【新增】：通知玩具的 Tag 强制开启高亮锁
+        InteractableTag tag = currentToy.GetComponent<InteractableTag>();
+        if (tag != null)
+        {
+            tag.SetPossessedState(true, possessedHighlightColor);
+        }
     }
 
     public void ExitPossess()
     {
-        if (currentToy != null) currentToy.UnPossess();
+        // 【新增】：通知玩具的 Tag 解除高亮锁 (要在 currentToy = null 之前调用)
+        if (currentToy != null)
+        {
+            InteractableTag tag = currentToy.GetComponent<InteractableTag>();
+            if (tag != null)
+            {
+                tag.SetPossessedState(false, possessedHighlightColor);
+            }
+
+            currentToy.UnPossess();
+        }
+
         isPossessing = false;
         currentToy = null;
         if (rend)
