@@ -1,36 +1,62 @@
 using UnityEngine;
+using System.Collections;
 
 public class CarDropBoard : MonoBehaviour
 {
-    [Header("Car to Drop")]
+    [Header("References")]
     public GameObject toyCar;
-    public float nudgeForce = 1.5f;     // 轻推力度
-    public Vector3 nudgeDirection = new Vector3(-1f, 0f, 0f); // 往左推一点
+    public Transform boardMesh;         // 木板的视觉Mesh物体（做旋转动画用）
+
+    [Header("Tip Animation")]
+    public float tipDuration = 0.5f;    // 木板翻倒时间
+    public float tipAngle = 80f;        // 翻倒角度
+    public Vector3 tipAxis = Vector3.forward; // 绕哪个轴翻（根据木板朝向调整）
 
     [Header("State")]
     public bool hasTriggered = false;
 
-    public void TriggerDrop()
-    {
-        TriggerDrop(nudgeForce);
-    }
-
-    public void TriggerDrop(float force)
+    // 被猫触发
+    public void TipBoard()
     {
         if (hasTriggered) return;
-        if (toyCar == null)
+        hasTriggered = true;
+        StartCoroutine(TipAndSlide());
+        Debug.Log("[CarDropBoard] Board tipping!");
+    }
+
+    // 旧接口保留兼容
+    public void TriggerDrop() { TipBoard(); }
+    public void TriggerDrop(float force) { TipBoard(); }
+
+    IEnumerator TipAndSlide()
+    {
+        // 木板翻倒动画 
+        if (boardMesh != null)
         {
-            Debug.LogWarning("[CarDropBoard] toyCar is null!");
-            return;
+            Quaternion startRot = boardMesh.rotation;
+            Quaternion endRot = startRot * Quaternion.AngleAxis(tipAngle, tipAxis);
+            float elapsed = 0f;
+
+            while (elapsed < tipDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / tipDuration;
+                float smooth = t * t * (3f - 2f * t);
+                boardMesh.rotation = Quaternion.Lerp(startRot, endRot, smooth);
+                yield return null;
+            }
+            boardMesh.rotation = endRot;
         }
 
-        hasTriggered = true;
-        
-        ToyCar car = toyCar.GetComponent<ToyCar>();
-        if (car != null)
+        // 激活小车（开始滑落）
+        if (toyCar != null)
         {
-            car.ActivateOnBoard();
-            Debug.Log($"[CarDropBoard] Car activated on board!");
+            ToyCar car = toyCar.GetComponent<ToyCar>();
+            if (car != null)
+            {
+                car.SlideOffBoard();
+                Debug.Log("[CarDropBoard] Car sliding off!");
+            }
         }
     }
 }

@@ -28,15 +28,30 @@ public class CutsceneManager : MonoBehaviour
     public CanvasGroup objectivePanel;  // 包含 "Wake up the little girl!" 的 CanvasGroup
     public float fadeDuration = 0.5f;
     
+    [Header("Dev Tools")]
+    #if UNITY_EDITOR
+    public bool skipCutscene = false;
+    #endif
+    
     void Awake()
     {
         Instance = this;
         if (objectivePanel) objectivePanel.alpha = 0f;
     }
 
-    /// <summary>
-    /// 由 GameManager 在 tutorial 结束时调用
-    /// </summary>
+    void Start()
+    {
+    #if UNITY_EDITOR
+        if (skipCutscene)
+        {
+            player.inputLocked = false;
+            Debug.Log("[Cutscene] Skipped (Dev Mode)");
+            return;
+        }
+    #endif
+        PlayObjectiveCutscene();
+    }
+    
     public void PlayObjectiveCutscene()
     {
         StartCoroutine(CutsceneRoutine());

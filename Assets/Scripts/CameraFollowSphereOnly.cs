@@ -5,14 +5,17 @@ public class CameraFollowSphereOnly : MonoBehaviour
     [Header("Target")]
     public Transform playerTarget;
 
-    [Header("Camera Settings")]
+    [Header("Offset")]
     public Vector3 offset = new Vector3(0, 1, -8);
-    public float smoothSpeed = 8f;
+
+    [Header("Smooth Speed")]
+    public float smoothSpeedX = 8f;
+    public float smoothSpeedY = 3f;  // Y轴单独调低，避免上下迟钝感
 
     [Header("Camera Bounds")]
     public float minX = -15f;
     public float maxX = 15f;
-    public float minY = -5f;      
+    public float minY = -5f;
     public float maxY = 10f;
 
     void LateUpdate()
@@ -23,6 +26,9 @@ public class CameraFollowSphereOnly : MonoBehaviour
         targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
         targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
 
-        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * smoothSpeed);
+        float newX = Mathf.Lerp(transform.position.x, targetPos.x, Time.deltaTime * smoothSpeedX);
+        float newY = Mathf.Lerp(transform.position.y, targetPos.y, Time.deltaTime * smoothSpeedY);
+
+        transform.position = new Vector3(newX, newY, targetPos.z);
     }
 }
