@@ -22,6 +22,8 @@ public class TutorialManager : MonoBehaviour
     private Vector3 lastMousePos;
     private float mouseMoveAccumulator = 0f;
 
+    private bool catTriggered = false;
+
     void Start()
     {
         tutorialStep = 0;
@@ -33,75 +35,45 @@ public class TutorialManager : MonoBehaviour
     {
         switch (tutorialStep)
         {
-            case 0: // Step 0: Teach Mouse
+            case 0: // 移动鼠标
                 if (Vector3.Distance(Input.mousePosition, lastMousePos) > 5f)
-                {
                     mouseMoveAccumulator += Time.deltaTime;
-                }
                 lastMousePos = Input.mousePosition;
-
-                if (mouseMoveAccumulator > 1.0f)
-                {
-                    tutorialStep++;
-                    UpdateText();
-                }
+                if (mouseMoveAccumulator > 1.0f) { tutorialStep++; UpdateText(); }
                 break;
 
-            case 1: // Step 1: Teach Q
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    tutorialStep++;
-                    UpdateText();
-                }
-                break;
-
-            case 2: // Step 2: Teach E
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    tutorialStep++;
-                    UpdateText();
-                }
-                break;
-
-            case 3: // Step 3: Teach Possess
+            case 1: // 附身小火车
                 if (player.isPossessing && player.currentToy == tutorialToy)
-                {
-                    tutorialStep++;
-                    UpdateText();
-                }
+                { tutorialStep++; UpdateText(); }
                 break;
 
-            case 4: // Step 4: Push the ball
-                // 等待 TutorialBall 调用 OnBallInBasket()
+            case 2: // 球进篮，等待 OnBallInBasket()
                 break;
 
-            case 5: // Step 5: Unpossess
+            case 3: // 退出附身
                 if (!player.isPossessing)
                 {
-                    tutorialStep++;
-                    UpdateText();
-
+                    tutorialStep++; UpdateText();
                     if (tutorialToy != null) tutorialToy.canBePossessed = false;
                 }
                 break;
         }
     }
-
+    
     public void OnBallInBasket()
     {
-        if (tutorialStep == 4)
-        {
-            tutorialStep++;
-            UpdateText();
+        Debug.Log($"[Tutorial] OnBallInBasket! Step: {tutorialStep}");
+        if (catTriggered) return;
+        catTriggered = true;
 
-            // 触发猫咪！
-            if (tutorialCat != null && catTargetPoint != null)
-            {
-                tutorialCat.TriggerAttention(catTargetPoint);
-            }
-        }
+        // 如果还没到step 2，先跳到step 2再推进
+        if (tutorialStep < 2) tutorialStep = 2;
+    
+        tutorialStep++;
+        UpdateText();
+        if (tutorialCat != null && catTargetPoint != null)
+            tutorialCat.TriggerAttention(catTargetPoint);
     }
-
     void UpdateText()
     {
         if (tutorialText == null) return;
@@ -112,21 +84,15 @@ public class TutorialManager : MonoBehaviour
                 tutorialText.text = "Move your <color=#FFD700>Mouse</color> to look around.";
                 break;
             case 1:
-                tutorialText.text = "Press <color=#FFD700>[Q]</color> to scan for possessable objects.";
+                tutorialText.text = "Hover over the toy and <color=#FFD700>hold left mouse button</color> to possess it.";
                 break;
             case 2:
-                tutorialText.text = "Press <color=#FFD700>[E]</color> to scan for interactables.";
-                break;
-            case 3:
-                tutorialText.text = "Hover over the toy and press <color=#FFD700>[Shift]</color> to possess it.";
-                break;
-            case 4:
                 tutorialText.text = "Use <color=#FFD700>[W][A][S][D]</color> and <color=#FFD700>[Space]</color> to move.\nPush the ball into the basket to attract the cat!";
                 break;
-            case 5:
-                tutorialText.text = "Great! The cat is distracted.\nPress <color=#FFD700>[Shift]</color> to exit the toy.";
+            case 3:
+                tutorialText.text = "Great! The cat is distracted.\n<color=#FFD700>Click</color> to exit the toy.";
                 break;
-            case 6:
+            case 4:
                 tutorialText.text = "Tutorial complete!\nTry to help the little girl.";
                 Invoke("HideText", textHideDelay);
                 break;

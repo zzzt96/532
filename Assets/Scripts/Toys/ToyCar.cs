@@ -139,6 +139,7 @@ public class ToyCar : ToyBase
         if (shelf != null && !hasHitShelf)
         {
             hasHitShelf = true;
+            canBePossessed = false;
             shelf.KnockDown();
             if (audioSrc && hitShelfSound) audioSrc.PlayOneShot(hitShelfSound);
             Debug.Log("[ToyCar] HIT SHELF!");

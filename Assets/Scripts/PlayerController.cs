@@ -6,9 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Spawn Settings")]
     public Vector2 startPosition = new Vector2(0, 1);
-
+    
     [Header("Movement")]
     public float mouseFollowSmoothing = 3f;
+    public float maxTargetJumpPerFrame = 1.5f;
 
     [Header("Movement Bounds")]
     public float minX = -40f;
@@ -32,7 +33,8 @@ public class PlayerController : MonoBehaviour
     public ToyBase currentHover;
     public ToyBase currentToy;
     public bool isPossessing = false;
-    public KeyCode possessKey = KeyCode.LeftShift;
+    public float holdDuration = 0.8f;   // 长按多久附身
+    private float holdTimer = 0f;
 
     [Header("Visual")]
     public Color normalColor = new Color(0.35f, 0.58f, 0.55f, 0.6f);
@@ -111,11 +113,9 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = currentToy.transform.position + new Vector3(0, currentToy.cameraYOffset, 0);
             currentToy.ToyUpdate();
-
-            if (Input.GetKeyDown(possessKey)) ExitPossess();
+            if (Input.GetMouseButtonDown(0)) ExitPossess(); // 右键退出附身
             return;
         }
-
         // 自由移动状态
         HandleMouseMovement();
 
@@ -136,9 +136,14 @@ public class PlayerController : MonoBehaviour
 
         HandlePossessInput();
     }
-
+    
     void HandleMouseMovement()
     {
+        if (isPossessing) return;  
+        
+        // 靠近可附身物体时降低最大跳跃距离
+        float currentMaxJump = currentHover != null ? maxTargetJumpPerFrame * 0.4f : maxTargetJumpPerFrame;
+        
         Vector3 logicalPos = transform.position;
         logicalPos.y -= currentBobOffset;
 
@@ -149,21 +154,21 @@ public class PlayerController : MonoBehaviour
         if (plane.Raycast(ray, out distance))
         {
             Vector3 mouseWorldPos = ray.GetPoint(distance);
-
             float targetX = Mathf.Clamp(mouseWorldPos.x, minX, maxX);
             float targetY = Mathf.Clamp(mouseWorldPos.y, minY, maxY);
             Vector3 targetPos = new Vector3(targetX, targetY, transform.position.z);
 
+            // 限制目标位置每帧最多跳多远
+            targetPos = Vector3.MoveTowards(logicalPos, targetPos, currentMaxJump);
             Vector3 newPos = Vector3.Lerp(logicalPos, targetPos, Time.deltaTime * mouseFollowSmoothing);
 
             currentBobOffset = enableJuice ? Mathf.Sin(Time.time * bobFrequency) * bobAmplitude : 0f;
-
             newPos.y += currentBobOffset;
             newPos.z = transform.position.z;
             transform.position = newPos;
         }
     }
-
+    
     void ApplyGhostJuice()
     {
         if (!enableJuice) return;
@@ -176,14 +181,12 @@ public class PlayerController : MonoBehaviour
         if (currentHover != null)
         {
             float newTargetZ = currentHover.transform.position.z;
-            if (Mathf.Abs(newTargetZ - targetZ) > 0.1f)
-                Debug.Log($"[Player] Z changing: {targetZ:F2} → {newTargetZ:F2} (Hover: {currentHover.name})");
+            // 只允许Z往背景方向移动，不允许往摄像机方向超过defaultZ
+            newTargetZ = Mathf.Min(newTargetZ, defaultZ);
             targetZ = newTargetZ;
         }
         else
         {
-            if (Mathf.Abs(defaultZ - targetZ) > 0.1f)
-                Debug.Log($"[Player] Z returning to default: {targetZ:F2} → {defaultZ:F2}");
             targetZ = defaultZ;
         }
 
@@ -248,13 +251,33 @@ public class PlayerController : MonoBehaviour
 
     void HandlePossessInput()
     {
-        if (currentHover == null || !currentHover.canBePossessed) return;
+        if (currentHover == null || !currentHover.canBePossessed)
+        {
+            holdTimer = 0f;
+            PossessUI.Instance?.Hide();
+            return;
+        }
 
-        // 即时附身，按一下 Shift 立刻触发，暂时不加pending UI
-        if (Input.GetKeyDown(possessKey))
-            EnterPossess();
+        if (Input.GetMouseButton(0)) // 长按左键
+        {
+            holdTimer += Time.deltaTime;
+            float progress = Mathf.Clamp01(holdTimer / holdDuration);
+            PossessUI.Instance?.Show(currentHover.transform.position, progress);
+
+            if (holdTimer >= holdDuration)
+            {
+                holdTimer = 0f;
+                PossessUI.Instance?.Hide();
+                EnterPossess();
+            }
+        }
+        else
+        {
+            // 松开重置
+            holdTimer = 0f;
+            PossessUI.Instance?.Hide();
+        }
     }
-
     void SwitchToNextToy()
     {
         if (availableToys.Count == 0) return;
@@ -335,6 +358,9 @@ public class PlayerController : MonoBehaviour
         if (audioSrc && possessExitSound) audioSrc.PlayOneShot(possessExitSound);
 
         targetFOV = normalFOV;
+        
+        ClearHover();
+        DetectHoverObject(); // 立即重新检测，不等下一帧
         Debug.Log("[Player] Exited possession");
     }
 }
