@@ -143,6 +143,7 @@ public class ToyCar : ToyBase
             shelf.KnockDown();
             if (audioSrc && hitShelfSound) audioSrc.PlayOneShot(hitShelfSound);
             Debug.Log("[ToyCar] HIT SHELF!");
+            GetComponent<InteractableTag>()?.SetCompleted();
         }
     }
 

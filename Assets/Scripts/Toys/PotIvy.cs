@@ -26,10 +26,11 @@ public class PotIvy : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (hasBeenHit) return;
-        // 【修改这里】只用 GetComponent 检查，安全无报错！
-        if (other.GetComponent<Ball>() != null)
+        Ball ball = other.GetComponent<Ball>();
+        if (ball != null)
         {
             hasBeenHit = true;
+            ball.GetComponent<InteractableTag>()?.SetCompleted(); 
             StartCoroutine(ShakeAndAttractCat());
         }
     }
@@ -37,10 +38,11 @@ public class PotIvy : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (hasBeenHit) return;
-        // 【修改这里】
-        if (collision.collider.GetComponent<Ball>() != null)
+        Ball ball = collision.collider.GetComponent<Ball>();
+        if (ball != null)
         {
             hasBeenHit = true;
+            ball.SetPotLineDone(); 
             StartCoroutine(ShakeAndAttractCat());
         }
     }

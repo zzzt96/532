@@ -151,6 +151,8 @@ public class WaterBottle : ToyBase
 
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = false;
+        
+        GetComponent<InteractableTag>()?.SetCompleted();
     }
 
     // 保留旧的球碰撞触发接口

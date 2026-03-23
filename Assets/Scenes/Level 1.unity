@@ -1378,10 +1378,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBePossessed: 1
-  isInteractable: 0
+  canBePossessed: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 425790611}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &425790611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2369,7 +2370,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652142482}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
@@ -2569,15 +2570,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652142482}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 1
   highlightEffect: {fileID: 652142484}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &652142489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2878,9 +2880,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 1
-  isInteractable: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 663702232}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &663702232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3477,9 +3480,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 0
   highlightEffect: {fileID: 697594697}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &697594697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3858,15 +3862,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749917979}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 0
   highlightEffect: {fileID: 749917983}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &749917983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3874,7 +3879,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749917979}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
@@ -4298,10 +4303,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBePossessed: 1
-  isInteractable: 0
+  canBePossessed: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 787035598}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &787035598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5257,9 +5263,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 0
   highlightEffect: {fileID: 909071835}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!1 &925778724
 GameObject:
   m_ObjectHideFlags: 0
@@ -5405,9 +5412,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possessKey: 113
-  interactKey: 101
   possessableColor: {r: 1, g: 0.9801403, b: 0.1607843, a: 1}
-  interactableColor: {r: 0, g: 1, b: 0.942652, a: 1}
+  lockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   maxDistance: 15
   playerTransform: {fileID: 8313445556517066220}
 --- !u!4 &927111447
@@ -6635,10 +6641,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBePossessed: 1
-  isInteractable: 0
+  canBePossessed: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 1167528415}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &1167528415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7167,7 +7174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1322262379}
   m_Layer: 0
-  m_Name: Interactable
+  m_Name: Interactables
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7186,8 +7193,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1789879937}
   - {fileID: 663702218}
+  - {fileID: 1789879937}
   - {fileID: 787035588}
   - {fileID: 795091922}
   - {fileID: 652142481}
@@ -7520,15 +7527,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434506192}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 1
   highlightEffect: {fileID: 1434506201}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &1434506201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7536,7 +7544,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434506192}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
@@ -8180,15 +8188,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667856557}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 0
   highlightEffect: {fileID: 1597095185}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &1597095185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8196,7 +8205,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667856557}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
@@ -9038,9 +9047,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 0
   highlightEffect: {fileID: 1789879940}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!1 &1834168426
 GameObject:
   m_ObjectHideFlags: 0
@@ -9281,15 +9291,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875083842}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 0
   highlightEffect: {fileID: 1875083851}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &1875083851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9297,7 +9308,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875083842}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
@@ -9714,15 +9725,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877635391}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 0
   highlightEffect: {fileID: 1877635400}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &1877635400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9730,7 +9742,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877635391}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 

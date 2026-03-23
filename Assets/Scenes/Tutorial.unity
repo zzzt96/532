@@ -947,6 +947,7 @@ Transform:
   m_Children:
   - {fileID: 1112345370}
   - {fileID: 1974302176}
+  - {fileID: 1763951437}
   - {fileID: 837286986}
   - {fileID: 1334188779}
   - {fileID: 1393034933}
@@ -1342,6 +1343,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 837286986}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &870121931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 870121932}
+  m_Layer: 0
+  m_Name: hitPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &870121932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870121931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.461, y: 0.062, z: -0.004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1112345370}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &927111445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,11 +1404,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possessKey: 113
-  interactKey: 101
   possessableColor: {r: 1, g: 0.9801403, b: 0.1607843, a: 1}
-  interactableColor: {r: 0, g: 1, b: 0.942652, a: 1}
+  lockedColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
   maxDistance: 15
-  playerTransform: {fileID: 0}
+  playerTransform: {fileID: 751791441}
 --- !u!4 &927111447
 Transform:
   m_ObjectHideFlags: 0
@@ -1699,7 +1730,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4372384554928229373, guid: d0bcd4883263d2f48adb4a951ac9a1a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 870121932}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4243634849996484649, guid: d0bcd4883263d2f48adb4a951ac9a1a4, type: 3}
       insertIndex: -1
@@ -1931,10 +1965,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7dfae7f6dacb44babfdca0fd21bd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBePossessed: 1
-  isInteractable: 0
+  canBePossessed: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 1112345367}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &1112345369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1954,11 +1989,13 @@ MonoBehaviour:
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
   moveSpeed: 3
-  jumpForce: 5
   minX: -26
   maxX: -22
   minZ: -3
   maxZ: 2
+  targetBall: {fileID: 1974302180}
+  hitDistance: 0.8
+  hitPoint: {fileID: 870121932}
 --- !u!4 &1112345370 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4372384554928229373, guid: d0bcd4883263d2f48adb4a951ac9a1a4, type: 3}
@@ -2119,6 +2156,7 @@ MonoBehaviour:
   tutorialCat: {fileID: 161156280}
   catTargetPoint: {fileID: 700685685}
   textHideDelay: 3
+  autoAdvanceDelay: 4
   exitZone: {fileID: 41921755}
 --- !u!1 &1689267009
 GameObject:
@@ -2228,6 +2266,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689267009}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1763951436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1763951437}
+  m_Layer: 0
+  m_Name: TableEdgeTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1763951437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763951436}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -27.92, y: 2.6586509, z: 2.3139834}
+  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 518527616}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1913689727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,6 +2500,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 518527616}
     m_Modifications:
     - target: {fileID: -791209441160922991, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
+      propertyPath: m_Size.x
+      value: 0.12000203
+      objectReference: {fileID: 0}
+    - target: {fileID: -791209441160922991, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
+      propertyPath: m_Center.x
+      value: 0.015788436
+      objectReference: {fileID: 0}
+    - target: {fileID: -791209441160922991, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -2456,7 +2533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1958666109943891209, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.3139834
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1958666109943891209, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2731,9 +2808,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isInteractable: 1
+  isPossessableObject: 1
   highlightEffect: {fileID: 1974302178}
   isCurrentlyPossessed: 0
+  isCompleted: 0
 --- !u!114 &1974302180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2746,10 +2824,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea663a09cc7c2364aaceb93be97fbda9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBePossessed: 1
+  isPossessed: 0
+  useXOnlyDetection: 0
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  possessColor: {r: 0, g: 1, b: 1, a: 1}
+  cameraYOffset: 0
   tutorialManager: {fileID: 1393034934}
+  tableEdgeTarget: {fileID: 1763951437}
   basketTarget: {fileID: 842093849}
-  flyDuration: 0.8
+  rollDuration: 1.2
+  jumpForce: 6
   arcHeight: 1.5
+  jumpDuration: 0.8
+  basketRadius: 0.6
 --- !u!1 &2079967448
 GameObject:
   m_ObjectHideFlags: 0

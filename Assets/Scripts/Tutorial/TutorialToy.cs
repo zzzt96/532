@@ -4,7 +4,6 @@ public class TutorialToy : ToyBase
 {
     [Header("Tutorial Movement")]
     public float moveSpeed = 3f;
-    public float jumpForce = 5f; // ��Ծ����
 
     [Header("Movement Bounds")]
     public float minX = -5f;
@@ -12,50 +11,43 @@ public class TutorialToy : ToyBase
     public float minZ = -5f;
     public float maxZ = 5f;
 
-    private bool isJumping = false;
-    private float startY;
+    [Header("Hit Detection")]
+    public TutorialBall targetBall;
+    public float hitDistance = 0.8f;
+    public Transform hitPoint; 
+
+    private bool hasHit = false;
 
     protected override void Start()
     {
         base.Start();
         canBePossessed = true;
         useXOnlyDetection = true;
-        startY = transform.position.y;
     }
 
     public override void ToyUpdate()
     {
-        // ==== ������Ծ ====
-        if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
+        // 检测是否撞到球（距离判断，不靠物理）
+        if (!hasHit && targetBall != null)
         {
-            isJumping = true;
-            if (rb != null)
+            Vector3 checkPos = hitPoint != null ? hitPoint.position : transform.position;
+            float dist = Vector2.Distance(
+                new Vector2(checkPos.x, checkPos.z),
+                new Vector2(targetBall.transform.position.x, targetBall.transform.position.z)
+            );
+
+            if (dist <= hitDistance)
             {
-                // ��������и��壬ʹ�ø�����Ծ
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                hasHit = true;
+                targetBall.OnHitByTrain();
+
+                // 火车任务完成，标记不可再附身
+                GetComponent<InteractableTag>()?.SetCompleted();
+                Debug.Log("[TutorialToy] Hit ball!");
             }
         }
 
-        // ���û�и��壬�ü򵥵Ĵ���ģ����Ծ����
-        if (rb == null && isJumping)
-        {
-            transform.position += Vector3.up * jumpForce * Time.deltaTime;
-            if (transform.position.y > startY + 2f) jumpForce = -Mathf.Abs(jumpForce); // �ﵽ���������
-            if (transform.position.y <= startY && jumpForce < 0)
-            {
-                Vector3 resetPos = transform.position;
-                resetPos.y = startY;
-                transform.position = resetPos;
-                isJumping = false;
-                jumpForce = Mathf.Abs(jumpForce); // �ָ���ʼ����
-            }
-        }
-        else if (rb != null && Mathf.Abs(rb.linearVelocity.y) < 0.01f)
-        {
-            isJumping = false; // ������ؼ��
-        }
-
-        // ==== ���� WASD �ƶ� ====
+        // WASD 移动
         float moveX = 0f;
         float moveZ = 0f;
 

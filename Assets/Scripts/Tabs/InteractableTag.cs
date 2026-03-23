@@ -4,15 +4,15 @@ using HighlightPlus;
 
 public class InteractableTag : MonoBehaviour
 {
-    [Header("×´Ì¬ÅäÖÃ (¶àÑ¡Ò»»ò¶¼Ñ¡)")]
+    [Header("State")]
     public bool canBePossessed = false;
-    public bool isInteractable = true;
+    public bool isPossessableObject = false;
 
-    [Header("±ØĞëÍÏÈë¸ÃÎïÌåÉÏµÄ Highlight Effect ×é¼ş")]
+    [Header("Highlight Effect")]
     public HighlightEffect highlightEffect;
 
-    // ¼ÇÂ¼ÊÇ·ñÕıÔÚ±»Íæ¼Ò¸½Éí£¨ÓÉ PlayerController ¿ØÖÆ£©
     [HideInInspector] public bool isCurrentlyPossessed = false;
+    [HideInInspector] public bool isCompleted = false;
 
     public static readonly List<InteractableTag> All = new List<InteractableTag>();
 
@@ -27,11 +27,20 @@ public class InteractableTag : MonoBehaviour
         if (highlightEffect != null) highlightEffect.SetHighlighted(false);
     }
 
-    // ĞÂÔö£ºÓÉ PlayerController µ÷ÓÃ£¬Ç¿ÖÆËø¶¨»ò½âËø¸½ÉíµÄ¸ßÁÁ×´Ì¬
+    public void SetCompleted()
+    {
+        isCompleted = true;
+        canBePossessed = false;
+    
+        // åŒæ­¥ToyBase(ç”±PlayerControlleråˆ¤æ–­)ï¼Œé˜»æ­¢ç©å®¶å®é™…é™„èº«ï¼Œå’Œè¿™ä¸ªè„šæœ¬é‡Œçš„InteractableTag.canBePossessedæ˜¯ä¸¤ä¸ªç‹¬ç«‹å­—æ®µ
+        ToyBase toy = GetComponent<ToyBase>();
+        if (toy != null) toy.canBePossessed = false;
+        if (highlightEffect != null) highlightEffect.SetHighlighted(false);
+    }
+    
     public void SetPossessedState(bool state, Color possessColor)
     {
         isCurrentlyPossessed = state;
-
         if (highlightEffect == null) return;
 
         if (state)
@@ -41,33 +50,29 @@ public class InteractableTag : MonoBehaviour
         }
         else
         {
-            // ½â³ı¸½ÉíÊ±£¬ÏÈ°ÑËü¹Øµô£¬ÏÂÒ»Ö¡Èç¹ûÍæ¼Ò»¹°´×ÅQ/E£¬TabHighlighter»áÖØĞÂ½Ó¹ÜËü
             highlightEffect.SetHighlighted(false);
         }
     }
 
-    // ½ÓÊÕ¹ÜÀíÆ÷´«À´µÄ°´¼ü×´Ì¬ºÍÑÕÉ«
-    public void UpdateHighlight(bool isQPressed, bool isEPressed, Color possessColor, Color interactColor)
+    public void UpdateHighlight(bool isQPressed, Color possessColor, Color lockedColor)
     {
         if (highlightEffect == null) return;
-
-        // ¡¾ºËĞÄĞŞ¸Ä¡¿£ºÈç¹ûÕıÔÚ±»¸½Éí£¬Ö±½ÓÎŞÊÓ°´¼ü×´Ì¬£¬±£³Ö³£ÁÁ£¬²»Ö´ĞĞÏÂÃæµÄÂß¼­
         if (isCurrentlyPossessed) return;
 
-        bool shouldShowPossess = isQPressed && canBePossessed;
-        bool shouldShowInteract = isEPressed && isInteractable;
-
-        if (shouldShowPossess || shouldShowInteract)
+        if (isCompleted || !isQPressed)
         {
-            if (shouldShowPossess)
-            {
-                highlightEffect.outlineColor = possessColor;
-            }
-            else if (shouldShowInteract)
-            {
-                highlightEffect.outlineColor = interactColor;
-            }
+            highlightEffect.SetHighlighted(false);
+            return;
+        }
 
+        if (canBePossessed)
+        {
+            highlightEffect.outlineColor = possessColor;
+            highlightEffect.SetHighlighted(true);
+        }
+        else if (isPossessableObject)
+        {
+            highlightEffect.outlineColor = lockedColor;
             highlightEffect.SetHighlighted(true);
         }
         else

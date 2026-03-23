@@ -1,57 +1,112 @@
 using UnityEngine;
 using System.Collections;
 
-public class TutorialBall : MonoBehaviour
+public class TutorialBall : ToyBase
 {
     [Header("References")]
     public TutorialManager tutorialManager;
-    public Transform basketTarget;   // Àº×ÓÖĞĞÄµÄÄ¿±êµã (Empty GameObject)
+    public Transform tableEdgeTarget;   // æ¡Œå­è¾¹ç¼˜çš„Empty GameObject
+    public Transform basketTarget;      // ç¯®å­ä¸­å¿ƒçš„Empty GameObject
 
-    [Header("Animation Settings")]
-    public float flyDuration = 0.8f; // ·É½øÀº×ÓĞèÒª¼¸Ãë
-    public float arcHeight = 1.5f;   // Å×ÎïÏßµÄ¸ß¶È
+    [Header("Roll to Edge")]
+    public float rollDuration = 0.8f;   // æ»šåˆ°æ¡Œå­è¾¹ç¼˜çš„æ—¶é—´
 
-    private bool hasBeenHit = false;
+    [Header("Jump into Basket")]
+    public float jumpForce = 6f;        // Spaceé”®è·³è·ƒåŠ›åº¦ï¼ˆçº¯è„šæœ¬æ¨¡æ‹Ÿï¼‰
+    public float arcHeight = 2f;        // è·³è·ƒæœ€é«˜ç‚¹
+    public float jumpDuration = 0.8f;   // è·³è·ƒåŠ¨ç”»æ—¶é•¿
+    public float basketRadius = 0.6f;   // å¤šè¿‘ç®—è¿›ç¯®å­
 
-    void OnTriggerEnter(Collider other)
+    private bool isRolling = false;
+    private bool isJumping = false;
+    private bool inBasket = false;
+
+    protected override void Start()
     {
-        if (hasBeenHit) return;
+        base.Start();
+        canBePossessed = false; // è¢«æ’åæ‰èƒ½é™„èº«
+    }
 
-        // Ö»ÒªÅöµ½µÄÎïÌåÉÏÓĞ TutorialToy ½Å±¾£¬¾Í´¥·¢£¡
-        if (other.GetComponent<TutorialToy>() != null)
+    // ç”± TutorialToy åœ¨è·ç¦»è¶³å¤Ÿè¿‘æ—¶è°ƒç”¨
+    public void OnHitByTrain()
+    {
+        if (isRolling) return;
+        StartCoroutine(RollToEdge());
+    }
+
+    IEnumerator RollToEdge()
+    {
+        isRolling = true;
+        Vector3 startPos = transform.position;
+        Vector3 endPos = tableEdgeTarget.position;
+        float elapsed = 0f;
+
+        Debug.Log("[TutorialBall] Rolling to edge...");
+
+        while (elapsed < rollDuration)
         {
-            hasBeenHit = true;
-            StartCoroutine(FlyToBasket());
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / rollDuration); // ä¸æ»‘ç¼“å…¥ç¼“å‡º
+            transform.position = Vector3.Lerp(startPos, endPos, t);
+            yield return null;
+        }
+
+        transform.position = endPos;
+        isRolling = false;
+
+        // åˆ°è¾¾æ¡Œè¾¹åï¼Œå¼€æ”¾é™„èº«
+        canBePossessed = true;
+        Debug.Log("[TutorialBall] Reached edge, now possessable!");
+    }
+
+    // é™„èº«åç©å®¶æ§åˆ¶
+    public override void ToyUpdate()
+    {
+        if (isJumping || inBasket) return;
+
+        // Spaceé”®è·³å‘ç¯®å­
+        if (Input.GetKeyDown(KeyCode.Space) && basketTarget != null)
+        {
+            StartCoroutine(JumpToBasket());
         }
     }
 
-    IEnumerator FlyToBasket()
+    IEnumerator JumpToBasket()
     {
+        isJumping = true;
+        canBePossessed = false;
+
         Vector3 startPos = transform.position;
         Vector3 endPos = basketTarget.position;
         float elapsed = 0f;
 
-        while (elapsed < flyDuration)
+        Debug.Log("[TutorialBall] Jumping to basket!");
+
+        while (elapsed < jumpDuration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / flyDuration;
+            float t = elapsed / jumpDuration;
 
-            // ÏßĞÔÒÆ¶¯ X ºÍ Z
-            Vector3 currentPos = Vector3.Lerp(startPos, endPos, t);
+            Vector3 pos = Vector3.Lerp(startPos, endPos, t);
+            pos.y += Mathf.Sin(t * Mathf.PI) * arcHeight; // æŠ›ç‰©çº¿
+            transform.position = pos;
 
-            // Ê¹ÓÃ Sin º¯ÊıÎª Y ÖáÌí¼ÓÍêÃÀµÄÅ×ÎïÏß¸ß¶È
-            currentPos.y += Mathf.Sin(t * Mathf.PI) * arcHeight;
-
-            transform.position = currentPos;
             yield return null;
         }
 
-        transform.position = endPos; // È·±£¾«×¼ÂäÈë
+        transform.position = endPos;
+        isJumping = false;
+        inBasket = true;
 
-        // ¸æËß¹ÜÀíÆ÷£ºÇò½øÀ²£¡
+        // é€šçŸ¥å®Œæˆ
+        GetComponent<InteractableTag>()?.SetCompleted();
+
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null) player.ExitPossess();
+
         if (tutorialManager != null)
-        {
             tutorialManager.OnBallInBasket();
-        }
+
+        Debug.Log("[TutorialBall] In basket!");
     }
 }

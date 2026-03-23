@@ -32,6 +32,9 @@ public class Ball : ToyBase
     private bool isJumping = false;
     private float startY;
     private float jumpProgress = 0f;
+    
+    private bool lineIronDone = false;
+    private bool linePotDone = false;
 
     protected override void Start()
     {
@@ -66,6 +69,26 @@ public class Ball : ToyBase
         pos.y = fixedY;
         pos.z = Mathf.Clamp(pos.z, minZ, maxZ);
         transform.position = pos;
+    }
+    
+    
+    // 小球的两条线都完成之后小球才会彻底不能被再附身
+    public void SetIronLineDone()
+    {
+        lineIronDone = true;
+        CheckBothLinesDone();
+    }
+
+    public void SetPotLineDone()
+    {
+        linePotDone = true;
+        CheckBothLinesDone();
+    }
+
+    void CheckBothLinesDone()
+    {
+        if (lineIronDone && linePotDone)
+            GetComponent<InteractableTag>()?.SetCompleted();
     }
 
     void StartJump()
@@ -174,6 +197,7 @@ public class Ball : ToyBase
             other.gameObject.SendMessage("ActivateBunnyInternal", SendMessageOptions.DontRequireReceiver);
             other.gameObject.SendMessage("Activate", SendMessageOptions.DontRequireReceiver);
             Debug.Log("[Ball] Hit iron hanger!");
+            SetIronLineDone();
         }
     }
 }

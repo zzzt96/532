@@ -82,6 +82,7 @@ public class ToyRocket : ToyBase
 
             clock.TriggerAlarm();
             Debug.Log("[ToyRocket] HIT CLOCK! Alarm triggered!");
+            GetComponent<InteractableTag>()?.SetCompleted();
         }
     }
 
