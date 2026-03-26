@@ -70,8 +70,10 @@ public class CatNPC : MonoBehaviour
     public Transform rockingChairPosition;  // 摇椅落点
     public Transform albumBoxPosition;      // 木箱落点
     public Drawer drawerRef;                // 抽屉脚本引用、[Header("Level 2 References")]
+    
     public Transform tableEdgeGroundPos; 
-
+    public Transform catFanTablePosition; // 猫在风扇桌上的准确位置
+    
     // ─── 私有状态 ──────────────────────────────────────────────
     private Vector3 targetPos;
     private bool isMoving = false;
@@ -180,19 +182,35 @@ public class CatNPC : MonoBehaviour
 
     public void GoToRockingChair()
     {
-        if (rockingChairPosition == null) return;
+        if (rockingChairPosition == null || tableEdgeGroundPos == null) return;
 
-        // 第一步：走到桌子边缘
+        float groundY = tableEdgeGroundPos.position.y;
+        float tableY  = catFanTablePosition != null 
+            ? catFanTablePosition.position.y 
+            : transform.position.y;
+
+        // 先强制修正猫的Y到桌面高度
+        Vector3 corrected = transform.position;
+        corrected.y = tableY;
+        transform.position = corrected;
+
+        // 第一步：走到桌边
         SetWalkTarget(
-            new Vector3(tableEdgeGroundPos.position.x, transform.position.y, transform.position.z),
+            new Vector3(tableEdgeGroundPos.position.x, tableY, transform.position.z),
             CatState.WalkToChair,
             () => {
-                // 第二步：跳下桌到地面
-                StartCoroutine(DoJump(transform.position, tableEdgeGroundPos.position, CatState.JumpOnChair, () =>
+                // 第二步：跳到地面
+                Vector3 groundPos = new Vector3(tableEdgeGroundPos.position.x, groundY, transform.position.z);
+                StartCoroutine(DoJump(transform.position, groundPos, CatState.JumpOnChair, () =>
                 {
+                    // 强制锁定Y到地面
+                    Vector3 p = transform.position;
+                    p.y = groundY;
+                    transform.position = p;
+
                     // 第三步：走到摇椅
                     SetWalkTarget(
-                        new Vector3(rockingChairPosition.position.x, transform.position.y, transform.position.z),
+                        new Vector3(rockingChairPosition.position.x, groundY, transform.position.z),
                         CatState.WalkToChair,
                         () => {
                             currentState = CatState.SitOnChair;
@@ -208,8 +226,18 @@ public class CatNPC : MonoBehaviour
     public void GoToAlbumBox()
     {
         if (albumBoxPosition == null) return;
+
+        float groundY = tableEdgeGroundPos != null 
+            ? tableEdgeGroundPos.position.y 
+            : transform.position.y;
+
+        // 强制修正Y到地面
+        Vector3 corrected = transform.position;
+        corrected.y = groundY;
+        transform.position = corrected;
+
         SetWalkTarget(
-            new Vector3(albumBoxPosition.position.x, transform.position.y, transform.position.z),
+            new Vector3(albumBoxPosition.position.x, groundY, transform.position.z),
             CatState.WalkToBox,
             () => StartCoroutine(DoJump(transform.position, SafePos(albumBoxPosition), CatState.JumpOnBox, () =>
             {

@@ -9,12 +9,10 @@ public class AlbumBox : MonoBehaviour
 {
     [Header("Album")]
     public GameObject album;
-    [Tooltip("相册掉落的目标位置（地面空物体）")]
     public Transform albumDropTarget;
     public float dropDuration = 0.5f;
 
     [Header("Girl Final Position")]
-    [Tooltip("小女孩走过来坐下的位置")]
     public Transform girlFinalPosition;
 
     private bool albumDropped = false;
@@ -45,8 +43,7 @@ public class AlbumBox : MonoBehaviour
         }
         album.transform.position = end;
         Debug.Log("[AlbumBox] Album dropped!");
-
-        // 女孩走到相册位置
+        
         var girl = Level2Manager.Instance?.littleGirl;
         if (girl != null && girlFinalPosition != null)
         {

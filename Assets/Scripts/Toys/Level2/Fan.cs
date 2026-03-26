@@ -10,6 +10,7 @@ public class Fan : ToyBase
     [Header("Fan Blades")]
     public Transform fanBlades;
     public float bladeSpinSpeed = 360f;
+    public Transform fanCenter;
 
     [Header("Toilet Paper")]
     public GameObject toiletPaper;
@@ -18,7 +19,6 @@ public class Fan : ToyBase
     public float blowHoldTime = 0.8f;
 
     [Header("Toilet Paper Landing")]
-    [Tooltip("厕纸滚落的目标位置（放在第一本书旁边的空物体）")]
     public Transform toiletPaperLandTarget;
     public float rollDuration = 0.6f;
     public float fallDuration = 0.4f;
@@ -41,10 +41,9 @@ public class Fan : ToyBase
 
     void Update()
     {
-        if (isOn && fanBlades != null)
-            fanBlades.Rotate(Vector3.left,bladeSpinSpeed * Time.deltaTime, Space.Self); // 加了 Space.Self 确保绕自身轴旋转
+        if (isOn && fanBlades != null && fanCenter != null)
+            fanBlades.RotateAround(fanCenter.position, Vector3.left, bladeSpinSpeed * Time.deltaTime);
     }
-
     public override void ToyUpdate()
     {
         if (!isOn || blowTriggered) return;
