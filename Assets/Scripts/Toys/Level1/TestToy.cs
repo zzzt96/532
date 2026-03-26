@@ -44,8 +44,8 @@ public class TestToy : ToyBase
         LittleGirlController girl = FindObjectOfType<LittleGirlController>();
         if (girl != null)
         {
-            girl.UnlockMovement();
-            Debug.Log("Unlocked girl movement!");
+            //girl.UnlockMovement();
+            //Debug.Log("Unlocked girl movement!");
         }
     }
 }
