@@ -8,8 +8,8 @@ using System.Collections;
 public class RockingChair : MonoBehaviour
 {
     [Header("Rocking")]
-    public float rockAngle = 8f;
-    public float rockSpeed = 1.5f;
+    public float rockAngle = 4f;
+    public float rockSpeed = 1f;
     public float rockDuration = 3f;
 
     private bool isRocking = false;
