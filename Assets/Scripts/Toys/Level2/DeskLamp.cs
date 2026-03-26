@@ -1,9 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// 台灯 - 玩家附身后 AD 键旋转灯的方向
-/// 光照角度落入木箱区域并持续一段时间后，吸引猫跳上木箱
-/// 逻辑和 Mirror.cs 相同，但是台灯（点光源而非反射）
+/// 台灯 - 玩家附身后 AD 键旋转
+/// 旋转基于初始朝向叠加，不会附身瞬间跳位
+/// 附身时光束激活，照到纸盒子区域持续一段时间后猫跳上去
 /// </summary>
 public class DeskLamp : ToyBase
 {
@@ -16,21 +16,24 @@ public class DeskLamp : ToyBase
     [Tooltip("台灯的 SpotLight 子物体，附身时打开")]
     public Light lampSpotLight;
 
+    [Header("Lamp Beam")]
+    [Tooltip("光束子物体（和MirrorBeam同款），默认inactive，附身时激活")]
+    public GameObject lampBeam;
+
     [Header("Album Box Zone")]
-    [Tooltip("灯照到木箱时的 Z 旋转角度下限")]
     public float boxAngleMin = -65f;
-    [Tooltip("灯照到木箱时的 Z 旋转角度上限")]
     public float boxAngleMax = -25f;
-    [Tooltip("需要持续照射多少秒才触发")]
     public float holdTimeRequired = 0.8f;
 
     private float currentAngle = 0f;
     private float holdTimer = 0f;
     private bool triggered = false;
+    private Quaternion initialRotation;
 
-    // 默认不可附身，由 Level2Manager 在合适时机解锁
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+        initialRotation = transform.localRotation; // 记录初始朝向
         canBePossessed = false;
     }
 
@@ -38,6 +41,7 @@ public class DeskLamp : ToyBase
     {
         base.Possess();
         if (lampSpotLight != null) lampSpotLight.enabled = true;
+        if (lampBeam != null) lampBeam.SetActive(true);
     }
 
     public override void ToyUpdate()
@@ -50,8 +54,10 @@ public class DeskLamp : ToyBase
 
         currentAngle += input * rotateSpeed * Time.deltaTime;
         currentAngle = Mathf.Clamp(currentAngle, minAngle, maxAngle);
-        transform.rotation = Quaternion.Euler(0f, 0f, currentAngle);
 
+        // 基于初始朝向叠加旋转，不覆盖原始角度
+        transform.localRotation = initialRotation * Quaternion.Euler(0f, currentAngle, 0f);
+    
         bool inZone = currentAngle >= boxAngleMin && currentAngle <= boxAngleMax;
         holdTimer = inZone ? holdTimer + Time.deltaTime : 0f;
 
@@ -60,8 +66,7 @@ public class DeskLamp : ToyBase
             triggered = true;
             canBePossessed = false;
             GetComponent<InteractableTag>()?.SetCompleted();
-            Debug.Log("[Lamp] Light on box! Attracting cat.");
-            // 直接驱动猫，不经过 Level2Manager（猫是 Level2Manager 的引用）
+            Debug.Log("[Lamp] Light on box! Cat jumping.");
             Level2Manager.Instance?.cat?.GoToAlbumBox();
         }
     }

@@ -2,21 +2,23 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 木箱 + 相册 - 猫跳上来后相册掉落
-/// 相册落地后女孩走过来捡起，触发关卡结束
+/// 木箱+相册 - 猫跳上来后相册掉落
+/// 相册落地 → 女孩走过来捡起 → 关卡结束
 /// </summary>
 public class AlbumBox : MonoBehaviour
 {
     [Header("Album")]
-    [Tooltip("相册 GameObject")]
     public GameObject album;
-    [Tooltip("相册掉落的目标位置（地面上的空物体）")]
+    [Tooltip("相册掉落的目标位置（地面空物体）")]
     public Transform albumDropTarget;
-    public float dropDuration = 0.6f;
+    public float dropDuration = 0.5f;
+
+    [Header("Girl Final Position")]
+    [Tooltip("小女孩走过来坐下的位置")]
+    public Transform girlFinalPosition;
 
     private bool albumDropped = false;
 
-    /// <summary>由 Level2Manager.OnCatOnAlbumBox() 调用</summary>
     public void DropAlbum()
     {
         if (albumDropped || album == null) return;
@@ -36,15 +38,30 @@ public class AlbumBox : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = elapsed / dropDuration;
-            // 轻微弧线掉落
             Vector3 pos = Vector3.Lerp(start, end, t);
-            pos.y += Mathf.Sin(t * Mathf.PI) * 0.1f;
+            pos.y += Mathf.Sin(t * Mathf.PI) * 0.15f; // 轻微弧线
             album.transform.position = pos;
             yield return null;
         }
         album.transform.position = end;
         Debug.Log("[AlbumBox] Album dropped!");
 
-        // 女孩走到相册位置坐下（由 Level2Manager 里的 onArrival 回调处理）
+        // 女孩走到相册位置
+        var girl = Level2Manager.Instance?.littleGirl;
+        if (girl != null && girlFinalPosition != null)
+        {
+            // 关闭跟随模式，走到指定位置坐下
+            girl.followCatMode = false;
+            girl.StartMovingTo(girlFinalPosition, onArrival: () =>
+            {
+                girl.SitDown();
+                Debug.Log("[Girl] Picked up album. Level complete!");
+                Level2Manager.Instance?.OnLevelComplete();
+            });
+        }
+        else
+        {
+            Level2Manager.Instance?.OnLevelComplete();
+        }
     }
 }

@@ -2,85 +2,108 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 气球 - 玩家附身后按 E/Space 晃动
-/// 晃动满次数后，挂着的物体掉落到风扇开关位置，触发风扇启动
-/// 和 Level 1 的 IvyPlant 晃动逻辑相同
+/// 紫色气球 - 玩家附身后用AD左右移动
+/// 移动碰到白色气球触发碰撞 → 吸引猫跳起 → cube掉落到风扇
 /// </summary>
 public class Balloon : ToyBase
 {
-    [Header("Shake")]
-    public float shakeAngle = 20f;
-    public float shakeDuration = 0.35f;
-    [Tooltip("需要晃动几次才触发掉落")]
-    public int requiredShakes = 2;
+    [Header("WASD Movement")]
+    public float moveSpeed = 3f;
+    [Tooltip("左右移动范围（相对于初始位置）")]
+    public float moveRangeX = 3f;
 
-    [Header("Hanging Object")]
-    [Tooltip("气球下方挂着的物体，满次数后掉落")]
-    public GameObject hangingObject;
-    [Tooltip("掉落的目标位置（风扇开关上方的空物体）")]
-    public Transform dropTarget;
+    [Header("White Balloon Trigger")]
+    [Tooltip("白色气球的位置（空物体放在白气球处）")]
+    public Transform whiteBalloonTrigger;
+    [Tooltip("触发距离：紫气球离白气球多近时触发")]
+    public float triggerDistance = 1.0f;
+
+    [Header("Hanging Cube")]
+    [Tooltip("白色气球下挂的cube")]
+    public GameObject hangingCube;
+    [Tooltip("cube掉落目标位置（风扇开关上方）")]
+    public Transform cubeDropTarget;
     public float dropDuration = 0.5f;
 
-    private int shakeCount = 0;
-    private bool isShaking = false;
-    private bool dropped = false;
+    [Header("Cat Landing")]
+    [Tooltip("猫腾空后落在风扇桌上的位置")]
+    public Transform catLandingPosition;
+
+    private bool triggered = false;
+    private Vector3 startPosition;
+
+    protected override void Start()
+    {
+        base.Start();
+        startPosition = transform.position;
+    }
 
     public override void ToyUpdate()
     {
-        if (dropped || isShaking) return;
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E))
-            StartCoroutine(ShakeRoutine());
-    }
+        if (triggered) return;
 
-    IEnumerator ShakeRoutine()
-    {
-        isShaking = true;
-        float elapsed = 0f;
+        float input = 0f;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  input = 1f;
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) input = -1f;
 
-        while (elapsed < shakeDuration)
+        Vector3 pos = transform.position;
+        pos.x += input * moveSpeed * Time.deltaTime;
+        pos.x = Mathf.Clamp(pos.x, startPosition.x - moveRangeX, startPosition.x + moveRangeX);
+        transform.position = pos;
+
+        // 检测是否碰到白气球
+        if (whiteBalloonTrigger != null)
         {
-            elapsed += Time.deltaTime;
-            float angle = Mathf.Sin((elapsed / shakeDuration) * Mathf.PI * 2f) * shakeAngle;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle);
-            yield return null;
-        }
-        transform.rotation = Quaternion.identity;
-        isShaking = false;
-        shakeCount++;
+            float dist = Vector2.Distance(
+                new Vector2(transform.position.x, transform.position.y),
+                new Vector2(whiteBalloonTrigger.position.x, whiteBalloonTrigger.position.y)
+            );
 
-        Debug.Log($"[Balloon] Shake {shakeCount}/{requiredShakes}");
-
-        if (shakeCount >= requiredShakes)
-        {
-            dropped = true;
-            canBePossessed = false;
-            GetComponent<InteractableTag>()?.SetCompleted();
-            StartCoroutine(DropHangingObject());
+            if (dist <= triggerDistance)
+            {
+                triggered = true;
+                canBePossessed = false;
+                GetComponent<InteractableTag>()?.SetCompleted();
+                Debug.Log("[Balloon] Hit white balloon!");
+                StartCoroutine(TriggerSequence());
+            }
         }
     }
-
-    IEnumerator DropHangingObject()
+    
+    IEnumerator TriggerSequence()
     {
-        if (hangingObject == null || dropTarget == null)
+        var cat = Level2Manager.Instance?.cat;
+        if (cat != null && catLandingPosition != null)
+            cat.JumpToPosition(catLandingPosition);
+
+        // 等猫跳到最高点（jumpDuration的一半）触发cube掉落
+        float halfJump = cat != null ? cat.jumpDuration * 0.6f : 0.3f;
+        yield return new WaitForSeconds(halfJump);
+        StartCoroutine(DropCube());
+    }
+    
+    IEnumerator DropCube()
+    {
+        if (hangingCube == null || cubeDropTarget == null)
         {
-            Debug.LogWarning("[Balloon] hangingObject or dropTarget not assigned!");
+            Debug.LogWarning("[Balloon] hangingCube or cubeDropTarget not assigned!");
             Level2Manager.Instance?.OnBalloonTriggeredFan();
             yield break;
         }
 
-        hangingObject.transform.SetParent(null);
-        Vector3 startPos = hangingObject.transform.position;
+        hangingCube.transform.SetParent(null);
+        Vector3 startPos = hangingCube.transform.position;
         float elapsed = 0f;
 
         while (elapsed < dropDuration)
         {
             elapsed += Time.deltaTime;
-            hangingObject.transform.position = Vector3.Lerp(startPos, dropTarget.position, elapsed / dropDuration);
+            hangingCube.transform.position = Vector3.Lerp(startPos, cubeDropTarget.position, elapsed / dropDuration);
             yield return null;
         }
-        hangingObject.transform.position = dropTarget.position;
+        hangingCube.transform.position = cubeDropTarget.position;
 
-        Debug.Log("[Balloon] Object hit fan switch!");
+        Debug.Log("[Balloon] Cube hit fan!");
         Level2Manager.Instance?.OnBalloonTriggeredFan();
     }
 }

@@ -44,4 +44,12 @@ public class Drawer : MonoBehaviour
         Debug.Log("[Drawer] Opened! Notifying Level2Manager.");
         Level2Manager.Instance?.OnDrawerOpened();
     }
+    
+    // 猫跳上来压开抽屉
+    public void OpenByWeight()
+    {
+        if (isOpen) return;
+        isOpen = true;
+        StartCoroutine(OpenRoutine());
+    }
 }

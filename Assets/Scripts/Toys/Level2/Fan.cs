@@ -1,36 +1,48 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 风扇 - 由气球开关触发启动，玩家随后附身
-/// AD 键控制风扇头左右摇摆，摇到触发角度时吹倒目标物体
-/// </summary>
 public class Fan : ToyBase
 {
     [Header("Fan Head")]
-    [Tooltip("风扇头部的子Transform，摇摆时旋转它（Y轴）")]
-    public Transform fanHead;
     public float headRotateSpeed = 50f;
-    [Tooltip("摇头最大角度（左右各这么多度）")]
-    public float maxHeadAngle = 50f;
+    public float maxHeadAngle = 200f;
 
-    [Header("Blow Target")]
-    [Tooltip("被吹倒的物体，需要有 Rigidbody")]
-    public Rigidbody blowTarget;
-    [Tooltip("吹力方向（世界空间，通常 Vector3.left）")]
-    public Vector3 blowDirection = Vector3.left;
-    public float blowForce = 6f;
-    [Tooltip("摇头到达这个角度后触发吹倒（通常设为 maxHeadAngle 的 60-80%）")]
-    public float triggerHeadAngle = 35f;
+    [Header("Fan Blades")]
+    public Transform fanBlades;
+    public float bladeSpinSpeed = 360f;
+
+    [Header("Toilet Paper")]
+    public GameObject toiletPaper;
+    public float blowAngle = -180f;
+    public float angleTolerance = 15f;
+    public float blowHoldTime = 0.8f;
+
+    [Header("Toilet Paper Landing")]
+    [Tooltip("厕纸滚落的目标位置（放在第一本书旁边的空物体）")]
+    public Transform toiletPaperLandTarget;
+    public float rollDuration = 0.6f;
+    public float fallDuration = 0.4f;
+
+    [Header("Domino Chain")]
+    public DominoChain dominoChain;
 
     private bool isOn = false;
     private float currentHeadAngle = 0f;
     private bool blowTriggered = false;
+    private float blowTimer = 0f;
+    private Quaternion initialRotation;
 
-    // 风扇默认不可附身，开关触发后再解锁
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+        initialRotation = transform.localRotation;
         canBePossessed = false;
+    }
+
+    void Update()
+    {
+        if (isOn && fanBlades != null)
+            fanBlades.Rotate(Vector3.left,bladeSpinSpeed * Time.deltaTime, Space.Self); // 加了 Space.Self 确保绕自身轴旋转
     }
 
     public override void ToyUpdate()
@@ -43,33 +55,76 @@ public class Fan : ToyBase
 
         currentHeadAngle += input * headRotateSpeed * Time.deltaTime;
         currentHeadAngle = Mathf.Clamp(currentHeadAngle, -maxHeadAngle, maxHeadAngle);
+        transform.localRotation = initialRotation * Quaternion.Euler(0f, currentHeadAngle, 0f);
 
-        if (fanHead != null)
-            fanHead.localRotation = Quaternion.Euler(0f, currentHeadAngle, 0f);
+        bool aimed = Mathf.Abs(currentHeadAngle - blowAngle) <= angleTolerance;
+        blowTimer = aimed ? blowTimer + Time.deltaTime : 0f;
 
-        if (Mathf.Abs(currentHeadAngle) >= triggerHeadAngle)
+        if (blowTimer >= blowHoldTime)
         {
             blowTriggered = true;
-            TriggerBlow();
+            canBePossessed = false;
+            GetComponent<InteractableTag>()?.SetCompleted();
+            StartCoroutine(BlowToiletPaper());
         }
     }
 
-    /// <summary>由 Level2Manager 在气球触发后调用</summary>
     public void TurnOn()
     {
         isOn = true;
-        // TODO: 播放风扇旋转音效/视觉
         Debug.Log("[Fan] Turned on!");
     }
 
-    void TriggerBlow()
+    IEnumerator BlowToiletPaper()
     {
-        if (blowTarget != null)
-            blowTarget.AddForce(blowDirection.normalized * blowForce, ForceMode.Impulse);
+        if (toiletPaper == null)
+        {
+            dominoChain?.StartChain();
+            yield break;
+        }
 
-        canBePossessed = false;
-        GetComponent<InteractableTag>()?.SetCompleted();
-        Debug.Log("[Fan] Blow triggered!");
-        Level2Manager.Instance?.OnFanBlowTriggeredChair();
+        Debug.Log("[Fan] Blowing toilet paper!");
+
+        Vector3 startPos = toiletPaper.transform.position;
+
+        // 如果没有指定落点，就往左滚1.5单位后落地
+        Vector3 landPos = toiletPaperLandTarget != null
+            ? toiletPaperLandTarget.position
+            : new Vector3(startPos.x - 1.5f, 0.15f, startPos.z);
+
+        // 中间经过桌子边缘（和起点同高，落点X位置）
+        Vector3 edgePos = new Vector3(landPos.x, startPos.y, startPos.z);
+
+        // 滚到桌边
+        float elapsed = 0f;
+        while (elapsed < rollDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / rollDuration);
+            toiletPaper.transform.position = Vector3.Lerp(startPos, edgePos, t);
+            toiletPaper.transform.Rotate(Vector3.forward, -300f * Time.deltaTime);
+            yield return null;
+        }
+        toiletPaper.transform.position = edgePos;
+
+        // 落到地面
+        elapsed = 0f;
+        while (elapsed < fallDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / fallDuration;
+            toiletPaper.transform.position = Vector3.Lerp(edgePos, landPos, t);
+            yield return null;
+        }
+        toiletPaper.transform.position = landPos;
+
+        // 落地后禁用重力防止继续掉落
+        Rigidbody rb = toiletPaper.GetComponent<Rigidbody>();
+        if (rb != null) { rb.isKinematic = true; rb.linearVelocity = Vector3.zero; }
+
+        yield return new WaitForSeconds(0.2f);
+        
+        Debug.Log("[Fan] Toilet paper landed! Starting domino chain.");
+        dominoChain?.StartChain();
     }
 }

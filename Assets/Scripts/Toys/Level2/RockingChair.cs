@@ -2,26 +2,30 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 摇椅 - 被碰撞物体撞到后开始晃动
-/// 晃动一段时间后吸引猫过来
+/// 摇椅 - 原地摇动，不改变朝向
+/// 摇动后吸引猫过来
 /// </summary>
 public class RockingChair : MonoBehaviour
 {
     [Header("Rocking")]
-    public float rockAngle = 15f;
-    public float rockSpeed = 2.5f;
-    [Tooltip("晃多少秒后猫才被吸引过来")]
-    public float rockDuration = 2.5f;
+    public float rockAngle = 8f;
+    public float rockSpeed = 1.5f;
+    public float rockDuration = 3f;
 
     private bool isRocking = false;
+    private Quaternion initialRotation;
 
-    // 被物理碰撞触发（Fan吹倒的物体撞过来）
+    void Start()
+    {
+        // 记录初始旋转，摇动时在此基础上叠加，不改变朝向
+        initialRotation = transform.localRotation;
+    }
+
     void OnCollisionEnter(Collision col)
     {
         if (!isRocking) StartRocking();
     }
 
-    /// <summary>也可由外部直接调用</summary>
     public void StartRocking()
     {
         if (isRocking) return;
@@ -35,15 +39,17 @@ public class RockingChair : MonoBehaviour
         while (elapsed < rockDuration)
         {
             elapsed += Time.deltaTime;
+            // 绕初始朝向的Z轴摇动，不影响Y轴朝向
             float angle = Mathf.Sin(elapsed * rockSpeed * Mathf.PI) * rockAngle;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            transform.localRotation = initialRotation * Quaternion.Euler(0f, 0f, angle);
             yield return null;
         }
-        transform.rotation = Quaternion.identity;
+
+        // 摇完恢复初始旋转
+        transform.localRotation = initialRotation;
         isRocking = false;
 
-        Debug.Log("[RockingChair] Rocking attracted the cat!");
-        // 让猫过来（Level2Manager 持有猫的引用）
+        Debug.Log("[RockingChair] Attracted the cat!");
         Level2Manager.Instance?.cat?.GoToRockingChair();
     }
 }

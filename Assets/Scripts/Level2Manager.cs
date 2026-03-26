@@ -64,10 +64,8 @@ public class Level2Manager : MonoBehaviour
         currentPhase = Phase.SkylightOpened;
         Debug.Log("[L2] Phase: SkylightOpened");
 
-        // 猫：走向天窗光斑
-        cat.GoToSkylight();
-        // 女孩：开始自动向前移动（先走到 Waypoint1 停下等待）
-        littleGirl.StartMovingTo(girlWaypoint1);
+        cat?.GoToSkylight();
+        littleGirl?.StartMovingTo(girlWaypoint1); // 加了?. 即使是null也不会崩
     }
 
     /// <summary>玩家把镜子光打到抽屉区域后调用（由Mirror.cs调用）</summary>
@@ -84,7 +82,13 @@ public class Level2Manager : MonoBehaviour
     /// <summary>猫打开抽屉后调用（由Drawer.cs调用）</summary>
     public void OnDrawerOpened()
     {
-        if (currentPhase != Phase.MirrorToDrawer) return;
+        Debug.Log($"[L2] OnDrawerOpened called, current phase: {currentPhase}");
+        
+        if (currentPhase != Phase.MirrorToDrawer) {
+            Debug.LogWarning($"[L2] Phase wrong! Expected MirrorToDrawer, got {currentPhase}");
+            return;
+        }
+        
         currentPhase = Phase.DrawerOpened;
         Debug.Log("[L2] Phase: DrawerOpened");
 
@@ -94,6 +98,15 @@ public class Level2Manager : MonoBehaviour
         littleGirl.StartMovingTo(girlWaypoint2);
         // 猫：借助抽屉跳到衣柜顶部
         cat.JumpToWardrobeTop();
+    }
+    
+    /// <summary>镜子Zone2触发：光照到柜顶，猫从抽屉跳上去</summary>
+    public void OnMirrorAimedAtWardrobe()
+    {
+        if (currentPhase != Phase.DrawerOpened) return;
+        currentPhase = Phase.CatOnWardrobe; // 先占住phase防止重复触发
+        Debug.Log("[L2] Phase: MirrorAimedAtWardrobe → Cat jumping to wardrobe");
+        cat?.JumpToWardrobeTop();
     }
 
     /// <summary>猫成功跳上衣柜后调用（由CatNPC.cs调用）</summary>
@@ -154,7 +167,7 @@ public class Level2Manager : MonoBehaviour
         littleGirl.StartMovingTo(girlWaypointFinal, onArrival: OnLevelComplete);
     }
 
-    void OnLevelComplete()
+    public void OnLevelComplete()
     {
         currentPhase = Phase.Complete;
         Debug.Log("[L2] Level Complete!");

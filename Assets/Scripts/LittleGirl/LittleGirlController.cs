@@ -1,41 +1,41 @@
 using UnityEngine;
 
 /// <summary>
-/// Level 1 用法：autoStart = true，场景里放 StopPoint 物体，
-///              各交互脚本调用 UnlockMovement() 让她继续走
-///
-/// Level 2 用法：autoStart = false，由 Level2Manager 调用
-///              StartMovingTo(target) 分阶段驱动她移动
-///              到达后自动停下，可传入 onArrival 回调
+/// 小女孩移动控制器 - Level 1 & Level 2 通用
+/// Level 2 新增：followCat模式，永远比猫慢一步跟过去
 /// </summary>
 public class LittleGirlController : MonoBehaviour
 {
-    // ─── Inspector ─────────────────────────────────────────────
     [Header("Movement")]
-    public float moveSpeed = 2f;
-    public Vector3 moveDirection = Vector3.left; // Level 1 方向移动
-    public bool autoStart = true;                // Level 1 = true, Level 2 = false
+    public float moveSpeed = 1.5f;
+    public Vector3 moveDirection = Vector3.left;
+    public bool autoStart = true;
 
     [Header("Animator (Optional)")]
     public Animator animator;
 
+    [Header("Level 2 - Cat Follow")]
+    [Tooltip("Level 2里拖入猫的Transform，开启跟随模式")]
+    public Transform catTransform;
+    [Tooltip("女孩始终落后猫多少X距离")]
+    public float followOffsetX = 2f;
+    [Tooltip("是否开启跟随模式")]
+    public bool followCatMode = false;
+
     [Header("Debug")]
     public bool testMode = false;
 
-    // ─── 私有状态 ──────────────────────────────────────────────
+    // 内部状态
     private bool canMove = false;
-
-    // Level 1 StopPoint 相关
     private int currentStopPointIndex = 0;
     private bool reachedFinalStop = false;
 
-    // Level 2 Waypoint 相关
+    // Level 2 waypoint
     private Transform waypointTarget = null;
     private System.Action onArrivalCallback = null;
     private bool waypointMode = false;
-    private const float waypointArrivalThreshold = 0.2f;
+    private const float waypointArrivalThreshold = 0.3f;
 
-    // ════════════════════════════════════════════════════════════
     void Start()
     {
         if (autoStart) canMove = true;
@@ -55,13 +55,19 @@ public class LittleGirlController : MonoBehaviour
             return;
         }
 
+        // 跟随猫模式（Level 2）
+        if (followCatMode && catTransform != null)
+        {
+            HandleFollowCat();
+            return;
+        }
+
         if (waypointMode)
         {
             HandleWaypointMove();
         }
         else
         {
-            // Level 1：方向移动
             if (testMode || canMove)
             {
                 transform.position += moveDirection.normalized * moveSpeed * Time.deltaTime;
@@ -74,13 +80,29 @@ public class LittleGirlController : MonoBehaviour
         }
     }
 
-    // ════════════════════════════════════════════════════════════
-    // Level 2 接口
-    // ════════════════════════════════════════════════════════════
+    // ─── Level 2：跟随猫 ────────────────────────────────────────
+    void HandleFollowCat()
+    {
+        // 目标X = 猫X + offset（女孩永远在猫右边/后面一点）
+        float targetX = catTransform.position.x + followOffsetX;
+        float distX = Mathf.Abs(transform.position.x - targetX);
 
-    /// <summary>
-    /// Level 2 专用：移动到目标点，到达后停下并触发回调
-    /// </summary>
+        if (distX > 0.3f)
+        {
+            float dir = targetX > transform.position.x ? 1f : -1f;
+            Vector3 pos = transform.position;
+            pos.x = Mathf.MoveTowards(pos.x, targetX, moveSpeed * Time.deltaTime);
+            transform.position = pos;
+            FlipTowards(new Vector3(targetX, 0, 0));
+            SetMovingAnim(true);
+        }
+        else
+        {
+            SetMovingAnim(false);
+        }
+    }
+
+    // ─── Level 2：走到指定目标点 ────────────────────────────────
     public void StartMovingTo(Transform target, System.Action onArrival = null)
     {
         if (target == null) return;
@@ -97,7 +119,6 @@ public class LittleGirlController : MonoBehaviour
     {
         if (waypointTarget == null || !canMove) return;
 
-        // 只移动X轴（侧视角）
         Vector3 targetPos = new Vector3(waypointTarget.position.x, transform.position.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
         FlipTowards(targetPos);
@@ -116,13 +137,10 @@ public class LittleGirlController : MonoBehaviour
         }
     }
 
-    // ════════════════════════════════════════════════════════════
-    // Level 1 接口（保持原有逻辑不变）
-    // ════════════════════════════════════════════════════════════
-
+    // ─── Level 1 接口 ────────────────────────────────────────────
     void OnTriggerEnter(Collider other)
     {
-        if (waypointMode) return; // Level 2 模式下忽略 StopPoint
+        if (waypointMode || followCatMode) return;
 
         StopPoint stopPoint = other.GetComponent<StopPoint>();
         if (stopPoint != null && stopPoint.stopIndex == currentStopPointIndex)
@@ -139,7 +157,6 @@ public class LittleGirlController : MonoBehaviour
         }
     }
 
-    /// <summary>解锁移动（Level 1 各交互脚本调用）</summary>
     public void UnlockMovement()
     {
         canMove = true;
@@ -147,21 +164,18 @@ public class LittleGirlController : MonoBehaviour
         SetMovingAnim(true);
     }
 
-    /// <summary>强制停止</summary>
     public void StopMovement()
     {
         canMove = false;
         SetMovingAnim(false);
     }
 
-    /// <summary>播放坐下（Level 2 结尾调用）</summary>
     public void SitDown()
     {
         StopMovement();
         if (animator != null) animator.Play("Sit");
     }
 
-    /// <summary>Level 1 觉醒版入口（兼容旧调用）</summary>
     public void WakeUpAndMove()
     {
         transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -170,10 +184,7 @@ public class LittleGirlController : MonoBehaviour
         Debug.Log("[Girl] Woke up!");
     }
 
-    // ════════════════════════════════════════════════════════════
-    // 辅助
-    // ════════════════════════════════════════════════════════════
-
+    // ─── 辅助 ────────────────────────────────────────────────────
     void FlipTowards(Vector3 target)
     {
         float dir = target.x > transform.position.x ? 1f : -1f;

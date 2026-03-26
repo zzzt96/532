@@ -65,12 +65,12 @@ public class CatNPC : MonoBehaviour
     // ─── Level 2 专用引用 ──────────────────────────────────────
     [Header("Level 2 References (leave empty in Level 1)")]
     public Transform skylightLightSpot;
-    public Transform drawerFrontPosition;   // 猫走到这里打开抽屉
     public Transform drawerTopPosition;     // 抽屉打开后的跳跃踏板
     public Transform wardrobeTopPosition;   // 衣柜顶部
     public Transform rockingChairPosition;  // 摇椅落点
     public Transform albumBoxPosition;      // 木箱落点
-    public Drawer drawerRef;                // 抽屉脚本引用
+    public Drawer drawerRef;                // 抽屉脚本引用、[Header("Level 2 References")]
+    public Transform tableEdgeGroundPos; 
 
     // ─── 私有状态 ──────────────────────────────────────────────
     private Vector3 targetPos;
@@ -130,54 +130,78 @@ public class CatNPC : MonoBehaviour
     public void GoToSkylight()
     {
         if (skylightLightSpot == null) { Debug.LogWarning("[Cat] skylightLightSpot not assigned!"); return; }
-        SetWalkTarget(
-            new Vector3(skylightLightSpot.position.x, transform.position.y, transform.position.z),
-            CatState.WalkToSkylight,
+        StartCoroutine(DoJump(
+            transform.position, 
+            skylightLightSpot.position, 
+            CatState.JumpOnTable, 
             () => {
                 currentState = CatState.SitInLight;
                 PlayAnim(clipIdle);
-                Debug.Log("[Cat] Sitting in skylight.");
+                Debug.Log("[Cat] On desk in sunlight.");
             }
-        );
+        ));
     }
 
     public void GoToDrawer(Transform drawerTransform = null)
     {
-        if (drawerFrontPosition == null) { Debug.LogWarning("[Cat] drawerFrontPosition not assigned!"); return; }
-        SetWalkTarget(
-            new Vector3(drawerFrontPosition.position.x, transform.position.y, transform.position.z),
-            CatState.WalkToDrawer,
-            () => StartCoroutine(OpenDrawerRoutine())
-        );
+        if (drawerTopPosition == null) { Debug.LogWarning("[Cat] drawerTopPosition not assigned!"); return; }
+        StartCoroutine(DoJump(transform.position, drawerTopPosition.position, CatState.JumpOnDrawer, () =>
+        {
+            currentState = CatState.SitInLight;
+            PlayAnim(clipIdle);
+            drawerRef?.OpenByWeight();
+            Debug.Log("[Cat] Jumped onto drawer!");
+        }));
     }
 
     public void JumpToWardrobeTop()
     {
-        // 先跳上抽屉踏板，再跳上衣柜顶
-        StartCoroutine(DoJump(transform.position, SafePos(drawerTopPosition), CatState.JumpOnDrawer, () =>
+        // 猫已经在抽屉上，直接跳柜顶
+        StartCoroutine(DoJump(transform.position, SafePos(wardrobeTopPosition), CatState.JumpOnWardrobe, () =>
         {
-            StartCoroutine(DoJump(transform.position, SafePos(wardrobeTopPosition), CatState.JumpOnWardrobe, () =>
-            {
-                currentState = CatState.SitOnWardrobe;
-                PlayAnim(clipIdle);
-                Debug.Log("[Cat] On wardrobe top!");
-                Level2Manager.Instance?.OnCatOnWardrobe();
-            }));
+            currentState = CatState.SitOnWardrobe;
+            PlayAnim(clipIdle);
+            Debug.Log("[Cat] On wardrobe top!");
+            Level2Manager.Instance?.OnCatOnWardrobe();
+        }));
+    }
+    
+    /// <summary>Balloon触发：猫从柜顶跳到指定位置（风扇桌）</summary>
+    public void JumpToPosition(Transform target)
+    {
+        if (target == null) return;
+        StartCoroutine(DoJump(transform.position, target.position, CatState.JumpOnChair, () =>
+        {
+            currentState = CatState.SitOnChair;
+            PlayAnim(clipIdle);
+            Debug.Log("[Cat] Landed after balloon jump!");
         }));
     }
 
     public void GoToRockingChair()
     {
         if (rockingChairPosition == null) return;
+
+        // 第一步：走到桌子边缘
         SetWalkTarget(
-            new Vector3(rockingChairPosition.position.x, transform.position.y, transform.position.z),
+            new Vector3(tableEdgeGroundPos.position.x, transform.position.y, transform.position.z),
             CatState.WalkToChair,
-            () => StartCoroutine(DoJump(transform.position, SafePos(rockingChairPosition), CatState.JumpOnChair, () =>
-            {
-                currentState = CatState.SitOnChair;
-                PlayAnim(clipIdle);
-                Level2Manager.Instance?.OnCatOnRockingChair();
-            }))
+            () => {
+                // 第二步：跳下桌到地面
+                StartCoroutine(DoJump(transform.position, tableEdgeGroundPos.position, CatState.JumpOnChair, () =>
+                {
+                    // 第三步：走到摇椅
+                    SetWalkTarget(
+                        new Vector3(rockingChairPosition.position.x, transform.position.y, transform.position.z),
+                        CatState.WalkToChair,
+                        () => {
+                            currentState = CatState.SitOnChair;
+                            PlayAnim(clipIdle);
+                            Level2Manager.Instance?.OnCatOnRockingChair();
+                        }
+                    );
+                }));
+            }
         );
     }
 

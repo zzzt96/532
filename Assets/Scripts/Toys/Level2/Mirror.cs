@@ -1,74 +1,77 @@
 using UnityEngine;
 
 /// <summary>
-/// 镜子 - 玩家附身后WASD旋转，SpotLight跟着转
-/// 当光方向落入目标角度区间时触发对应谜题阶段
+/// 桌上小镜子 - 玩家附身后AD旋转，SpotLight跟着转
+/// 阶段1：光打到抽屉 → 猫从桌面跳到抽屉
+/// 阶段2：玩家继续旋转（不退出附身）→ 光打到柜顶 → 猫跳上柜顶
+/// 整个过程玩家始终附身镜子
 /// </summary>
 public class Mirror : ToyBase
 {
-    // ─── Inspector 设置 ────────────────────────────────────────
     [Header("Rotation")]
-    [Tooltip("WASD旋转速度（度/秒）")]
     public float rotateSpeed = 60f;
-    [Tooltip("Z轴旋转最小值（限制范围防止乱转）")]
     public float minAngle = -80f;
-    [Tooltip("Z轴旋转最大值")]
     public float maxAngle = 80f;
 
     [Header("SpotLight")]
-    [Tooltip("镜子的子物体 SpotLight，和镜子一起转")]
+    [Tooltip("镜子的子物体 SpotLight，随镜子一起旋转")]
     public Light reflectionLight;
 
-    [Header("Target Zones - Drawer")]
-    [Tooltip("光打到抽屉区域的角度范围（Z轴，最小值）")]
-    public float drawerAngleMin = 20f;
-    [Tooltip("光打到抽屉区域的角度范围（Z轴，最大值）")]
-    public float drawerAngleMax = 40f;
+    [Header("Beam")]
+    public GameObject mirrorBeam;
+    
+    [Header("Zone 1 - Drawer")]
+    [Tooltip("光打到抽屉时的角度范围 最小值（场景里测出来填）")]
+    public float drawerAngleMin = 15f;
+    public float drawerAngleMax = 35f;
     [Tooltip("需要持续照射多少秒才触发")]
     public float holdTimeRequired = 1.0f;
 
-    [Header("Auto Redirect - Wardrobe")]
-    [Tooltip("抽屉打开后，镜子自动转到的角度（照向衣柜顶）")]
-    public float wardrobeRedirectAngle = -30f;
-    [Tooltip("自动转向的速度")]
-    public float autoRotateSpeed = 45f;
-
+    [Header("Zone 2 - Wardrobe Top")]
+    [Tooltip("光打到柜顶时的角度范围 最小值（抽屉触发后才检测这个）")]
+    public float wardrobeAngleMin = 50f;
+    public float wardrobeAngleMax = 75f;
+    
     [Header("Debug")]
     public bool showDebugGizmos = true;
-    
-    private float currentAngle = 0f;           // 当前Z轴旋转角度
-    private float drawerHoldTimer = 0f;        // 持续照射抽屉的计时器
-    private bool drawerTriggered = false;      // 是否已触发抽屉阶段
-    private bool autoRedirecting = false;      // 是否正在自动转向衣柜
-    private float autoRedirectTarget = 0f;
-    
-    // ToyBase 覆写
-    public override void ToyUpdate()
+
+    // ─── 私有状态 ──────────────────────────────────────────────
+    private float currentAngle = 0f;
+    private float holdTimer = 0f;
+    private Quaternion initialRotation;
+
+    // 两个阶段的触发状态
+    private bool drawerTriggered = false;
+    private bool wardrobeTriggered = false;
+
+    protected override void Start()
     {
-        if (autoRedirecting)
-        {
-            DoAutoRedirect();
-            return;
-        }
-
-        HandleRotationInput();
-        CheckDrawerZone();
+        base.Start();
+        initialRotation = transform.rotation; // 记录场景里摆好的初始朝向
     }
-
     public override void Possess()
     {
         base.Possess();
         if (reflectionLight != null) reflectionLight.enabled = true;
+        if (mirrorBeam != null) mirrorBeam.SetActive(true);
     }
 
     public override void UnPossess()
     {
         base.UnPossess();
-        // 脱离附身后保留光（还在照着），玩家只是失去控制
+        // 光束保留，玩家退出附身后光还在照着
     }
-    
-    // 私有方法
-    void HandleRotationInput()
+    public override void ToyUpdate()
+    {
+        HandleRotationInput();
+
+        if (!drawerTriggered)
+            CheckZone(drawerAngleMin, drawerAngleMax, ref holdTimer, OnDrawerZoneHeld);
+        else if (!wardrobeTriggered)
+            CheckZone(wardrobeAngleMin, wardrobeAngleMax, ref holdTimer, OnWardrobeZoneHeld);
+    }
+
+  void HandleRotationInput()
     {
         float input = 0f;
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  input = -1f;
@@ -76,72 +79,49 @@ public class Mirror : ToyBase
 
         currentAngle += input * rotateSpeed * Time.deltaTime;
         currentAngle = Mathf.Clamp(currentAngle, minAngle, maxAngle);
-
-        // 旋转镜子本身（Z轴）
-        transform.rotation = Quaternion.Euler(0f, 0f, currentAngle);
+        
+        transform.rotation = initialRotation * Quaternion.Euler(0f, 0f, currentAngle);
     }
-
-    void CheckDrawerZone()
+    void CheckZone(float min, float max, ref float timer, System.Action onTriggered)
     {
-        if (drawerTriggered) return;
-
-        bool inDrawerZone = currentAngle >= drawerAngleMin && currentAngle <= drawerAngleMax;
-
-        if (inDrawerZone)
+        bool inZone = currentAngle >= min && currentAngle <= max;
+        timer = inZone ? timer + Time.deltaTime : 0f;
+        if (inZone && timer >= holdTimeRequired) 
         {
-            drawerHoldTimer += Time.deltaTime;
-            if (drawerHoldTimer >= holdTimeRequired)
-            {
-                drawerTriggered = true;
-                Debug.Log("[Mirror] Light aimed at drawer zone! Triggering.");
-                Level2Manager.Instance?.OnMirrorAimedAtDrawer();
-            }
-        }
-        else
-        {
-            // 离开区域，重置计时（需要连续照射）
-            drawerHoldTimer = 0f;
+            timer = 0f;
+            onTriggered?.Invoke();
         }
     }
 
-    void DoAutoRedirect()
+    void OnDrawerZoneHeld()
     {
-        currentAngle = Mathf.MoveTowards(currentAngle, autoRedirectTarget, autoRotateSpeed * Time.deltaTime);
-        transform.rotation = Quaternion.Euler(0f, 0f, currentAngle);
-
-        if (Mathf.Abs(currentAngle - autoRedirectTarget) < 0.5f)
-        {
-            currentAngle = autoRedirectTarget;
-            autoRedirecting = false;
-            Debug.Log("[Mirror] Auto-redirected to wardrobe angle.");
-        }
+        drawerTriggered = true;
+        Debug.Log("[Mirror] Zone 1: Drawer triggered!");
+        Level2Manager.Instance?.OnMirrorAimedAtDrawer();
+        // 玩家不退出附身，继续旋转进入阶段2
     }
-
-    // ════════════════════════════════════════════════════════════
-    // 外部接口
-    // ════════════════════════════════════════════════════════════
-
-    /// <summary>抽屉打开后由Level2Manager调用，光自动转向衣柜顶</summary>
-    public void AutoRedirectToWardrobe()
+    
+    void OnWardrobeZoneHeld()
     {
-        autoRedirecting = true;
-        autoRedirectTarget = wardrobeRedirectAngle;
-        canBePossessed = false; // 这时候玩家不能再控制镜子了
-        Debug.Log("[Mirror] Starting auto-redirect to wardrobe.");
+        wardrobeTriggered = true;
+        canBePossessed = false;
+        Debug.Log("[Mirror] Zone 2: Wardrobe triggered!");
+        Level2Manager.Instance?.OnMirrorAimedAtWardrobe(); // 改这里
     }
+    
+    /// <summary>外部调用接口保留（Level2Manager里有引用）</summary>
+    public void AutoRedirectToWardrobe() { /* 新流程不需要自动转，玩家手动转 */ }
 
-    // ════════════════════════════════════════════════════════════
-    // 编辑器辅助
     // ════════════════════════════════════════════════════════════
     void OnDrawGizmos()
     {
         if (!showDebugGizmos) return;
-        // 在Scene视图里画出两个目标角度区间（绿色=抽屉，蓝色=衣柜）
         Gizmos.color = Color.green;
         DrawAngleGizmo(drawerAngleMin);
         DrawAngleGizmo(drawerAngleMax);
         Gizmos.color = Color.cyan;
-        DrawAngleGizmo(wardrobeRedirectAngle);
+        DrawAngleGizmo(wardrobeAngleMin);
+        DrawAngleGizmo(wardrobeAngleMax);
     }
 
     void DrawAngleGizmo(float angle)
