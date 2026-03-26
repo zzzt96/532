@@ -1,233 +1,148 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 /// <summary>
-/// 小女孩移动控制器 - 适配 Level 2 动画、跟随逻辑与最终坐下逻辑
+/// 小女孩移动控制器 - 绝对控制/定点移动版
+/// 抛弃模糊的跟随逻辑，完全通过指定 Transform 点位来精确控制移动和动作
 /// </summary>
 public class LittleGirlController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 1.5f;
-    public Vector3 moveDirection = Vector3.left;
-    public bool autoStart = true;
 
     [Header("Animator Control")]
-    [Tooltip("如果不拖拽，脚本会自动在子物体中寻找模型上的Animator")]
     public Animator animator;
 
-    [Header("Level 2 - Cat Follow")]
-    [Tooltip("Level 2里拖入猫的Transform")]
-    public Transform catTransform;
-    [Tooltip("女孩始终落后猫多少X距离")]
-    public float followOffsetX = 2f;
-    [Tooltip("是否开启跟随模式")]
-    public bool followCatMode = false;
-
-    [Header("Debug")]
-    public bool testMode = false;
+    [Header("Arrival Settings")]
+    [Tooltip("到达目标点的精准度，0.01 几乎就是绝对重合")]
+    public float arrivalThreshold = 0.01f;
 
     // 内部状态
-    private bool canMove = false;
-    private int currentStopPointIndex = 0;
-    private bool reachedFinalStop = false;
-
-    // Level 2 路径点相关
-    private Transform waypointTarget = null;
-    private System.Action onArrivalCallback = null;
-    private bool waypointMode = false;
-    private const float waypointArrivalThreshold = 0.3f;
+    private bool isMovingToTarget = false;
+    private Transform currentTarget = null;
+    private Action onArrivalCallback = null;
 
     void Start()
     {
-        // 自动获取挂在模型子物体上的 Animator
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
         }
-
-        if (autoStart) canMove = true;
     }
 
     void Update()
     {
-        // 基础游戏状态检查
-        if (GameManager.Instance != null)
-        {
-            if (GameManager.Instance.isGameOver || GameManager.Instance.isIntroPlaying)
-                return;
-        }
-
-        if (reachedFinalStop)
-        {
-            SetMovingAnim(false);
+        if (GameManager.Instance != null && (GameManager.Instance.isGameOver || GameManager.Instance.isIntroPlaying))
             return;
-        }
 
-        // --- Level 2 核心：跟随猫模式 ---
-        if (followCatMode && catTransform != null)
+        // 核心移动逻辑：如果有目标点，就精确移动过去
+        if (isMovingToTarget && currentTarget != null)
         {
-            HandleFollowCat();
-            return;
-        }
+            // 只在 X 和 Z 轴上移动，保持原本的高度 (Y轴)
+            Vector3 targetPos = new Vector3(currentTarget.position.x, transform.position.y, currentTarget.position.z);
 
-        // --- Level 2 核心：指定点移动模式 ---
-        if (waypointMode)
-        {
-            HandleWaypointMove();
-        }
-        else
-        {
-            // 基础移动逻辑 (兼顾 Level 1 或测试)
-            if (testMode || canMove)
+            // 精确移动
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            FlipTowards(targetPos);
+
+            // 检查是否精确到达
+            float dist = Vector3.Distance(transform.position, targetPos);
+            if (dist <= arrivalThreshold)
             {
-                transform.position += moveDirection.normalized * moveSpeed * Time.deltaTime;
-                SetMovingAnim(true);
-            }
-            else
-            {
+                // 到达目标点，彻底停稳
+                transform.position = targetPos;
+                isMovingToTarget = false;
+                currentTarget = null;
                 SetMovingAnim(false);
+
+                // 执行到达后的回调动作（比如拾取、坐下等）
+                Action cb = onArrivalCallback;
+                onArrivalCallback = null;
+                cb?.Invoke();
             }
         }
     }
 
-    // ─── Level 2 动画与状态控制逻辑 ─────────────────────────────────
+    // ─── 核心控制接口（供外部脚本调用） ──────────────────────────
 
-    private void SetMovingAnim(bool moving)
+    /// <summary>
+    /// 指令：走到指定位置，并在到达后执行动作
+    /// 用法示例：girl.GoToPosition(point1, () => girl.PlayPickUp());
+    /// </summary>
+    public void GoToPosition(Transform target, Action onArrival = null)
     {
-        if (animator != null)
-        {
-            animator.SetBool("isMoving", moving);
-        }
+        if (target == null) return;
+
+        currentTarget = target;
+        onArrivalCallback = onArrival;
+        isMovingToTarget = true;
+
+        SetMovingAnim(true);
+        FlipTowards(target.position);
     }
 
     /// <summary>
-    /// 强制坐下（对应 AlbumBox 调用）
-    /// 包含先拾取、再坐下的完整流程
+    /// 指令：原地播放拾取动画
     /// </summary>
-    public void SitDown()
+    public void PlayPickUp()
     {
-        canMove = false;
-        waypointMode = false;
-        followCatMode = false;
-        SetMovingAnim(false);
+        StopMovement(); // 确保停下
+        if (animator != null) animator.SetTrigger("pickUp");
+    }
 
+    /// <summary>
+    /// 指令：原地播放拾取，然后坐下
+    /// </summary>
+    public void PickUpAndSit()
+    {
+        StopMovement();
         if (animator != null)
         {
-            // 触发拾取动作，并启动坐下协程
             animator.SetTrigger("pickUp");
             StartCoroutine(SitRoutine());
         }
     }
 
     /// <summary>
-    /// 延迟进入坐下状态的协程
+    /// 指令：直接坐下
     /// </summary>
-    private IEnumerator SitRoutine()
+    public void JustSit()
     {
-        // 等待拾取动作播放一瞬间，根据你的 pickUp 动画实际长度调整这个时间
-        // 如果捡起动作需要1秒，这里就填 1.0f
-        yield return new WaitForSeconds(0.8f);
-
-        if (animator != null)
-        {
-            animator.SetBool("isSitting", true);
-        }
-        Debug.Log("[Girl] Character is now sitting.");
+        StopMovement();
+        if (animator != null) animator.SetBool("isSitting", true);
     }
 
     /// <summary>
-    /// （备用）单纯只播放拾取动画
+    /// 强制停止所有动作
     /// </summary>
-    public void PlayPickUp()
+    public void StopMovement()
     {
-        if (animator != null)
-        {
-            animator.SetTrigger("pickUp");
-        }
+        isMovingToTarget = false;
+        currentTarget = null;
+        SetMovingAnim(false);
     }
 
-    // ─── Level 2 移动行为实现 ─────────────────────────────────────
+    // ─── 内部辅助与动画 ──────────────────────────────────────────
 
-    void HandleFollowCat()
+    private IEnumerator SitRoutine()
     {
-        // 计算目标位置（女孩在猫后方 followOffsetX 的位置）
-        float targetX = catTransform.position.x + followOffsetX;
-        float distX = Mathf.Abs(transform.position.x - targetX);
-
-        // 如果距离超过阈值，则行走，否则待机
-        if (distX > 0.3f)
-        {
-            float dir = targetX > transform.position.x ? 1f : -1f;
-            Vector3 pos = transform.position;
-            pos.x = Mathf.MoveTowards(pos.x, targetX, moveSpeed * Time.deltaTime);
-            transform.position = pos;
-
-            FlipTowards(new Vector3(targetX, 0, 0));
-            SetMovingAnim(true); // 激活行走动画
-        }
-        else
-        {
-            SetMovingAnim(false); // 切换回 Idle 动画
-        }
+        // 等待拾取动作播放一小会儿，再切换到坐下（根据你的动画长度微调）
+        yield return new WaitForSeconds(0.8f);
+        if (animator != null) animator.SetBool("isSitting", true);
     }
 
-    public void StartMovingTo(Transform target, System.Action onArrival = null)
+    private void SetMovingAnim(bool moving)
     {
-        if (target == null) return;
-        waypointTarget = target;
-        onArrivalCallback = onArrival;
-        waypointMode = true;
-        followCatMode = false; // 开始走向指定点时，必须强制关闭跟随猫模式
-        canMove = true;
-        SetMovingAnim(true);
-        FlipTowards(target.position);
+        if (animator != null) animator.SetBool("isMoving", moving);
     }
 
-    void HandleWaypointMove()
+    private void FlipTowards(Vector3 target)
     {
-        if (waypointTarget == null || !canMove) return;
-
-        Vector3 targetPos = new Vector3(waypointTarget.position.x, transform.position.y, transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-        FlipTowards(targetPos);
-
-        if (Vector3.Distance(transform.position, targetPos) <= waypointArrivalThreshold)
-        {
-            canMove = false;
-            waypointMode = false;
-            SetMovingAnim(false); // 到达点位，停止动画
-
-            var cb = onArrivalCallback;
-            onArrivalCallback = null;
-            waypointTarget = null;
-            cb?.Invoke(); // 执行到达后的回调（比如调用 SitDown）
-        }
-    }
-
-    // ─── 基础辅助 ────────────────────────────────────────────────
-
-    void FlipTowards(Vector3 target)
-    {
+        if (Mathf.Abs(target.x - transform.position.x) < 0.01f) return; // 距离太近不转身
         float dir = target.x > transform.position.x ? 1f : -1f;
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * dir;
         transform.localScale = scale;
-    }
-
-    // 保留 Level 1 触发器逻辑以防万一
-    void OnTriggerEnter(Collider other)
-    {
-        if (waypointMode || followCatMode) return;
-        StopPoint stopPoint = other.GetComponent<StopPoint>();
-        if (stopPoint != null && stopPoint.stopIndex == currentStopPointIndex)
-        {
-            canMove = false;
-            currentStopPointIndex++;
-            if (stopPoint.isFinalStop)
-            {
-                reachedFinalStop = true;
-                GameManager.Instance?.GameWin();
-            }
-        }
     }
 }

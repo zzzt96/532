@@ -549,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3956646131956295683, guid: 5fa4ba062ad9f7641a584ec74f7f7c1d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.887
+      value: 1.31
       objectReference: {fileID: 0}
     - target: {fileID: 3956646131956295683, guid: 5fa4ba062ad9f7641a584ec74f7f7c1d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9530,7 +9530,7 @@ MonoBehaviour:
   autoStart: 0
   animator: {fileID: 1907271713}
   catTransform: {fileID: 1667452269}
-  followOffsetX: 2
+  followOffsetX: 0.1
   followCatMode: 1
   testMode: 0
 --- !u!1 &1965449493
