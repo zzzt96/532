@@ -762,7 +762,7 @@ Transform:
   m_GameObject: {fileID: 94671166}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7917746, z: -0, w: 0.6108135}
-  m_LocalPosition: {x: -12.81, y: 2, z: 1.67}
+  m_LocalPosition: {x: -10.75, y: 1.1, z: 2.21}
   m_LocalScale: {x: 80, y: 80, z: 80}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1074,7 +1074,7 @@ Transform:
   m_GameObject: {fileID: 179908492}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -41.73, y: 5.14, z: -2.08}
+  m_LocalPosition: {x: -37.2, y: 5.14, z: -2.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1826,7 +1826,7 @@ Transform:
   m_GameObject: {fileID: 285581292}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -18.31, y: 4.63, z: -3.04}
+  m_LocalPosition: {x: -18.31, y: 4.63, z: -4.22}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4864,6 +4864,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1322262379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &808903362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 808903363}
+  m_Layer: 0
+  m_Name: CatLeavingFanTablePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &808903363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808903362}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -15.08, y: 4.31, z: -0.82}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1322262379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &828524974
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5419,6 +5450,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1322262379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &937183831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 937183832}
+  m_Layer: 0
+  m_Name: AlbumBoxPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &937183832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937183831}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.01777634, w: 0.999842}
+  m_LocalPosition: {x: 7.86, y: 1.4, z: 8.37}
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1322262379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 25.218}
 --- !u!114 &943413043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6888,8 +6950,8 @@ MonoBehaviour:
   maxAngle: 0
   lampSpotLight: {fileID: 0}
   lampBeam: {fileID: 1995965587}
-  boxAngleMin: -65
-  boxAngleMax: -25
+  boxAngleMin: -260
+  boxAngleMax: -205
   holdTimeRequired: 0.8
 --- !u!1001 &1132947728
 PrefabInstance:
@@ -7854,7 +7916,7 @@ Transform:
   m_GameObject: {fileID: 1293910231}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7012683, z: -0, w: 0.71289754}
-  m_LocalPosition: {x: 2.04, y: 2, z: 8.17}
+  m_LocalPosition: {x: 2.04, y: 1.4, z: 8.17}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7901,6 +7963,7 @@ Transform:
   - {fileID: 808470163}
   - {fileID: 930393989}
   - {fileID: 285581293}
+  - {fileID: 808903363}
   - {fileID: 543450653027302697}
   - {fileID: 1642341923}
   - {fileID: 94671167}
@@ -7913,6 +7976,7 @@ Transform:
   - {fileID: 1218149174}
   - {fileID: 1195877366}
   - {fileID: 899171198}
+  - {fileID: 937183832}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1340737151
@@ -8827,10 +8891,10 @@ MonoBehaviour:
   drawerTopPosition: {fileID: 1105060232}
   wardrobeTopPosition: {fileID: 1842499409}
   rockingChairPosition: {fileID: 1293910232}
-  albumBoxPosition: {fileID: 899171198}
+  albumBoxPosition: {fileID: 937183832}
   drawerRef: {fileID: 37646988}
+  catFanTablePosition: {fileID: 808903363}
   tableEdgeGroundPos: {fileID: 94671167}
-  catFanTablePosition: {fileID: 285581293}
 --- !u!4 &1667452269 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5605576919427662434, guid: 842c650e107c0c842bd63593a83fdcc9, type: 3}
@@ -9202,7 +9266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1937441016
 Transform:
   m_ObjectHideFlags: 0
