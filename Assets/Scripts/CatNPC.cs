@@ -69,10 +69,10 @@ public class CatNPC : MonoBehaviour
     public Transform wardrobeTopPosition;   // 衣柜顶部
     public Transform rockingChairPosition;  // 摇椅落点
     public Transform albumBoxPosition;      // 木箱落点
-    public Drawer drawerRef;                // 抽屉脚本引用
+    public Drawer drawerRef;                // 抽屉脚本引用、[Header("Level 2 References")]
     
+    public Transform tableEdgeGroundPos; 
     public Transform catFanTablePosition; // 猫在风扇桌上的准确位置
-    public Transform tableEdgeGroundPos; // 猫跳下风扇桌的位置
     
     // ─── 私有状态 ──────────────────────────────────────────────
     private Vector3 targetPos;
@@ -180,7 +180,6 @@ public class CatNPC : MonoBehaviour
         }));
     }
 
-    // 从风扇桌走向摇摇椅
     public void GoToRockingChair()
     {
         if (rockingChairPosition == null || tableEdgeGroundPos == null) return;
@@ -195,19 +194,23 @@ public class CatNPC : MonoBehaviour
         corrected.y = tableY;
         transform.position = corrected;
 
-        // 第一步：走到桌边，X和Z都用tableEdgeGroundPos
+        // 第一步：走到桌边
         SetWalkTarget(
-            new Vector3(tableEdgeGroundPos.position.x, tableY, tableEdgeGroundPos.position.z),
+            new Vector3(tableEdgeGroundPos.position.x, tableY, transform.position.z),
             CatState.WalkToChair,
             () => {
-                Vector3 groundPos = tableEdgeGroundPos.position;
+                // 第二步：跳到地面
+                Vector3 groundPos = new Vector3(tableEdgeGroundPos.position.x, groundY, transform.position.z);
                 StartCoroutine(DoJump(transform.position, groundPos, CatState.JumpOnChair, () =>
                 {
-                    transform.position = groundPos; // 强制对齐所有轴
+                    // 强制锁定Y到地面
+                    Vector3 p = transform.position;
+                    p.y = groundY;
+                    transform.position = p;
 
-                    // 第三步：走到摇椅，X和Z都用rockingChairPosition
+                    // 第三步：走到摇椅
                     SetWalkTarget(
-                        rockingChairPosition.position, // 直接用完整position，不再只取X
+                        new Vector3(rockingChairPosition.position.x, groundY, transform.position.z),
                         CatState.WalkToChair,
                         () => {
                             currentState = CatState.SitOnChair;
@@ -220,18 +223,21 @@ public class CatNPC : MonoBehaviour
         );
     }
 
-    // 从摇摇椅走到相册下方
     public void GoToAlbumBox()
     {
         if (albumBoxPosition == null) return;
 
-        // 先强制修正Y和Z到地面
+        float groundY = tableEdgeGroundPos != null 
+            ? tableEdgeGroundPos.position.y 
+            : transform.position.y;
+
+        // 强制修正Y到地面
         Vector3 corrected = transform.position;
-        corrected.y = tableEdgeGroundPos != null ? tableEdgeGroundPos.position.y : transform.position.y;
+        corrected.y = groundY;
         transform.position = corrected;
 
         SetWalkTarget(
-            new Vector3(albumBoxPosition.position.x, corrected.y, albumBoxPosition.position.z),
+            new Vector3(albumBoxPosition.position.x, groundY, transform.position.z),
             CatState.WalkToBox,
             () => StartCoroutine(DoJump(transform.position, SafePos(albumBoxPosition), CatState.JumpOnBox, () =>
             {
@@ -374,15 +380,7 @@ public class CatNPC : MonoBehaviour
         float zDiff = target.z - transform.position.z;
         float zStep = Mathf.MoveTowards(0, zDiff, walkSpeed * Time.deltaTime);
         float dirX = target.x > transform.position.x ? 1f : -1f;
-        
-        // transform.position += new Vector3(dirX * walkSpeed * Time.deltaTime, 0, zStep);
-        Vector3 move = new Vector3(dirX * walkSpeed * Time.deltaTime, 0, zStep);
-        transform.position += move;
-        // 走路时强制锁Y到目标点Y，防止浮空
-        Vector3 locked = transform.position;
-        locked.y = targetPos.y;
-        transform.position = locked;
-        
+        transform.position += new Vector3(dirX * walkSpeed * Time.deltaTime, 0, zStep);
         currentFaceAngle = dirX > 0 ? 90f : -90f;
     }
 

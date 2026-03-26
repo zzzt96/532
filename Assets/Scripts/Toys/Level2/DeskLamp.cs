@@ -17,6 +17,7 @@ public class DeskLamp : ToyBase
     public Light lampSpotLight;
 
     [Header("Lamp Beam")]
+    [Tooltip("光束子物体（和MirrorBeam同款），默认inactive，附身时激活")]
     public GameObject lampBeam;
 
     [Header("Album Box Zone")]
@@ -32,7 +33,7 @@ public class DeskLamp : ToyBase
     protected override void Start()
     {
         base.Start();
-        initialRotation = transform.localRotation; 
+        initialRotation = transform.localRotation; // 记录初始朝向
         canBePossessed = false;
     }
 
@@ -47,9 +48,6 @@ public class DeskLamp : ToyBase
     {
         if (triggered) return;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            Debug.Log($"[Lamp] current angle: {currentAngle}");
-        
         float input = 0f;
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  input = -1f;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) input =  1f;
