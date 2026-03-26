@@ -26,6 +26,10 @@ public class Fan : ToyBase
     [Header("Domino Chain")]
     public DominoChain dominoChain;
 
+    // ─── 新增：回忆特效引用 ───
+    [Header("Memory Effect")]
+    public MemoryEffect memoryEffect;
+
     private bool isOn = false;
     private float currentHeadAngle = 0f;
     private bool blowTriggered = false;
@@ -44,13 +48,14 @@ public class Fan : ToyBase
         if (isOn && fanBlades != null && fanCenter != null)
             fanBlades.RotateAround(fanCenter.position, Vector3.left, bladeSpinSpeed * Time.deltaTime);
     }
+
     public override void ToyUpdate()
     {
         if (!isOn || blowTriggered) return;
 
         float input = 0f;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  input = -1f;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) input =  1f;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) input = -1f;
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) input = 1f;
 
         currentHeadAngle += input * headRotateSpeed * Time.deltaTime;
         currentHeadAngle = Mathf.Clamp(currentHeadAngle, -maxHeadAngle, maxHeadAngle);
@@ -78,6 +83,8 @@ public class Fan : ToyBase
     {
         if (toiletPaper == null)
         {
+            // 防御性处理：如果没有配置卫生纸，直接触发特效和多米诺
+            memoryEffect?.ActivateEffect();
             dominoChain?.StartChain();
             yield break;
         }
@@ -122,8 +129,16 @@ public class Fan : ToyBase
         if (rb != null) { rb.isKinematic = true; rb.linearVelocity = Vector3.zero; }
 
         yield return new WaitForSeconds(0.2f);
-        
+
         Debug.Log("[Fan] Toilet paper landed! Starting domino chain.");
+
+        // ─── 新增：在这里触发回忆特效 ───
+        if (memoryEffect != null)
+        {
+            memoryEffect.ActivateEffect();
+            Debug.Log("[Fan] 触发了风扇回忆特效！");
+        }
+
         dominoChain?.StartChain();
     }
 }

@@ -43,22 +43,23 @@ public class AlbumBox : MonoBehaviour
         }
         album.transform.position = end;
         Debug.Log("[AlbumBox] Album dropped!");
-        
+
         var girl = Level2Manager.Instance?.littleGirl;
         if (girl != null && girlFinalPosition != null)
         {
-            // 关闭跟随模式，走到指定位置坐下
+            // 确保关闭跟随猫模式，让她专心走向相册
             girl.followCatMode = false;
+
             girl.StartMovingTo(girlFinalPosition, onArrival: () =>
             {
-                girl.SitDown();
-                Debug.Log("[Girl] Picked up album. Level complete!");
-                Level2Manager.Instance?.OnLevelComplete();
+                // 【核心修改】：到达目的地后，调用刚才写好的 PlayPickUp 方法
+                girl.PlayPickUp();
+
+                Debug.Log("[Girl] Reached the album and playing pick up animation!");
+
+                // 延迟 2.5 秒结束关卡，留出时间让玩家看完弯腰捡东西的动画
+                Level2Manager.Instance?.Invoke("OnLevelComplete", 2.5f);
             });
-        }
-        else
-        {
-            Level2Manager.Instance?.OnLevelComplete();
         }
     }
 }

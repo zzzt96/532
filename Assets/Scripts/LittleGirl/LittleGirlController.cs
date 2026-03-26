@@ -134,17 +134,27 @@ public class LittleGirlController : MonoBehaviour
         }
         Debug.Log("[Girl] Character is now sitting.");
     }
-
     /// <summary>
-    /// （备用）单纯只播放拾取动画
+    /// 停止所有移动，并播放弯腰捡起动画
     /// </summary>
     public void PlayPickUp()
     {
+        // 1. 彻底停止移动状态
+        canMove = false;
+        waypointMode = false;
+        followCatMode = false;
+
         if (animator != null)
         {
-            animator.SetTrigger("pickUp");
+            animator.SetBool("isMoving", false); // 关掉行走动画
+            animator.SetTrigger("pickUp");       // 触发弯腰捡东西动画
+
+            // 如果你需要她捡完东西后坐下，可以解除下面这行的注释
+            // StartCoroutine(SitRoutine());
         }
     }
+
+    
 
     // ─── Level 2 移动行为实现 ─────────────────────────────────────
 
