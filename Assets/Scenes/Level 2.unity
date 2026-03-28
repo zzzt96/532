@@ -8759,7 +8759,7 @@ MonoBehaviour:
   girlCamOffset: {x: -16, y: -2, z: 1}
   objectivePanel: {fileID: 925778726}
   fadeDuration: 0.5
-  skipCutscene: 1
+  skipCutscene: 0
 --- !u!4 &1604185808
 Transform:
   m_ObjectHideFlags: 0

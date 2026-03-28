@@ -36,6 +36,7 @@ public class Balloon : ToyBase
     {
         base.Start();
         startPosition = transform.position;
+        canBePossessed = false;
     }
 
     public override void ToyUpdate()

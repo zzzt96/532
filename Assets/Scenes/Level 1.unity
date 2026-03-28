@@ -8869,7 +8869,7 @@ MonoBehaviour:
   girlCamOffset: {x: -10, y: 0, z: 0}
   objectivePanel: {fileID: 925778726}
   fadeDuration: 0.5
-  skipCutscene: 1
+  skipCutscene: 0
 --- !u!4 &1604185808
 Transform:
   m_ObjectHideFlags: 0
@@ -41647,12 +41647,12 @@ SceneRoots:
   - {fileID: 1937441016}
   - {fileID: 927111447}
   - {fileID: 1126985955}
-  - {fileID: 1604185808}
   - {fileID: 1179334978}
   - {fileID: 6128055}
   - {fileID: 1402058224}
   - {fileID: 619318659}
   - {fileID: 528961228}
+  - {fileID: 1604185808}
   - {fileID: 408572369}
   - {fileID: 993439780}
   - {fileID: 804263036}
