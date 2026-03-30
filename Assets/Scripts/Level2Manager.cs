@@ -29,6 +29,9 @@ public class Level2Manager : MonoBehaviour
     public Transform girlWaypoint1;
     public Transform girlWaypoint2;
     public Transform girlWaypointFinal;
+    
+    [Header("Scene Transition")]
+    public string nextSceneName;
 
     void Awake()
     {
@@ -52,8 +55,6 @@ public class Level2Manager : MonoBehaviour
         if (tag != null) tag.canBePossessed = false;
     }
 
-    // ═══════════════════════════════════════════════════════════
-
     public void OnSkylightOpened()
     {
         if (currentPhase != Phase.Idle) return;
@@ -62,6 +63,7 @@ public class Level2Manager : MonoBehaviour
 
         cat?.GoToSkylight();
         littleGirl?.StartMovingTo(girlWaypoint1);
+        Unlock(mirror); 
     }
 
     public void OnMirrorAimedAtDrawer()
@@ -143,11 +145,11 @@ public class Level2Manager : MonoBehaviour
         albumBox?.DropAlbum();
         littleGirl?.StartMovingTo(girlWaypointFinal, onArrival: OnLevelComplete);
     }
-
+    
     public void OnLevelComplete()
     {
         currentPhase = Phase.Complete;
         Debug.Log("[L2] Level Complete!");
-        // TODO: 触发过场/切换场景
+        UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
     }
 }

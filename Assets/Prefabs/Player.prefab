@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: -74, y: 6}
-  mouseFollowSmoothing: 8
+  mouseFollowSmoothing: 6
   maxTargetJumpPerFrame: 1.2
   minX: -52
   maxX: 12

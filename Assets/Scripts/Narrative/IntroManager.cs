@@ -1,38 +1,38 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Ê¹ÓÃ TextMeshPro
+using TMPro; // Ê¹ï¿½ï¿½ TextMeshPro
 using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class IntroManager : MonoBehaviour
 {
     [Header("UI References")]
-    [Tooltip("¹ÒÔØÁË³õÊ¼Í¼Æ¬µÄÎïÌå£¨±ØÐë°üº¬ CanvasGroup ×é¼þ£©")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½Ê¼Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½å£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CanvasGroup ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public CanvasGroup introImageGroup;
-    [Tooltip("ÓÃÀ´ÏÔÊ¾¾çÇéµÄÎÄ×Ö×é¼þ")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public TextMeshProUGUI storyText;
 
     [Header("Story Settings")]
-    [Tooltip("Í¼Æ¬µ­³ö³ÉºÚÆÁÐèÒªµÄÊ±¼ä£¨Ãë£©")]
+    [Tooltip("Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½Éºï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ê±ï¿½ä£¨ï¿½ë£©")]
     public float fadeDuration = 1.5f;
 
-    [Tooltip("ÔÚÕâÀïÌí¼ÓÄãµÄ¾çÇéÎÄ×Ö£¬Ã¿¼ÓÒ»¸öElement¾ÍÊÇÍæ¼Òµã»÷ºóµÄÒ»Ò³")]
-    [TextArea(3, 5)] // Õâ¸öÊôÐÔÄÜÈÃÊäÈë¿ò±ä´ó£¬·½±ãÄãÊäÈë¶àÐÐÎÄ×Ö
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½Ã¿ï¿½ï¿½Ò»ï¿½ï¿½Elementï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ò³")]
+    [TextArea(3, 5)] // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public string[] storyLines;
 
     [Header("Scene Transition")]
-    [Tooltip("¾çÇé½áÊøºóÒª¼ÓÔØµÄÏÂÒ»¸ö³¡¾°Ãû×Ö")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public string nextSceneName;
 
     private int currentLineIndex = 0;
 
-    // ×´Ì¬»ú£ºµ±Ç°´¦ÓÚÊ²Ã´½×¶Î
+    // ×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ê²Ã´ï¿½×¶ï¿½
     private enum IntroState { ShowingImage, FadingImage, ShowingText }
     private IntroState currentState = IntroState.ShowingImage;
 
     void Start()
     {
-        // ³õÊ¼»¯×´Ì¬£ºÏÔÊ¾Í¼Æ¬£¬Òþ²ØÎÄ×Ö
+        // ï¿½ï¿½Ê¼ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½Ê¾Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (introImageGroup != null)
         {
             introImageGroup.alpha = 1f;
@@ -41,24 +41,24 @@ public class IntroManager : MonoBehaviour
 
         if (storyText != null)
         {
-            storyText.text = ""; // Çå¿ÕÎÄ×Ö
+            storyText.text = ""; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             storyText.gameObject.SetActive(false);
         }
     }
 
     void Update()
     {
-        // ¼ì²âÍæ¼Òµã»÷Êó±ê×ó¼ü£¬»òÕß°´ÏÂ¿Õ¸ñ/»Ø³µ¼ü
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß°ï¿½ï¿½Â¿Õ¸ï¿½/ï¿½Ø³ï¿½ï¿½ï¿½
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             if (currentState == IntroState.ShowingImage)
             {
-                // Íæ¼ÒµÚÒ»´Îµã»÷£¬¿ªÊ¼µ­³öÍ¼Æ¬
+                // ï¿½ï¿½Òµï¿½Ò»ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
                 StartCoroutine(FadeOutImageAndStartText());
             }
             else if (currentState == IntroState.ShowingText)
             {
-                // Ö®ºóµÄµã»÷£¬ÇÐ»»ÏÂÒ»ÌõÎÄ×Ö
+                // Ö®ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 ShowNextLine();
             }
         }
@@ -66,10 +66,10 @@ public class IntroManager : MonoBehaviour
 
     IEnumerator FadeOutImageAndStartText()
     {
-        currentState = IntroState.FadingImage; // Ëø¶¨×´Ì¬£¬·ÀÖ¹µ­³öÊ±Íæ¼Ò¿ñµã
+        currentState = IntroState.FadingImage; // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ò¿ï¿½ï¿½
         float elapsed = 0f;
 
-        // Í¼Æ¬½¥½¥±äÍ¸Ã÷
+        // Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ï¿½
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
@@ -80,17 +80,17 @@ public class IntroManager : MonoBehaviour
             yield return null;
         }
 
-        // µ­³ö³¹µ×Íê³É
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (introImageGroup != null)
         {
             introImageGroup.alpha = 0f;
-            introImageGroup.gameObject.SetActive(false); // Òþ²ØÍ¼Æ¬£¬Â¶³öµ×ÏÂµÄºÚÆÁ
+            introImageGroup.gameObject.SetActive(false); // ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Â¶ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄºï¿½ï¿½ï¿½
         }
 
-        // ÉÔÎ¢Í£¶Ù°ëÃë£¨Áô°×£¬ÈÃÑÝ³ö¸ü×ÔÈ»£©
+        // ï¿½ï¿½Î¢Í£ï¿½Ù°ï¿½ï¿½ë£¨ï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½
         yield return new WaitForSeconds(0.5f);
 
-        // ½øÈëÎÄ×ÖÄ£Ê½£¬ÏÔÊ¾µÚÒ»¾ä»°
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ò»ï¿½ä»°
         currentState = IntroState.ShowingText;
         if (storyText != null) storyText.gameObject.SetActive(true);
         ShowNextLine();
@@ -98,18 +98,18 @@ public class IntroManager : MonoBehaviour
 
     void ShowNextLine()
     {
-        // Èç¹û»¹ÓÐÊ£ÏÂµÄ¾çÇé
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê£ï¿½ÂµÄ¾ï¿½ï¿½ï¿½
         if (currentLineIndex < storyLines.Length)
         {
             if (storyText != null)
             {
                 storyText.text = storyLines[currentLineIndex];
             }
-            currentLineIndex++; // ×¼±¸ÏÂÒ»´Îµã»÷µÄË÷Òý
+            currentLineIndex++; // ×¼ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
-            // ËùÓÐ¾çÇé²¥·ÅÍê±Ï£¬¼ÓÔØÓÎÏ·³¡¾°£¡
+            // ï¿½ï¿½ï¿½Ð¾ï¿½ï¿½é²¥ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             LoadNextScene();
         }
     }
@@ -123,7 +123,7 @@ public class IntroManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[IntroManager] »¹Ã»ÓÐÌîÐ´ÏÂÒ»¸ö³¡¾°µÄÃû×Ö£¡");
+            Debug.LogWarning("[IntroManager] ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½");
         }
     }
 }

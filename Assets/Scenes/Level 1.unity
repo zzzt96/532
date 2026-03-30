@@ -5279,7 +5279,7 @@ Transform:
   m_GameObject: {fileID: 908454879}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -64.19, y: -9.35, z: 6.91}
+  m_LocalPosition: {x: -64.19, y: -7.64, z: 6.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10679,6 +10679,7 @@ MonoBehaviour:
   isIntroPlaying: 0
   girlHasWokenUp: 0
   littleGirl: {fileID: 1949404771}
+  nextSceneName: Level 2
 --- !u!1 &1988354584
 GameObject:
   m_ObjectHideFlags: 0

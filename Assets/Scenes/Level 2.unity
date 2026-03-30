@@ -762,7 +762,7 @@ Transform:
   m_GameObject: {fileID: 94671166}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7917746, z: -0, w: 0.6108135}
-  m_LocalPosition: {x: -10.75, y: 1.1, z: 2.21}
+  m_LocalPosition: {x: -10.75, y: 0.65, z: 6.74}
   m_LocalScale: {x: 80, y: 80, z: 80}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2419,8 +2419,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.48878345, y: 0.5363222, z: -0.13912737, w: 0.6738641}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.16589467, y: 0.97667116, z: -0.050233997, w: -0.12676331}
+  m_LocalPosition: {x: 11.038097, y: 43.595955, z: 111.30171}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3085,7 +3085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPhase: 0
   cat: {fileID: 1667452268}
-  littleGirl: {fileID: 0}
+  littleGirl: {fileID: 1949404773}
   mirror: {fileID: 66389270}
   drawer: {fileID: 37646988}
   balloon: {fileID: 7388042965076935629}
@@ -3096,6 +3096,7 @@ MonoBehaviour:
   girlWaypoint1: {fileID: 0}
   girlWaypoint2: {fileID: 0}
   girlWaypointFinal: {fileID: 0}
+  nextSceneName: Level 3
 --- !u!4 &590494823
 Transform:
   m_ObjectHideFlags: 0
@@ -4200,8 +4201,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708213131}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.81, y: 10.19, z: 2.17}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.8099976, y: 10.190002, z: -969.28125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4890,7 +4891,7 @@ Transform:
   m_GameObject: {fileID: 808903362}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -15.08, y: 4.31, z: -0.82}
+  m_LocalPosition: {x: -14.46, y: 5.16, z: -0.43}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7917,7 +7918,7 @@ Transform:
   m_GameObject: {fileID: 1293910231}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7012683, z: -0, w: 0.71289754}
-  m_LocalPosition: {x: 2.04, y: 1.4, z: 8.17}
+  m_LocalPosition: {x: 2.04, y: 0.65, z: 6.74}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8759,7 +8760,7 @@ MonoBehaviour:
   girlCamOffset: {x: -16, y: -2, z: 1}
   objectivePanel: {fileID: 925778726}
   fadeDuration: 0.5
-  skipCutscene: 0
+  skipCutscene: 1
 --- !u!4 &1604185808
 Transform:
   m_ObjectHideFlags: 0
@@ -9116,7 +9117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 1
-  isPossessableObject: 1
+  isPossessableObject: 0
   highlightEffect: {fileID: 1647481278}
   isCurrentlyPossessed: 0
   isCompleted: 0
@@ -9736,6 +9737,7 @@ MonoBehaviour:
   isIntroPlaying: 0
   girlHasWokenUp: 0
   littleGirl: {fileID: 0}
+  nextSceneName: 
 --- !u!1 &1975069196
 GameObject:
   m_ObjectHideFlags: 0
@@ -16551,6 +16553,14 @@ PrefabInstance:
     - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
       propertyPath: minX
       value: -54
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: possessRadius
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: mouseFollowSmoothing
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5581381517667346855, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
       propertyPath: m_Camera

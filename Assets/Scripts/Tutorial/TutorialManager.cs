@@ -13,11 +13,11 @@ public class TutorialManager : MonoBehaviour
     public Transform catTargetPoint;
 
     [Header("Settings")]
-    public float textHideDelay = 4f;
+    public float textHideDelay = 5f;
     public float autoAdvanceDelay = 2.5f;
 
-    [Header("Level Exit")]
-    public GameObject exitZone;
+    [Header("Scene Transition")]
+    public string nextSceneName;
 
     private int tutorialStep = 0;
     private bool catTriggered = false;
@@ -96,14 +96,8 @@ public class TutorialManager : MonoBehaviour
     {
         if (tutorialText != null)
             tutorialText.gameObject.SetActive(false);
-
-        if (exitZone != null)
-        {
-            exitZone.SetActive(true);
-            Debug.Log("[Tutorial] Exit zone activated!");
-        }
-
-        if (GameManager.Instance != null)
-            GameManager.Instance.OnTutorialComplete();
+        
+        Debug.Log("[Tutorial] Complete! Loading next scene.");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
     }
 }

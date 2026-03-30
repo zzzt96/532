@@ -58,7 +58,8 @@ public class Fan : ToyBase
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) input = 1f;
 
         currentHeadAngle += input * headRotateSpeed * Time.deltaTime;
-        currentHeadAngle = Mathf.Clamp(currentHeadAngle, -maxHeadAngle, maxHeadAngle);
+        // currentHeadAngle = Mathf.Clamp(currentHeadAngle, -maxHeadAngle, maxHeadAngle);
+        currentHeadAngle = Mathf.Clamp(currentHeadAngle, -maxHeadAngle, 0f);
         transform.localRotation = initialRotation * Quaternion.Euler(0f, currentHeadAngle, 0f);
 
         bool aimed = Mathf.Abs(currentHeadAngle - blowAngle) <= angleTolerance;

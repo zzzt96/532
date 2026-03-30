@@ -48,6 +48,7 @@ public class Mirror : ToyBase
     {
         base.Start();
         initialRotation = transform.rotation; // 记录场景里摆好的初始朝向
+        canBePossessed = false;
     }
     public override void Possess()
     {

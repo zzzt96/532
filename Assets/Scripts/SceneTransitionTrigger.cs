@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class SceneTransitionTrigger : MonoBehaviour
 {
     [Header("Scene Settings")]
-    [Tooltip("Òª¼ÓÔØµÄ³¡¾°Ãû³Æ£¬ÇëÈ·±£ÒÑÌí¼Óµ½ Build Settings ÖÐ")]
+    [Tooltip("Òªï¿½ï¿½ï¿½ØµÄ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ Build Settings ï¿½ï¿½")]
     public string nextSceneName;
 
     private bool isLoading = false;
@@ -15,18 +15,18 @@ public class SceneTransitionTrigger : MonoBehaviour
 
         bool canTrigger = false;
 
-        // ¼ì²é´¥·¢µÄÊÇ²»ÊÇÍæ¼Ò£¨¹í»ê±¾Ìå£©
+        // ï¿½ï¿½é´¥ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½Ò£ï¿½ï¿½ï¿½ï¿½ê±¾ï¿½å£©
         if (other.GetComponent<PlayerController>() != null)
         {
             canTrigger = true;
         }
         else
         {
-            // Èç¹ûÍæ¼Ò¸½ÉíÔÚÍæ¾ßÉíÉÏ£¬¼ì²é´¥·¢µÄÊÇ²»ÊÇ±»¸½ÉíµÄÍæ¾ß
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½é´¥ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½Ç±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             ToyBase toy = other.GetComponent<ToyBase>();
-            // »òÕßÓÃ other.GetComponentInParent<ToyBase>() ÊÓÄãµÄÎïÌå²ã¼¶¶ø¶¨
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ other.GetComponentInParent<ToyBase>() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã¼¶ï¿½ï¿½ï¿½ï¿½
 
-            // ÎªÁË°²È«£¬È·±£Ö»ÓÐÍæ¼Òµ±Ç°¸½ÉíµÄÍæ¾ß²ÅÄÜ´¥·¢¹ý¹Ø£¨»òÕßÈÎºÎÍæ¾ßÅöµ½¶¼Ëã£¬¿´ÄãµÄÉè¼Æ£©
+            // Îªï¿½Ë°ï¿½È«ï¿½ï¿½È·ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Òµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß²ï¿½ï¿½Ü´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½
             if (toy != null)
             {
                 canTrigger = true;
@@ -39,7 +39,7 @@ public class SceneTransitionTrigger : MonoBehaviour
         }
     }
 
-    // ¿ª·ÅÒ»¸ö¹«¹²·½·¨£¬ÕâÑùÄãÒÔºó²»½ö¿ÉÒÔÍ¨¹ýÅö×²´¥·¢£¬»¹¿ÉÒÔÍ¨¹ý°´Å¥µã»÷»ò´úÂëµ÷ÓÃÀ´¼ÓÔØ
+    // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôºó²»½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void LoadScene()
     {
         if (isLoading) return;

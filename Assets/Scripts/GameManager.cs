@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     public LittleGirlControllerWakeUp littleGirl;
 
+    [Header("Scene Transition")]
+    public string nextSceneName;
+    
     public void OnTutorialComplete()
     {
         isIntroPlaying = false;
@@ -58,10 +61,10 @@ public class GameManager : MonoBehaviour
             littleGirl.WakeUpAndMove();
         }
     }
-
+    
     public void GameComplete()
     {
-        isGameOver = true;
         Debug.Log("[GameManager] Game Complete!");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
     }
 }
