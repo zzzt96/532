@@ -195,6 +195,60 @@ public class PlayerController : MonoBehaviour
         transform.position = pos;
     }
 
+    // void DetectHoverObject()
+    // {
+    //     ToyBase[] allToys = FindObjectsOfType<ToyBase>();
+    //
+    //     availableToys.Clear();
+    //     foreach (var toy in allToys)
+    //     {
+    //         if (!toy.canBePossessed) continue;
+    //
+    //         float dist2D;
+    //         if (toy.useXOnlyDetection)
+    //         {
+    //             // TutorialToy在XZ平面移动，只比较X轴距离
+    //             dist2D = Mathf.Abs(transform.position.x - toy.transform.position.x);
+    //         }
+    //         else
+    //         {
+    //             Vector2 ghostXY = new Vector2(transform.position.x, transform.position.y);
+    //             Vector2 toyXY   = new Vector2(toy.transform.position.x, toy.transform.position.y);
+    //             dist2D = Vector2.Distance(ghostXY, toyXY);
+    //         }
+    //
+    //         if (dist2D <= possessRadius)
+    //             availableToys.Add(toy);
+    //     }
+    //
+    //     // XY距离 + Z惩罚排序
+    //     availableToys.Sort((a, b) =>
+    //     {
+    //         Vector2 ghostXY = new Vector2(transform.position.x, transform.position.y);
+    //
+    //         float xyA = Vector2.Distance(ghostXY, new Vector2(a.transform.position.x, a.transform.position.y));
+    //         float xyB = Vector2.Distance(ghostXY, new Vector2(b.transform.position.x, b.transform.position.y));
+    //
+    //         float zPenaltyA = Mathf.Abs(transform.position.z - a.transform.position.z) * 0.5f;
+    //         float zPenaltyB = Mathf.Abs(transform.position.z - b.transform.position.z) * 0.5f;
+    //
+    //         return (xyA + zPenaltyA).CompareTo(xyB + zPenaltyB);
+    //     });
+    //
+    //     if (availableToys.Count == 0)
+    //     {
+    //         ClearHover();
+    //         return;
+    //     }
+    //
+    //     if (currentHover == null || !availableToys.Contains(currentHover))
+    //     {
+    //         currentToyIndex = 0;
+    //         SetHover(availableToys[0]);
+    //         Debug.Log($"[Player] Hovering: {currentHover.name}");
+    //     }
+    // }
+    
     void DetectHoverObject()
     {
         ToyBase[] allToys = FindObjectsOfType<ToyBase>();
@@ -204,16 +258,18 @@ public class PlayerController : MonoBehaviour
         {
             if (!toy.canBePossessed) continue;
 
+            // 使用detectionOffset让高处物体把检测点下移
+            Vector3 toyDetectPos = toy.transform.position + toy.detectionOffset;
+
             float dist2D;
             if (toy.useXOnlyDetection)
             {
-                // TutorialToy在XZ平面移动，只比较X轴距离
-                dist2D = Mathf.Abs(transform.position.x - toy.transform.position.x);
+                dist2D = Mathf.Abs(transform.position.x - toyDetectPos.x);
             }
             else
             {
                 Vector2 ghostXY = new Vector2(transform.position.x, transform.position.y);
-                Vector2 toyXY   = new Vector2(toy.transform.position.x, toy.transform.position.y);
+                Vector2 toyXY   = new Vector2(toyDetectPos.x, toyDetectPos.y);
                 dist2D = Vector2.Distance(ghostXY, toyXY);
             }
 
@@ -226,8 +282,11 @@ public class PlayerController : MonoBehaviour
         {
             Vector2 ghostXY = new Vector2(transform.position.x, transform.position.y);
 
-            float xyA = Vector2.Distance(ghostXY, new Vector2(a.transform.position.x, a.transform.position.y));
-            float xyB = Vector2.Distance(ghostXY, new Vector2(b.transform.position.x, b.transform.position.y));
+            Vector3 detectPosA = a.transform.position + a.detectionOffset;
+            Vector3 detectPosB = b.transform.position + b.detectionOffset;
+
+            float xyA = Vector2.Distance(ghostXY, new Vector2(detectPosA.x, detectPosA.y));
+            float xyB = Vector2.Distance(ghostXY, new Vector2(detectPosB.x, detectPosB.y));
 
             float zPenaltyA = Mathf.Abs(transform.position.z - a.transform.position.z) * 0.5f;
             float zPenaltyB = Mathf.Abs(transform.position.z - b.transform.position.z) * 0.5f;
@@ -248,7 +307,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"[Player] Hovering: {currentHover.name}");
         }
     }
-
+    
     void HandlePossessInput()
     {
         if (currentHover == null || !currentHover.canBePossessed)

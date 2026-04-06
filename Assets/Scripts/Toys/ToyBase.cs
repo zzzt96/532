@@ -20,6 +20,9 @@ public abstract class ToyBase : MonoBehaviour
     protected Rigidbody rb;
     protected Renderer rend;
     protected Color originalColor;
+    
+    [Tooltip("检测位置偏移，用于高处物体把检测点下移")] // Level 3专用
+    public Vector3 detectionOffset = Vector3.zero;
 
     // [新增] 声音组件，供所有子类使用
     protected AudioSource audioSrc;

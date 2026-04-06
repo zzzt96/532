@@ -242,6 +242,19 @@ public class CatNPC : MonoBehaviour
         );
     }
     
+    /// <summary>Level 3通用：直接走到指定位置（无状态限制）</summary>
+    public void MoveToTarget(Transform target)
+    {
+        if (target == null) return;
+        targetPos = new Vector3(target.position.x, transform.position.y, transform.position.z);
+        onArrivalCallback = () =>
+        {
+            currentState = CatState.Idle;
+            PlayAnim(clipIdle);
+        };
+        CheckTurnAndMove(CatState.WalkToChair);
+    }
+    
     // ── 协程 ────────────────────────────────────────────────────
     IEnumerator OpenDrawerRoutine()
     {
