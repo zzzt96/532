@@ -12,6 +12,7 @@ public class Level3Manager : MonoBehaviour
         LampSwung,
         PlankFell,
         AppleDone,
+        DeskLampOn,
         Complete
     }
 
@@ -27,6 +28,8 @@ public class Level3Manager : MonoBehaviour
     public ComputerTable computerTable;
     public Blank blank;
     public Apple apple;
+    public AirPump airPump;
+    public BalloonL3 balloonL3;
 
     [Header("NPC References")]
     public LittleGirlController littleGirl;
@@ -55,6 +58,7 @@ public class Level3Manager : MonoBehaviour
         Lock(pendantLight);
         Lock(tableClock);
         Lock(apple);
+        Lock(airPump);
         SetLights(false);
     }
 
@@ -147,8 +151,23 @@ public class Level3Manager : MonoBehaviour
     {
         if (currentPhase != Phase.PlankFell) return;
         currentPhase = Phase.AppleDone;
-        Debug.Log("[L3] Phase: AppleDone → Girl continues forward");
+        Debug.Log("[L3] Phase: AppleDone → AirPump unlocked");
         Lock(apple);
-        // TODO: 触发小女孩继续前进到下一个waypoint
+        Unlock(airPump);
+    }
+
+    public void OnBalloonFilled()
+    {
+        Debug.Log("[L3] Balloon filled → Inflating");
+        Lock(airPump);
+        balloonL3?.TriggerInflate();
+    }
+
+    public void OnDeskLampOn()
+    {
+        if (currentPhase != Phase.AppleDone) return;
+        currentPhase = Phase.DeskLampOn;
+        Debug.Log("[L3] Phase: DeskLampOn");
+        // TODO: 下一步解锁
     }
 }
