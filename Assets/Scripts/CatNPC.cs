@@ -255,6 +255,20 @@ public class CatNPC : MonoBehaviour
         CheckTurnAndMove(CatState.WalkToChair);
     }
     
+    /// <summary>Level 3：跳到桌面指定位置（八音盒触发）</summary>
+    public void JumpToDesk(Transform target)
+    {
+        if (target == null) return;
+        StartCoroutine(DoJump(transform.position, target.position, CatState.JumpOnTable, () =>
+        {
+            currentState = CatState.Idle;
+            PlayAnim(clipIdle);
+            Debug.Log("[Cat] Jumped onto desk!");
+            // 延迟触发礼物盒子
+            Level3Manager.Instance?.OnCatOnDesk();
+        }));
+    }
+    
     // ── 协程 ────────────────────────────────────────────────────
     IEnumerator OpenDrawerRoutine()
     {

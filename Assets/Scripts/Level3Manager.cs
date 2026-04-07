@@ -13,6 +13,7 @@ public class Level3Manager : MonoBehaviour
         PlankFell,
         AppleDone,
         DeskLampOn,
+        MusicPlayed,
         Complete
     }
 
@@ -30,6 +31,8 @@ public class Level3Manager : MonoBehaviour
     public Apple apple;
     public AirPump airPump;
     public BalloonL3 balloonL3;
+    public MusicBox musicBox;
+    public GiftBox giftBox;
 
     [Header("NPC References")]
     public LittleGirlController littleGirl;
@@ -39,8 +42,15 @@ public class Level3Manager : MonoBehaviour
     public Transform girlWaypointRight;
     public Transform girlWaypointLeft;
     public Transform catWaypointLeft;
-    public Transform girlWaypointAfterPlank; // 木板倒下后女孩走过水坑
+    public Transform girlWaypointOnPlank;
+    public Transform catWaypointOnPlank;
+    public Transform girlWaypointAtPump;
+    public Transform catWaypointAtPump;
+    public Transform catWaypointOnDesk;
 
+    [Tooltip("礼物出现后小女孩走过来的最终位置")]
+    public Transform girlWaypointFinal; 
+    
     [Header("Light References")]
     public Light[] sceneLights;
     public float litIntensity = 100f;
@@ -59,6 +69,7 @@ public class Level3Manager : MonoBehaviour
         Lock(tableClock);
         Lock(apple);
         Lock(airPump);
+        Lock(musicBox);
         SetLights(false);
     }
 
@@ -141,9 +152,14 @@ public class Level3Manager : MonoBehaviour
     {
         if (currentPhase != Phase.LampSwung) return;
         currentPhase = Phase.PlankFell;
-        Debug.Log("[L3] Phase: PlankFell → Girl walks over puddle, Apple unlocked");
-        if (littleGirl != null && girlWaypointAfterPlank != null)
-            littleGirl.StartMovingTo(girlWaypointAfterPlank);
+        Debug.Log("[L3] Phase: PlankFell → Girl and cat walk to plank, Apple unlocked");
+
+        // 小女孩和小猫走到木板上等待
+        if (littleGirl != null && girlWaypointOnPlank != null)
+            littleGirl.StartMovingTo(girlWaypointOnPlank);
+        if (cat != null && catWaypointOnPlank != null)
+            cat.MoveToTarget(catWaypointOnPlank);
+
         Unlock(apple);
     }
 
@@ -151,8 +167,16 @@ public class Level3Manager : MonoBehaviour
     {
         if (currentPhase != Phase.PlankFell) return;
         currentPhase = Phase.AppleDone;
-        Debug.Log("[L3] Phase: AppleDone → AirPump unlocked");
+        Debug.Log("[L3] Phase: AppleDone → Girl and cat walk to pump, AirPump unlocked");
+
         Lock(apple);
+
+        // 小女孩和小猫走到打气筒边上
+        if (littleGirl != null && girlWaypointAtPump != null)
+            littleGirl.StartMovingTo(girlWaypointAtPump);
+        if (cat != null && catWaypointAtPump != null)
+            cat.MoveToTarget(catWaypointAtPump);
+
         Unlock(airPump);
     }
 
@@ -167,7 +191,38 @@ public class Level3Manager : MonoBehaviour
     {
         if (currentPhase != Phase.AppleDone) return;
         currentPhase = Phase.DeskLampOn;
-        Debug.Log("[L3] Phase: DeskLampOn");
-        // TODO: 下一步解锁
+        Debug.Log("[L3] Phase: DeskLampOn → MusicBox unlocked");
+        Unlock(musicBox);
+    }
+
+    public void OnMusicPlayed()
+    {
+        if (currentPhase != Phase.DeskLampOn) return;
+        currentPhase = Phase.MusicPlayed;
+        Debug.Log("[L3] Phase: MusicPlayed → Cat jumps to desk");
+        Lock(musicBox);
+
+        // 小猫跳上桌面
+        if (cat != null && catWaypointOnDesk != null)
+            cat.JumpToDesk(catWaypointOnDesk);
+        
+    }
+
+    public void OnCatOnDesk()
+    {
+        Debug.Log("[L3] Cat on desk → triggering gift box");
+        giftBox?.TriggerKnock();
+    }
+
+
+    public void OnGiftRevealed()
+    {
+        if (currentPhase != Phase.MusicPlayed) return;
+        currentPhase = Phase.Complete;
+        Debug.Log("[L3] Phase: Complete → Girl walks over");
+
+        // 小女孩走过来
+        if (littleGirl != null && girlWaypointFinal != null)
+            littleGirl.StartMovingTo(girlWaypointFinal);
     }
 }

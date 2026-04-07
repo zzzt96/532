@@ -17,6 +17,9 @@ public class AirPump : ToyBase
     [Tooltip("活塞按压距离")]
     public float pistonPressDistance = 0.3f;
 
+    [Header("Balloon Reference")]
+    public BalloonL3 balloon;
+
     float fillTimer = 0f;
     bool filled = false;
     Vector3 pistonStartPos;
@@ -40,10 +43,11 @@ public class AirPump : ToyBase
             if (piston != null)
             {
                 float press = Mathf.Sin(Time.time * 8f) * pistonPressDistance * 0.5f + pistonPressDistance * 0.5f;
-                piston.localPosition = pistonStartPos + Vector3.down * press;
+                piston.localPosition = pistonStartPos + Vector3.left * press;
             }
 
             float progress = Mathf.Clamp01(fillTimer / fillDuration);
+            balloon?.UpdateInflationProgress(progress);
             Debug.Log($"[AirPump] Filling... {progress * 100f:F0}%");
 
             if (fillTimer >= fillDuration)

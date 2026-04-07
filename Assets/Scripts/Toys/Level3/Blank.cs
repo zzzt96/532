@@ -3,20 +3,15 @@ using UnityEngine;
 
 /// <summary>
 /// 木板
-/// 被桌子震动触发后，倒下盖住水坑
-/// 倒下方向：绕Z轴旋转（向左倒）
+/// 倒下盖住水坑 — 直接插值到目标世界旋转和位置
 /// </summary>
 public class Blank : MonoBehaviour
 {
     [Header("Fall Settings")]
-    [Tooltip("倒下方向角度（绕Z轴，正值=向左倒，负值=向右倒）")]
-    public float fallAngle = -85f;
-    [Tooltip("倒下时的X位移（落到水坑上）")]
-    public float fallSlideX = -1f;
-    [Tooltip("倒下后Y轴下移距离（贴地）")]
-    public float fallDropY = 0.5f;
-    [Tooltip("倒下后Z轴位移（往镜头靠近为负值）")]
-    public float fallSlideZ = -0.5f;
+    [Tooltip("木板倒下后的目标世界旋转（在Editor里手动摆好位置后填入）")]
+    public Vector3 targetWorldRotation = new Vector3(3f, -18.6f, -0.4f);
+    [Tooltip("木板倒下后的目标世界位置（在Editor里手动摆好位置后填入）")]
+    public Vector3 targetWorldPosition;
     public float fallDuration = 0.6f;
 
     Quaternion startRot;
@@ -24,8 +19,8 @@ public class Blank : MonoBehaviour
 
     void Start()
     {
-        startRot = transform.localRotation;
-        startPos = transform.localPosition;
+        startRot = transform.rotation;
+        startPos = transform.position;
     }
 
     public void TriggerFall()
@@ -35,23 +30,22 @@ public class Blank : MonoBehaviour
 
     IEnumerator FallRoutine()
     {
-        Quaternion endRot = Quaternion.Euler(0f, 0f, fallAngle) * startRot;
-        Vector3 endPos = startPos + new Vector3(fallSlideX, -fallDropY, fallSlideZ);
+        Quaternion endRot = Quaternion.Euler(targetWorldRotation);
+        Vector3 endPos = targetWorldPosition;
 
         float elapsed = 0f;
         while (elapsed < fallDuration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / fallDuration;
-            float eased = 1f - Mathf.Pow(1f - t, 3f); // ease-out
-
-            transform.localRotation = Quaternion.Slerp(startRot, endRot, eased);
-            transform.localPosition = Vector3.Lerp(startPos, endPos, eased);
+            float t = Mathf.Clamp01(elapsed / fallDuration);
+            float eased = 1f - Mathf.Pow(1f - t, 3f);
+            transform.rotation = Quaternion.Slerp(startRot, endRot, eased);
+            transform.position = Vector3.Lerp(startPos, endPos, eased);
             yield return null;
         }
 
-        transform.localRotation = endRot;
-        transform.localPosition = endPos;
+        transform.rotation = endRot;
+        transform.position = endPos;
 
         Debug.Log("[Blank] Plank fell, puddle covered.");
         Level3Manager.Instance?.OnPlankFell();
