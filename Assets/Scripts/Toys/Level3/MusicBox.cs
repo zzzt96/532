@@ -1,13 +1,8 @@
 using UnityEngine;
-
-/// <summary>
-/// 八音盒
-/// 附身后按Space → 播放音乐 → 小猫被吸引跳上桌面
-/// </summary>
 public class MusicBox : ToyBase
 {
-    [Header("Audio")]
     public AudioSource audioSource;
+    public float catDelayAfterMusic = 3f;
 
     bool activated = false;
 
@@ -25,12 +20,24 @@ public class MusicBox : ToyBase
         {
             activated = true;
 
-            if (audioSource != null)
-                audioSource.Play();
+            // 暂停BGM
+            var bgmObj = GameObject.Find("BGM");
+            if (bgmObj != null)
+            {
+                var bgm = bgmObj.GetComponent<AudioSource>();
+                if (bgm != null) bgm.Pause();
+            }
 
-            Debug.Log("[MusicBox] Music playing! Cat attracted.");
-            Level3Manager.Instance?.OnMusicPlayed();
+            if (audioSource != null) audioSource.Play();
+            Debug.Log("[MusicBox] Music playing! BGM paused. Cat will arrive soon.");
+            StartCoroutine(NotifyCatDelayed());
         }
+    }
+
+    System.Collections.IEnumerator NotifyCatDelayed()
+    {
+        yield return new WaitForSeconds(catDelayAfterMusic);
+        Level3Manager.Instance?.OnMusicPlayed();
     }
 
     public override void Possess()

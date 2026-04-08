@@ -167,16 +167,18 @@ public class Level3Manager : MonoBehaviour
     {
         if (currentPhase != Phase.PlankFell) return;
         currentPhase = Phase.AppleDone;
-        Debug.Log("[L3] Phase: AppleDone → Girl and cat walk to pump, AirPump unlocked");
-
         Lock(apple);
+        StartCoroutine(DelayedNPCMove());
+    }
 
-        // 小女孩和小猫走到打气筒边上
+    System.Collections.IEnumerator DelayedNPCMove()
+    {
+        yield return new WaitForSeconds(1.5f); // 等1.5秒再移动
+        Debug.Log("[L3] Phase: AppleDone → Girl and cat walk to pump");
         if (littleGirl != null && girlWaypointAtPump != null)
             littleGirl.StartMovingTo(girlWaypointAtPump);
         if (cat != null && catWaypointAtPump != null)
             cat.MoveToTarget(catWaypointAtPump);
-
         Unlock(airPump);
     }
 

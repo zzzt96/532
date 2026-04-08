@@ -1,10 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// 木板
-/// 倒下盖住水坑 — 直接插值到目标世界旋转和位置
-/// </summary>
 public class Blank : MonoBehaviour
 {
     [Header("Fall Settings")]

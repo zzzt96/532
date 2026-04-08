@@ -1,13 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// 礼物盒子
-/// 小猫跳上桌后自动触发：
-/// 1. 盒子被推倒动画
-/// 2. 礼物从盒子里滑出
-/// 3. 通知Manager小女孩走过来
-/// </summary>
 public class GiftBox : MonoBehaviour
 {
     [Header("Box")]
@@ -20,12 +13,13 @@ public class GiftBox : MonoBehaviour
     public float boxFallDuration = 0.4f;
 
     [Header("Gift")]
-    [Tooltip("礼物GameObject（初始隐藏在盒子里）")]
     public GameObject gift;
-    [Tooltip("礼物滑出的目标世界位置")]
+    [Tooltip("礼物滑出后的中间位置（桌边）")]
+    public Vector3 giftSlideWorldPosition;
+    [Tooltip("礼物最终落地的世界位置")]
     public Vector3 giftFinalWorldPosition;
-    [Tooltip("礼物滑出动画时间")]
-    public float giftSlideDuration = 0.5f;
+    public float giftSlideDuration = 0.4f;
+    public float giftFallDuration = 0.3f;
 
     bool triggered = false;
 
@@ -79,16 +73,29 @@ public class GiftBox : MonoBehaviour
     {
         gift.SetActive(true);
         Vector3 startPos = gift.transform.position;
-        Vector3 endPos = giftFinalWorldPosition;
 
+        // 第一段：从盒子里滑到桌边
         float elapsed = 0f;
         while (elapsed < giftSlideDuration)
         {
             elapsed += Time.deltaTime;
             float t = 1f - Mathf.Pow(1f - Mathf.Clamp01(elapsed / giftSlideDuration), 3f);
-            gift.transform.position = Vector3.Lerp(startPos, endPos, t);
+            gift.transform.position = Vector3.Lerp(startPos, giftSlideWorldPosition, t);
             yield return null;
         }
-        gift.transform.position = endPos;
+        gift.transform.position = giftSlideWorldPosition;
+
+        // 第二段：从桌边落到地面
+        elapsed = 0f;
+        while (elapsed < giftFallDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / giftFallDuration);
+            // 加速下落（ease-in）
+            float eased = t * t;
+            gift.transform.position = Vector3.Lerp(giftSlideWorldPosition, giftFinalWorldPosition, eased);
+            yield return null;
+        }
+        gift.transform.position = giftFinalWorldPosition;
     }
 }

@@ -321,7 +321,7 @@ public class PlayerController : MonoBehaviour
         {
             holdTimer += Time.deltaTime;
             float progress = Mathf.Clamp01(holdTimer / holdDuration);
-            PossessUI.Instance?.Show(currentHover.transform.position, progress);
+            PossessUI.Instance?.Show(currentHover.transform.position + currentHover.uiOffset, progress);
 
             if (holdTimer >= holdDuration)
             {

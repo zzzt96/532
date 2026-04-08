@@ -597,7 +597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1958666109943891209, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.402
+      value: 0.46
       objectReference: {fileID: 0}
     - target: {fileID: 1958666109943891209, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -871,7 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 1
-  isPossessableObject: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 188096428}
   isCurrentlyPossessed: 0
   isCompleted: 0
@@ -899,9 +899,10 @@ MonoBehaviour:
   possessColor: {r: 0.56078434, g: 0.28627452, b: 0.2901961, a: 1}
   cameraYOffset: 2
   detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 2, z: 0}
   moveSpeed: 8
-  minX: -30
-  maxX: 10
+  minX: -25
+  maxX: -8
   minZ: -6
   maxZ: 6
   candlePosition: {fileID: 176273306}
@@ -1214,7 +1215,7 @@ Transform:
   m_GameObject: {fileID: 275282114}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00004, y: -0, z: -0.00046}
+  m_LocalPosition: {x: -0.00056, y: 0.00055, z: 0.0001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1252,7 +1253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 1
-  isPossessableObject: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 276960042}
   isCurrentlyPossessed: 0
   isCompleted: 0
@@ -1491,8 +1492,9 @@ MonoBehaviour:
   useXOnlyDetection: 0
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
-  cameraYOffset: 0
-  detectionOffset: {x: 0, y: 0, z: 0}
+  cameraYOffset: 2
+  detectionOffset: {x: 0, y: 2, z: 0}
+  uiOffset: {x: 0, y: 2, z: 0}
   fillDuration: 3.5
   piston: {fileID: 680244746799656991}
   pistonPressDistance: 0.3
@@ -2330,7 +2332,7 @@ MonoBehaviour:
   balloonLarge: {fileID: 617378624}
   books: {fileID: 1620652883}
   booksLiftY: 1.5
-  booksFinalWorldPosition: {x: 8, y: 0.5800018, z: 7}
+  booksFinalWorldPosition: {x: 6, y: 0.77, z: 7}
   booksFinalWorldRotation: {x: -5.464, y: 24.092, z: -167.978}
   booksLiftDuration: 0.2
   booksFallDuration: 0.5
@@ -3023,7 +3025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 1
-  isPossessableObject: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 656570554}
   isCurrentlyPossessed: 0
   isCompleted: 0
@@ -3238,8 +3240,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 5d9cb5bae3b4f4650b874920db2d180e, type: 3}
-  m_PlayOnAwake: 1
+  m_Resource: {fileID: 8300000, guid: aa0d27da8b9194b49a7601867d1cd3d2, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -3343,7 +3345,9 @@ MonoBehaviour:
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
   detectionOffset: {x: 0, y: 0, z: 0}
-  audioSource: {fileID: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
+  audioSource: {fileID: 656570558}
+  catDelayAfterMusic: 3
 --- !u!1 &674170750
 GameObject:
   m_ObjectHideFlags: 0
@@ -3677,7 +3681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &708213132
 Transform:
   m_ObjectHideFlags: 0
@@ -4067,7 +4071,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &857437821
 Transform:
@@ -4078,8 +4082,8 @@ Transform:
   m_GameObject: {fileID: 857437820}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000008146034, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0099983215, y: -29.6, z: 0}
-  m_LocalScale: {x: 34.2306, y: 34.2306, z: 34.2306}
+  m_LocalPosition: {x: 0.0099983215, y: -31.04, z: 0}
+  m_LocalScale: {x: 33.52055, y: 33.52055, z: 33.52055}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 518374744}
@@ -4252,7 +4256,7 @@ Transform:
   m_GameObject: {fileID: 871480417}
   serializedVersion: 2
   m_LocalRotation: {x: 0.49317634, y: 0.4801406, z: 0.51977617, w: 0.50603837}
-  m_LocalPosition: {x: -21.43, y: 6.27, z: -8.43}
+  m_LocalPosition: {x: -22.63, y: 6.76, z: -8.43}
   m_LocalScale: {x: 13.212654, y: 0.110105455, z: 13.212654}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4359,8 +4363,8 @@ Transform:
   m_GameObject: {fileID: 873045687}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000081460335, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -19.27, z: 0.03}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalPosition: {x: 0, y: -28.232, z: 0.029999}
+  m_LocalScale: {x: 29.192, y: 29.192, z: 29.192}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 905168337}
@@ -4875,7 +4879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 0
-  isPossessableObject: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 905168335}
   isCurrentlyPossessed: 0
   isCompleted: 0
@@ -4892,9 +4896,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 857437821}
   - {fileID: 873045688}
   - {fileID: 2084455362}
+  - {fileID: 857437821}
   - {fileID: 2017454782}
   m_Father: {fileID: 1800670802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4905,7 +4909,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905168334}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f06db1b6d8c8ce4aa3fab98952a43bb, type: 3}
   m_Name: 
@@ -4915,18 +4919,17 @@ MonoBehaviour:
   useXOnlyDetection: 0
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
-  cameraYOffset: -10
-  detectionOffset: {x: 0, y: 0, z: 0}
+  cameraYOffset: -8
+  detectionOffset: {x: 0, y: -8, z: 0}
+  uiOffset: {x: 0, y: -6, z: 0}
+  pivotTransform: {fileID: 1800670802}
   triggerAngle: 60
   amplitudeGrowRate: 15
   amplitudeDecayRate: 5
   swingSpeed: 2
   swingAxis: {x: 0, y: 0, z: 1}
-  returnDuration: 1.5
   currentAmplitude: 0
   pendantPossessFOV: 55
-  bulb: {fileID: 0}
-  bulbAnchor: {fileID: 0}
 --- !u!135 &905168339
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6160,7 +6163,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.8
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -6914,8 +6917,10 @@ MonoBehaviour:
   boxFallSlide: {x: 0.3, y: 0, z: 0}
   boxFallDuration: 0.4
   gift: {fileID: 946464795}
-  giftFinalWorldPosition: {x: 6.28, y: 10, z: 6.1}
+  giftSlideWorldPosition: {x: 5.51, y: 7.56, z: 5.03}
+  giftFinalWorldPosition: {x: 5.7, y: 0.418, z: 5.98}
   giftSlideDuration: 0.5
+  giftFallDuration: 0.3
 --- !u!1 &1235569477
 GameObject:
   m_ObjectHideFlags: 0
@@ -7197,7 +7202,7 @@ MonoBehaviour:
   springGlove: {fileID: 919132148939979073}
   cans: {fileID: 883943153}
   switchObj: {fileID: 1967837349}
-  pendantLight: {fileID: 1800670803}
+  pendantLight: {fileID: 905168338}
   tableClock: {fileID: 2032063052}
   computerTable: {fileID: 1017829685}
   blank: {fileID: 1960842101}
@@ -8521,7 +8526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1604185807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8791,7 +8796,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1800670802}
-  - component: {fileID: 1800670803}
   m_Layer: 0
   m_Name: LampPivot
   m_TagString: Untagged
@@ -8815,35 +8819,6 @@ Transform:
   - {fileID: 905168337}
   m_Father: {fileID: 1322262379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1800670803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800670801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f06db1b6d8c8ce4aa3fab98952a43bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canBePossessed: 1
-  isPossessed: 0
-  useXOnlyDetection: 0
-  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  possessColor: {r: 0, g: 1, b: 1, a: 1}
-  cameraYOffset: -10
-  detectionOffset: {x: 0, y: 0, z: 0}
-  triggerAngle: 60
-  amplitudeGrowRate: 15
-  amplitudeDecayRate: 5
-  swingSpeed: 2
-  swingAxis: {x: 0, y: 0, z: 1}
-  returnDuration: 1.5
-  currentAmplitude: 0
-  pendantPossessFOV: 55
-  bulb: {fileID: 857437821}
-  bulbAnchor: {fileID: 518374744}
 --- !u!1001 &1803705279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9109,13 +9084,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848449557}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000061548555, y: 0.6550753, z: -0.00000005336263, w: 0.7555637}
-  m_LocalPosition: {x: -90.950005, y: -39.09, z: 77.65}
-  m_LocalScale: {x: 100, y: 186.4695, z: 306.5868}
+  m_LocalRotation: {x: 0.000000015218575, y: 0.982394, z: -0.000000080026275, w: 0.18682113}
+  m_LocalPosition: {x: -1.0015, y: -25.9, z: 122.6}
+  m_LocalScale: {x: 68.9856, y: 128.6371, z: 211.50075}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4576535245444412019}
-  m_LocalEulerAnglesHint: {x: 0, y: 81.851, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 158.465, z: 0}
 --- !u!1001 &1896162491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9257,7 +9232,7 @@ Transform:
   m_GameObject: {fileID: 1949404766}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -55.81, y: 2.42, z: 6.71}
+  m_LocalPosition: {x: -55.81, y: 2.44, z: 6.71}
   m_LocalScale: {x: 1.883048, y: 1.9640999, z: 1.3094}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9276,7 +9251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4aac70dee1a94ced9550ac62ad94205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
+  moveSpeed: 4
   moveDirection: {x: -1, y: 0, z: 0}
   autoStart: 0
   animator: {fileID: 1374254194}
@@ -9302,7 +9277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetWorldRotation: {x: 2.931, y: -18.589, z: -0.419}
-  targetWorldPosition: {x: -27.789, y: 0.6, z: 6.87994}
+  targetWorldPosition: {x: -27.789, y: 0.55, z: 6.87994}
   fallDuration: 0.6
 --- !u!1001 &1962881317
 PrefabInstance:
@@ -9398,9 +9373,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963037720}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.921758, y: 12.972508, z: 9.977399}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.34350264, z: -0, w: 0.93915176}
+  m_LocalPosition: {x: 3.54, y: 9.28, z: 6.5683413}
+  m_LocalScale: {x: 0.66766, y: 0.66766, z: 0.66766}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7065076068436554349}
@@ -9410,7 +9385,7 @@ Transform:
   - {fileID: 8002516885036541124}
   - {fileID: 7149069604095529134}
   m_Father: {fileID: 1322262379}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -40.181, z: 0}
 --- !u!1 &1965449493
 GameObject:
   m_ObjectHideFlags: 0
@@ -9692,7 +9667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 1
-  isPossessableObject: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 1967837346}
   isCurrentlyPossessed: 0
   isCompleted: 0
@@ -9732,6 +9707,7 @@ MonoBehaviour:
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
   detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   leverTransform: {fileID: 1992815686}
   leverFlipAngle: 40
 --- !u!1 &1970614914
@@ -10183,7 +10159,7 @@ Transform:
   m_GameObject: {fileID: 2017454781}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.094, y: -7.052, z: 0}
+  m_LocalPosition: {x: 0.024, y: -6.837, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10577,7 +10553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBePossessed: 1
-  isPossessableObject: 0
+  isPossessableObject: 1
   highlightEffect: {fileID: 2032063046}
   isCurrentlyPossessed: 0
   isCompleted: 0
@@ -10605,6 +10581,7 @@ MonoBehaviour:
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
   detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   shakeRequiredTime: 1
   shakeAmplitude: 0.15
   shakeFrequency: 30
@@ -10635,7 +10612,7 @@ Transform:
   m_GameObject: {fileID: 2084455361}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000081460335, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -19.27, z: 0.03}
+  m_LocalPosition: {x: 0, y: -21.229, z: 0.03}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12985,6 +12962,7 @@ MonoBehaviour:
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
   detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   springShort: {fileID: 852403392630031993}
   springLong: {fileID: 736468433}
   glove: {fileID: 983077794}
@@ -23705,7 +23683,7 @@ Transform:
   m_GameObject: {fileID: 1058406618282925978}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5000008, y: -0.49999923, z: -0.4999993, w: 0.5000007}
-  m_LocalPosition: {x: -4.399744, y: -2.34, z: -0.78}
+  m_LocalPosition: {x: -3.635, y: -1.503, z: -1.094}
   m_LocalScale: {x: 616.3561, y: 799.9999, z: 637.06006}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25331,13 +25309,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048830426872598601}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.38508496, y: -0.38508314, z: -0.5930511, w: 0.59305227}
-  m_LocalPosition: {x: -4.399743, y: -1.1575565, z: -0.26916027}
+  m_LocalRotation: {x: -0.35320467, y: -0.40042692, z: 0.33784655, w: 0.77509004}
+  m_LocalPosition: {x: -4.46, y: -1.0390759, z: -0.51}
   m_LocalScale: {x: 486.43628, y: 799.99994, z: 607.1838}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1963037721}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -16.079, y: -63.429, z: 57.08}
 --- !u!4 &8005691695455464283
 Transform:
   m_ObjectHideFlags: 0

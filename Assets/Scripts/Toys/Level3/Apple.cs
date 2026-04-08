@@ -1,11 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// 苹果
-/// 附身后WASD在地面滑动（固定Y轴）
-/// 移动到蜡烛前方TriggerZone → 圆形影子fade in盖住恐怖影子 → 小女孩前进
-/// </summary>
 public class Apple : ToyBase
 {
     [Header("Movement")]
@@ -59,8 +54,8 @@ public class Apple : ToyBase
         float moveZ = 0f;
         if (Input.GetKey(KeyCode.W)) moveZ -= 1f;
         if (Input.GetKey(KeyCode.S)) moveZ += 1f;
-        if (Input.GetKey(KeyCode.A)) moveX -= 1f;
-        if (Input.GetKey(KeyCode.D)) moveX += 1f;
+        if (Input.GetKey(KeyCode.A)) moveX += 1f;
+        if (Input.GetKey(KeyCode.D)) moveX -= 1f;
 
         Vector3 move = new Vector3(moveX, 0f, moveZ).normalized * moveSpeed * Time.deltaTime;
         Vector3 newPos = transform.position + move;

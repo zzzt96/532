@@ -1,10 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// 打气筒
-/// 附身后长按Space持续打气（3-4秒充满）
-/// 充满后→切换到大气球→书本被顶开→台灯亮起
-/// </summary>
 public class AirPump : ToyBase
 {
     [Header("Pump Settings")]
@@ -48,7 +43,7 @@ public class AirPump : ToyBase
 
             float progress = Mathf.Clamp01(fillTimer / fillDuration);
             balloon?.UpdateInflationProgress(progress);
-            Debug.Log($"[AirPump] Filling... {progress * 100f:F0}%");
+            // Debug.Log($"[AirPump] Filling... {progress * 100f:F0}%");
 
             if (fillTimer >= fillDuration)
             {

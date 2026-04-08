@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// 可交互物体基类
-/// </summary>
 public abstract class ToyBase : MonoBehaviour
 {
     [Header("Possession")]
@@ -23,6 +20,9 @@ public abstract class ToyBase : MonoBehaviour
     
     [Tooltip("检测位置偏移，用于高处物体把检测点下移")] // Level 3专用
     public Vector3 detectionOffset = Vector3.zero;
+    
+    [Tooltip("附身UI显示位置的偏移（用于高处物体把UI下移到玩家面前）")] // Level 3专用
+    public Vector3 uiOffset = Vector3.zero;
 
     // [新增] 声音组件，供所有子类使用
     protected AudioSource audioSrc;
@@ -31,7 +31,7 @@ public abstract class ToyBase : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rend = GetComponent<Renderer>();
-        audioSrc = GetComponent<AudioSource>(); // 获取自身挂载的AudioSource
+        audioSrc = GetComponent<AudioSource>();
 
         if (rend && rend.material)
             originalColor = rend.material.color;
@@ -53,8 +53,6 @@ public abstract class ToyBase : MonoBehaviour
     {
         if (rend && !isPossessed)
             rend.material.color = originalColor;
-
-
     }
 
     /// <summary>

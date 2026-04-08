@@ -516,6 +516,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   rotateSpeed: 90
   minAngle: -160
   maxAngle: 0
@@ -3517,6 +3519,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   headRotateSpeed: 90
   maxHeadAngle: 180
   fanBlades: {fileID: 928298375}
@@ -4783,6 +4787,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   skylightPanel: {fileID: 4614413067277150120}
   sunlightBeam: {fileID: 584243497}
   openAngleX: -90
@@ -6947,6 +6953,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   rotateSpeed: 90
   minAngle: -260
   maxAngle: 0
@@ -8889,7 +8897,7 @@ MonoBehaviour:
   girlCamOffset: {x: -16, y: -2, z: 1}
   objectivePanel: {fileID: 925778726}
   fadeDuration: 0.5
-  skipCutscene: 0
+  skipCutscene: 1
 --- !u!4 &1604185808
 Transform:
   m_ObjectHideFlags: 0
@@ -16519,6 +16527,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   moveSpeed: 3
   moveRangeX: 1.5
   whiteBalloonTrigger: {fileID: 808470163}

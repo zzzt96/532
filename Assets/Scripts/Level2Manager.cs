@@ -140,16 +140,25 @@ public class Level2Manager : MonoBehaviour
     {
         if (currentPhase != Phase.RockingChairPhase) return;
         currentPhase = Phase.LampPhase;
-        Debug.Log("[L2] Phase: LampPhase → Album falling");
-
         albumBox?.DropAlbum();
-        littleGirl?.StartMovingTo(girlWaypointFinal, onArrival: OnLevelComplete);
+    
+        // 如果没有waypoint就直接触发完关
+        if (girlWaypointFinal != null)
+            littleGirl?.StartMovingTo(girlWaypointFinal, onArrival: OnLevelComplete);
+        else
+            OnLevelComplete();
     }
     
     public void OnLevelComplete()
     {
         currentPhase = Phase.Complete;
         Debug.Log("[L2] Level Complete!");
+        StartCoroutine(LoadNextSceneDelayed());
+    }
+
+    System.Collections.IEnumerator LoadNextSceneDelayed()
+    {
+        yield return new WaitForSeconds(3f); // 等3秒再切换
         UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
     }
 }
