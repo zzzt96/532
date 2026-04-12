@@ -959,7 +959,7 @@ MonoBehaviour:
   smoothSpeedY: 2
   minX: -52
   maxX: 4
-  minY: 7
+  minY: 4
   maxY: 40
 --- !u!1 &356053610
 GameObject:
@@ -1329,6 +1329,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   moveSpeed: 3
   minX: 0.26
   maxX: 1.27
@@ -2729,7 +2731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4333652374253702736, guid: 0a2206bc7254ff94bb441ad5c6838a87, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.27
+      value: 4.366
       objectReference: {fileID: 0}
     - target: {fileID: 4333652374253702736, guid: 0a2206bc7254ff94bb441ad5c6838a87, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2827,6 +2829,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   isKnockedDown: 0
   moveSpeed: 6
   minX: -47
@@ -4575,6 +4579,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   moveSpeed: 6
   jumpKey: 32
   jumpHeight: 7
@@ -6932,7 +6938,9 @@ MonoBehaviour:
   useXOnlyDetection: 1
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
-  cameraYOffset: 0
+  cameraYOffset: -3
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   moveSpeed: 10
   minX: -35
   maxX: 5
@@ -8869,7 +8877,7 @@ MonoBehaviour:
   girlCamOffset: {x: -10, y: 0, z: 0}
   objectivePanel: {fileID: 925778726}
   fadeDuration: 0.5
-  skipCutscene: 0
+  skipCutscene: 1
 --- !u!4 &1604185808
 Transform:
   m_ObjectHideFlags: 0
@@ -37073,6 +37081,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: minY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: moveSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: maxGhostSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: mouseResponseTime
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: mouseIdleThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5581381517667346855, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
       propertyPath: m_Camera
       value: 

@@ -1,5 +1,4 @@
 using UnityEngine;
-
 /// <summary>
 /// 挂在 Player
 /// 自动创建一个 Overlay Camera 只渲染幽灵的 Layer
@@ -7,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class GhostAlwaysVisible : MonoBehaviour
 {
+    Camera _overlayCam;
     void Start()
     {
         int ghostLayer = LayerMask.NameToLayer("Ghost");
@@ -51,6 +51,12 @@ public class GhostAlwaysVisible : MonoBehaviour
         }
 
         // Debug.Log($"[GhostAlwaysVisible] Overlay camera created. Ghost on layer {ghostLayer}");
+    }
+    
+    void Update()
+    {
+        if (_overlayCam != null && Camera.main != null)
+            _overlayCam.fieldOfView = Camera.main.fieldOfView;
     }
 
     void SetLayerRecursive(GameObject obj, int layer)

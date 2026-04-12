@@ -883,7 +883,6 @@ Transform:
   - {fileID: 1763951437}
   - {fileID: 837286986}
   - {fileID: 1334188779}
-  - {fileID: 1393034933}
   - {fileID: 374397565}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1043,12 +1042,32 @@ PrefabInstance:
       value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: moveSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
       propertyPath: enableJuice
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: zSmoothSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: maxGhostSpeed
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
       propertyPath: startPosition.x
       value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: mouseResponseTime
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
+      propertyPath: mouseIdleThreshold
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5729700123578113632, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
       propertyPath: m_Name
@@ -1921,6 +1940,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   moveSpeed: 3
   minX: -26
   maxX: -22
@@ -2064,12 +2085,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393034932}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 518527616}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1393034934
 MonoBehaviour:
@@ -2088,7 +2109,7 @@ MonoBehaviour:
   tutorialToy: {fileID: 1112345369}
   tutorialCat: {fileID: 161156280}
   catTargetPoint: {fileID: 700685685}
-  textHideDelay: 5
+  textHideDelay: 8
   autoAdvanceDelay: 4
   nextSceneName: Level 1
 --- !u!1 &1689267009
@@ -2763,6 +2784,8 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   possessColor: {r: 0, g: 1, b: 1, a: 1}
   cameraYOffset: 0
+  detectionOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 0, z: 0}
   tutorialManager: {fileID: 1393034934}
   tableEdgeTarget: {fileID: 1763951437}
   basketTarget: {fileID: 842093849}
@@ -2922,6 +2945,7 @@ SceneRoots:
   - {fileID: 4576535245444412019}
   - {fileID: 927111447}
   - {fileID: 518527616}
+  - {fileID: 1393034933}
   - {fileID: 927919324}
   - {fileID: 161156277}
   - {fileID: 700685685}
