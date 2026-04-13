@@ -1,129 +1,148 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // ʹ�� TextMeshPro
+using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class IntroManager : MonoBehaviour
 {
-    [Header("UI References")]
-    [Tooltip("�����˳�ʼͼƬ�����壨������� CanvasGroup �����")]
-    public CanvasGroup introImageGroup;
-    [Tooltip("������ʾ������������")]
+    [Header("Start Screen Settings")]
+    [Tooltip("开始界面的父物体（需挂载CanvasGroup）")]
+    public CanvasGroup startScreenGroup;
+
+    [Header("Comic UI References")]
+    [Tooltip("漫画内容组（需挂载CanvasGroup）")]
+    public CanvasGroup mainContentGroup;
+
+    [Tooltip("显示漫画图片的组件")]
+    public Image comicImageDisplay;
+
+    [Tooltip("显示故事文字的组件")]
     public TextMeshProUGUI storyText;
 
     [Header("Story Settings")]
-    [Tooltip("ͼƬ�����ɺ�����Ҫ��ʱ�䣨�룩")]
-    public float fadeDuration = 1.5f;
+    [Tooltip("淡入淡出速度")]
+    public float fadeDuration = 1.0f;
+    [Tooltip("漫画镜头微动速度")]
+    public float zoomSpeed = 0.02f;
 
-    [Tooltip("������������ľ������֣�ÿ��һ��Element������ҵ�����һҳ")]
-    [TextArea(3, 5)] // �����������������󣬷����������������
     public string[] storyLines;
+    public Sprite[] storyImages;
 
     [Header("Scene Transition")]
-    [Tooltip("���������Ҫ���ص���һ����������")]
     public string nextSceneName;
 
-    private int currentLineIndex = 0;
-
-    // ״̬������ǰ����ʲô�׶�
-    private enum IntroState { ShowingImage, FadingImage, ShowingText }
-    private IntroState currentState = IntroState.ShowingImage;
+    private int currentLineIndex = -1;
+    private bool isTransitioning = false;
+    private bool gameStarted = false; // 标记是否已经点击过 Start
 
     void Start()
     {
-        // ��ʼ��״̬����ʾͼƬ����������
-        if (introImageGroup != null)
+        // 初始状态：显示开始界面，隐藏漫画内容
+        if (startScreenGroup != null)
         {
-            introImageGroup.alpha = 1f;
-            introImageGroup.gameObject.SetActive(true);
+            startScreenGroup.alpha = 1f;
+            startScreenGroup.gameObject.SetActive(true);
         }
 
-        if (storyText != null)
+        if (mainContentGroup != null)
         {
-            storyText.text = ""; // �������
-            storyText.gameObject.SetActive(false);
+            mainContentGroup.alpha = 0f;
+            mainContentGroup.gameObject.SetActive(false);
         }
+    }
+
+    // --- 新增：给开始按钮调用的方法 ---
+    public void StartGame()
+    {
+        if (isTransitioning) return;
+        StartCoroutine(TransitionFromStartToComic());
+    }
+
+    IEnumerator TransitionFromStartToComic()
+    {
+        isTransitioning = true;
+
+        // 1. 淡出开始界面
+        yield return StartCoroutine(FadeCanvasGroup(startScreenGroup, 1f, 0f, fadeDuration));
+        startScreenGroup.gameObject.SetActive(false);
+
+        // 2. 激活并淡入漫画界面
+        mainContentGroup.gameObject.SetActive(true);
+        gameStarted = true;
+        ShowNextPage(); // 显示第一页
+
+        isTransitioning = false;
     }
 
     void Update()
     {
-        // �����ҵ�������������߰��¿ո�/�س���
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        // 只有在游戏开始后，才响应点击翻页
+        if (gameStarted && !isTransitioning)
         {
-            if (currentState == IntroState.ShowingImage)
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
-                // ��ҵ�һ�ε������ʼ����ͼƬ
-                StartCoroutine(FadeOutImageAndStartText());
+                ShowNextPage();
             }
-            else if (currentState == IntroState.ShowingText)
-            {
-                // ֮��ĵ�����л���һ������
-                ShowNextLine();
-            }
+        }
+
+        // 漫画呼吸感特效
+        if (gameStarted && !isTransitioning && comicImageDisplay != null && mainContentGroup.alpha > 0.5f)
+        {
+            comicImageDisplay.transform.localScale += Vector3.one * zoomSpeed * Time.deltaTime;
         }
     }
 
-    IEnumerator FadeOutImageAndStartText()
+    void ShowNextPage()
     {
-        currentState = IntroState.FadingImage; // ����״̬����ֹ����ʱ��ҿ��
-        float elapsed = 0f;
-
-        // ͼƬ������͸��
-        while (elapsed < fadeDuration)
-        {
-            elapsed += Time.deltaTime;
-            if (introImageGroup != null)
-            {
-                introImageGroup.alpha = 1f - (elapsed / fadeDuration);
-            }
-            yield return null;
-        }
-
-        // �����������
-        if (introImageGroup != null)
-        {
-            introImageGroup.alpha = 0f;
-            introImageGroup.gameObject.SetActive(false); // ����ͼƬ��¶�����µĺ���
-        }
-
-        // ��΢ͣ�ٰ��루���ף����ݳ�����Ȼ��
-        yield return new WaitForSeconds(0.5f);
-
-        // ��������ģʽ����ʾ��һ�仰
-        currentState = IntroState.ShowingText;
-        if (storyText != null) storyText.gameObject.SetActive(true);
-        ShowNextLine();
-    }
-
-    void ShowNextLine()
-    {
-        // �������ʣ�µľ���
+        currentLineIndex++;
         if (currentLineIndex < storyLines.Length)
         {
-            if (storyText != null)
-            {
-                storyText.text = storyLines[currentLineIndex];
-            }
-            currentLineIndex++; // ׼����һ�ε��������
+            StartCoroutine(TransitionPageCoroutine());
         }
         else
         {
-            // ���о��鲥����ϣ�������Ϸ������
             LoadNextScene();
         }
+    }
+
+    IEnumerator TransitionPageCoroutine()
+    {
+        isTransitioning = true;
+
+        if (currentLineIndex > 0)
+        {
+            yield return StartCoroutine(FadeCanvasGroup(mainContentGroup, 1f, 0f, fadeDuration / 2f));
+        }
+
+        if (storyText != null) storyText.text = storyLines[currentLineIndex];
+        if (comicImageDisplay != null && currentLineIndex < storyImages.Length)
+        {
+            comicImageDisplay.sprite = storyImages[currentLineIndex];
+            comicImageDisplay.transform.localScale = Vector3.one;
+        }
+
+        yield return StartCoroutine(FadeCanvasGroup(mainContentGroup, 0f, 1f, fadeDuration / 2f));
+        isTransitioning = false;
+    }
+
+    // 优化的通用渐变方法，支持传入不同的 CanvasGroup
+    IEnumerator FadeCanvasGroup(CanvasGroup cg, float startAlpha, float endAlpha, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            if (cg != null)
+                cg.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsed / duration);
+            yield return null;
+        }
+        if (cg != null) cg.alpha = endAlpha;
     }
 
     void LoadNextScene()
     {
         if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            Debug.Log($"[IntroManager] Loading next scene: {nextSceneName}");
             SceneManager.LoadScene(nextSceneName);
-        }
-        else
-        {
-            Debug.LogWarning("[IntroManager] ��û����д��һ�����������֣�");
-        }
     }
 }
