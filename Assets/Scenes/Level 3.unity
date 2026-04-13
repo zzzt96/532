@@ -7225,6 +7225,7 @@ MonoBehaviour:
   sceneLights:
   - {fileID: 2017454784}
   litIntensity: 500
+  nextSceneName: End
 --- !u!4 &1241110647
 Transform:
   m_ObjectHideFlags: 0
@@ -24689,7 +24690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
       propertyPath: moveSpeed
-      value: 12
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919065354897215376, guid: 24ce25eb42b2748e99e8955f220dfdbe, type: 3}
       propertyPath: normalFOV

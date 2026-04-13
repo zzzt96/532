@@ -55,6 +55,9 @@ public class Level3Manager : MonoBehaviour
     public Light[] sceneLights;
     public float litIntensity = 100f;
 
+    [Header("Scene Transition")]
+    public string nextSceneName; 
+    
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -223,8 +226,16 @@ public class Level3Manager : MonoBehaviour
         currentPhase = Phase.Complete;
         Debug.Log("[L3] Phase: Complete → Girl walks over");
 
-        // 小女孩走过来
         if (littleGirl != null && girlWaypointFinal != null)
             littleGirl.StartMovingTo(girlWaypointFinal);
+
+        StartCoroutine(LoadEndingDelayed());
+    }
+
+    System.Collections.IEnumerator LoadEndingDelayed()
+    {
+        yield return new WaitForSeconds(4f); // 等小女孩走过来再切换
+        if (!string.IsNullOrEmpty(nextSceneName))
+            UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
     }
 }
