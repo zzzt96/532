@@ -9,6 +9,8 @@ public class TutorialCatNPC : MonoBehaviour
     [Header("Movement")]
     public float walkSpeed = 2f;
     public float turnDuration = 0.5f;
+    private bool hasArrived = false;
+    public bool HasArrived() => hasArrived;
 
     [Header("Animation Clip Names")]
     public string clipIdle = "Idle";
@@ -20,9 +22,9 @@ public class TutorialCatNPC : MonoBehaviour
     private bool isMoving = false;
     private float currentFaceAngle = 90f;
 
+    
     void Start()
     {
-        // ¼ÇÂ¼³õÊ¼³¯Ïò£¬·ÀÖ¹·­×ªÂÒÌ×
         currentFaceAngle = transform.eulerAngles.y;
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x);
@@ -38,11 +40,9 @@ public class TutorialCatNPC : MonoBehaviour
 
     void LateUpdate()
     {
-        // ¾ø¶Ô¿ØÖÆÐý×ª£¬¶Ô¿¹¾É°æ¶¯»­µÄ´íÎóÊý¾Ý
         transform.eulerAngles = new Vector3(0, currentFaceAngle, 0);
     }
-
-    // ÓÉ TutorialManager µ÷ÓÃ
+    
     public void TriggerAttention(Transform target)
     {
         if (isMoving) return;
@@ -77,19 +77,18 @@ public class TutorialCatNPC : MonoBehaviour
     {
         float distX = Mathf.Abs(targetPos.x - transform.position.x);
 
-        if (distX <= 0.1f) // µ½´ïÄ¿±êµã
+        if (distX <= 0.1f)
         {
             isMoving = false;
+            hasArrived = true; // â† åŠ è¿™ä¸€è¡Œ
             if (catAnimation != null) catAnimation.CrossFade(clipFinal, 0.2f);
             return;
         }
 
         float zDiff = targetPos.z - transform.position.z;
         float zStep = Mathf.MoveTowards(0, zDiff, walkSpeed * Time.deltaTime);
-
         float dirX = targetPos.x > transform.position.x ? 1f : -1f;
         transform.position += new Vector3(dirX * walkSpeed * Time.deltaTime, 0, zStep);
-
         currentFaceAngle = dirX > 0 ? 90f : -90f;
     }
 }

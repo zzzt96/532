@@ -2109,9 +2109,9 @@ MonoBehaviour:
   tutorialToy: {fileID: 1112345369}
   tutorialCat: {fileID: 161156280}
   catTargetPoint: {fileID: 700685685}
-  textHideDelay: 8
-  autoAdvanceDelay: 4
+  autoAdvanceDelay: 5
   nextSceneName: Level 1
+  catWaitDuration: 2
 --- !u!1 &1689267009
 GameObject:
   m_ObjectHideFlags: 0
@@ -2455,11 +2455,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -791209441160922991, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
       propertyPath: m_Size.x
-      value: 0.12000203
+      value: 0.097435236
       objectReference: {fileID: 0}
     - target: {fileID: -791209441160922991, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
       propertyPath: m_Center.x
-      value: 0.015788436
+      value: 0.0045050383
       objectReference: {fileID: 0}
     - target: {fileID: -791209441160922991, guid: b8bb3183763f8fc4094c70682ae21acf, type: 3}
       propertyPath: m_IsTrigger
@@ -2778,7 +2778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea663a09cc7c2364aaceb93be97fbda9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBePossessed: 1
+  canBePossessed: 0
   isPossessed: 0
   useXOnlyDetection: 0
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

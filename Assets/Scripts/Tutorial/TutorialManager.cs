@@ -13,8 +13,7 @@ public class TutorialManager : MonoBehaviour
     public Transform catTargetPoint;
 
     [Header("Settings")]
-    public float textHideDelay = 5f;
-    public float autoAdvanceDelay = 2.5f;
+    public float autoAdvanceDelay = 7f;   // 每句话停留7秒
 
     [Header("Scene Transition")]
     public string nextSceneName;
@@ -22,6 +21,10 @@ public class TutorialManager : MonoBehaviour
     private int tutorialStep = 0;
     private bool catTriggered = false;
     private float stepStartTime = 0f;
+    
+    private bool waitingForCat = false;
+    private float catArrivedTime = -1f;
+    public float catWaitDuration = 2f;    // 猫到位后等2秒切换
 
     void Start()
     {
@@ -32,17 +35,36 @@ public class TutorialManager : MonoBehaviour
 
     void Update()
     {
+        // 等猫到位后计时切换
+        if (waitingForCat)
+        {
+            if (catArrivedTime < 0 && tutorialCat != null && tutorialCat.HasArrived())
+            {
+                catArrivedTime = Time.time;
+            }
+
+            if (catArrivedTime >= 0 && Time.time - catArrivedTime >= catWaitDuration)
+            {
+                LoadNextScene();
+            }
+            return;
+        }
+
         switch (tutorialStep)
         {
             case 0:
             case 1:
             case 2:
-            case 4:
                 if (Time.time - stepStartTime > autoAdvanceDelay)
                 { tutorialStep++; UpdateText(); }
                 break;
 
-            case 3: // 只有球进篮才推进，不自动跳过
+            case 3: // 等玩家附身小火车撞球入篮，不自动跳过
+                break;
+
+            case 4: // 提示Shift退出，自动推进
+                if (Time.time - stepStartTime > autoAdvanceDelay)
+                { tutorialStep++; UpdateText(); }
                 break;
         }
     }
@@ -53,9 +75,7 @@ public class TutorialManager : MonoBehaviour
         if (catTriggered) return;
         catTriggered = true;
 
-        if (tutorialStep < 3) tutorialStep = 3;
-
-        tutorialStep++;
+        tutorialStep = 4;
         UpdateText();
 
         if (tutorialCat != null && catTargetPoint != null)
@@ -69,34 +89,34 @@ public class TutorialManager : MonoBehaviour
         switch (tutorialStep)
         {
             case 0:
-                tutorialText.text = "Move your <color=#FFD700>Mouse</color> to look around.";
+                tutorialText.text = "Use <color=#FFD700>[W][A][S][D]</color> to move around.";
                 break;
             case 1:
-                tutorialText.text = "Press <color=#FFD700>[Q]</color> to see interactable objects.\n<color=#FFD700>Yellow</color> = can possess now, <color=#9E9E9E>Gray</color> = not yet.";
+                tutorialText.text = "Press <color=#FFD700>[Q]</color> to see interactable objects.\n<color=#FFD700>Yellow</color> = can possess now,  <color=#9E9E9E>Gray</color> = not yet.";
                 break;
             case 2:
-                tutorialText.text = "Hover over the toy and <color=#FFD700>hold left mouse button</color> to possess it.";
+                tutorialText.text = "Move close to the train and <color=#FFD700>hold [Space]</color> to possess it.";
                 break;
             case 3:
-                tutorialText.text = "Use <color=#FFD700>[W][A][S][D]</color> and <color=#FFD700>[Space]</color> to move.\nPush the ball into the basket to attract the cat!";
+                tutorialText.text = "Use <color=#FFD700>[W][A][S][D]</color> to drive the train.\nKnock the ball into the basket!";
                 break;
             case 4:
-                tutorialText.text = "Great! The cat is distracted.\n<color=#FFD700>Click</color> to exit the toy.";
+                tutorialText.text = "Great! The cat is distracted.\nPress <color=#FFD700>[Shift]</color> to exit the train.";
                 break;
             case 5:
-                tutorialText.text = "Tutorial complete!\nTry to help the little girl.";
-                Invoke("HideText", textHideDelay);
+                tutorialText.text = "Well done! Now help the little girl.";
+                waitingForCat = true;
                 break;
         }
 
         stepStartTime = Time.time;
     }
 
-    void HideText()
+    void LoadNextScene()
     {
         if (tutorialText != null)
             tutorialText.gameObject.SetActive(false);
-        
+
         Debug.Log("[Tutorial] Complete! Loading next scene.");
         UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
     }

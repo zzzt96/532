@@ -41,12 +41,10 @@ public class TutorialBall : ToyBase
         Vector3 endPos = tableEdgeTarget.position;
         float elapsed = 0f;
 
-        Debug.Log("[TutorialBall] Rolling to edge...");
-
         while (elapsed < rollDuration)
         {
             elapsed += Time.deltaTime;
-            float t = Mathf.SmoothStep(0f, 1f, elapsed / rollDuration); // 丝滑缓入缓出
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / rollDuration);
             transform.position = Vector3.Lerp(startPos, endPos, t);
             yield return null;
         }
@@ -54,21 +52,14 @@ public class TutorialBall : ToyBase
         transform.position = endPos;
         isRolling = false;
 
-        // 到达桌边后，开放附身
-        canBePossessed = true;
-        Debug.Log("[TutorialBall] Reached edge, now possessable!");
+        // 不再开放附身，直接跳进篮子
+        StartCoroutine(JumpToBasket());
     }
 
     // 附身后玩家控制
     public override void ToyUpdate()
     {
         if (isJumping || inBasket) return;
-
-        // Space键跳向篮子
-        if (Input.GetKeyDown(KeyCode.Space) && basketTarget != null)
-        {
-            StartCoroutine(JumpToBasket());
-        }
     }
 
     IEnumerator JumpToBasket()
@@ -100,9 +91,6 @@ public class TutorialBall : ToyBase
 
         // 通知完成
         GetComponent<InteractableTag>()?.SetCompleted();
-
-        PlayerController player = FindObjectOfType<PlayerController>();
-        if (player != null) player.ExitPossess();
 
         if (tutorialManager != null)
             tutorialManager.OnBallInBasket();
