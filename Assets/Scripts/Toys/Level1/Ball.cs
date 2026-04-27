@@ -19,27 +19,40 @@ public class Ball : ToyBase
     public float fixedY = 4.59f;
 
     [Header("Knock Off Shelf")]
-    public Transform landingOnDeskTarget;  // 空物体：左边桌面上的落点
+    public Transform landingOnDeskTarget;
     public float fallDuration = 0.4f;
     public float bounceDuration = 0.15f;
     private bool isKnockedOff = false;
 
+    // ==================== Audio ====================
     [Header("Audio")]
-    public AudioClip jumpSound;
-    public AudioClip hitSound;
-    public AudioClip dropSound;
+    [Tooltip("跳跃时的弹跳声 (自找音源, 非 Berklee 列表)")]
+    public SoundSlot jumpSound;
+
+    [Tooltip("被猫撞落到桌面的落桌声 (轻质物体撞木桌)")]
+    public SoundSlot landSound;
+
+    [Tooltip("撞到墙上铁钩子的清脆碰撞声")]
+    public SoundSlot hitHangerSound;
+
+    [Tooltip("撞到盆栽的轻撞声 (由 PotIvy 通过 PlayHitPlantSoundExternal 触发)")]
+    public SoundSlot hitPlantSound;
+
+    [Tooltip("撞到水壶的撞击声")]
+    public SoundSlot hitBottleSound;
+    // ===============================================
 
     private bool isJumping = false;
     private float startY;
     private float jumpProgress = 0f;
-    
+
     private bool lineIronDone = false;
     private bool linePotDone = false;
 
     protected override void Start()
     {
         base.Start();
-        canBePossessed = false; // 默认不可附身，掉落后才可以
+        canBePossessed = false; // 默认不可附身, 掉落到桌面后才变 true
     }
 
     public override void ToyUpdate()
@@ -70,33 +83,48 @@ public class Ball : ToyBase
         pos.z = Mathf.Clamp(pos.z, minZ, maxZ);
         transform.position = pos;
     }
-    
-    
-    // 小球的两条线都完成之后小球才会彻底不能被再附身
+
+    // ===== 双线路完成追踪 =====
     public void SetIronLineDone()
     {
         lineIronDone = true;
+        Debug.Log("[Ball] Iron hanger line completed.");
         CheckBothLinesDone();
     }
 
     public void SetPotLineDone()
     {
         linePotDone = true;
+        Debug.Log("[Ball] Plant pot line completed.");
         CheckBothLinesDone();
     }
 
     void CheckBothLinesDone()
     {
         if (lineIronDone && linePotDone)
+        {
+            // 只有两条线都完成时, Ball 才整体完成 + 不可再附身
+            canBePossessed = false;
             GetComponent<InteractableTag>()?.SetCompleted();
+            Debug.Log("[Ball] Both lines completed! Ball locked.");
+        }
+        // 只完成一条线时, 不调 SetCompleted, canBePossessed 保持 true
+        // 玩家可以继续靠近 Ball 重新附身, 走另一条线
     }
 
+    // ===== 由 PotIvy 外部调用, 触发 Ball 自己的撞盆栽声 =====
+    public void PlayHitPlantSoundExternal()
+    {
+        PlaySound(hitPlantSound);
+    }
+
+    // ===== 跳跃 =====
     void StartJump()
     {
         isJumping = true;
         startY = transform.position.y;
         jumpProgress = 0f;
-        if (audioSrc && jumpSound) audioSrc.PlayOneShot(jumpSound);
+        PlaySound(jumpSound);
     }
 
     void UpdateJump()
@@ -116,7 +144,7 @@ public class Ball : ToyBase
         }
     }
 
-    // 猫撞击后调用
+    // ===== 被猫撞下书架 =====
     public void KnockOffShelf()
     {
         if (isKnockedOff) return;
@@ -129,24 +157,22 @@ public class Ball : ToyBase
     {
         Vector3 startPos = transform.position;
 
-        // 落点：用 landingOnDeskTarget 的 XY，保持自身 Z
         Vector3 landPos = landingOnDeskTarget != null
             ? new Vector3(landingOnDeskTarget.position.x, landingOnDeskTarget.position.y, transform.position.z)
             : new Vector3(startPos.x, 0f, transform.position.z);
 
-        // 掉落
         float elapsed = 0f;
         while (elapsed < fallDuration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / fallDuration;
-            transform.position = Vector3.Lerp(startPos, landPos, t * t); // 加速落下
+            transform.position = Vector3.Lerp(startPos, landPos, t * t);
             yield return null;
         }
         transform.position = landPos;
 
-        // 落地音效
-        if (audioSrc && dropSound) audioSrc.PlayOneShot(dropSound);
+        // 落桌音效
+        PlaySound(landSound);
 
         // 弹跳
         Vector3 bounceUp = landPos + Vector3.up * 0.4f;
@@ -169,11 +195,11 @@ public class Ball : ToyBase
         }
         transform.position = landPos;
 
-        // 落稳后玩家可以附身
         canBePossessed = true;
         Debug.Log("[Ball] Landed on desk, ready to possess!");
     }
 
+    // ===== 与其他物体碰撞 =====
     void OnTriggerEnter(Collider other)
     {
         Debug.Log($"[Ball] Triggered: {other.name}, Tag: {other.tag}");
@@ -183,7 +209,7 @@ public class Ball : ToyBase
             WaterBottle bottle = other.GetComponent<WaterBottle>();
             if (bottle != null)
             {
-                if (audioSrc && hitSound) audioSrc.PlayOneShot(hitSound);
+                PlaySound(hitBottleSound);
                 Vector3 dir = (other.transform.position - transform.position).normalized;
                 if (dir.sqrMagnitude < 0.001f) dir = Vector3.right;
                 bottle.KnockDown(dir);
@@ -192,12 +218,13 @@ public class Ball : ToyBase
         }
         else if (other.CompareTag("IronHanger"))
         {
-            if (audioSrc && hitSound) audioSrc.PlayOneShot(hitSound);
+            PlaySound(hitHangerSound);
             other.gameObject.SendMessage("ActivateBunny", SendMessageOptions.DontRequireReceiver);
             other.gameObject.SendMessage("ActivateBunnyInternal", SendMessageOptions.DontRequireReceiver);
             other.gameObject.SendMessage("Activate", SendMessageOptions.DontRequireReceiver);
             Debug.Log("[Ball] Hit iron hanger!");
             SetIronLineDone();
+            // 注意: 这里不调 SetCompleted, 让玩家有机会走另一条线
         }
     }
 }

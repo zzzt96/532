@@ -13,8 +13,11 @@ public class TableClock : MonoBehaviour
     public float bounceSpeed = 5f;
     public int bounceCount = 3;
 
+    // ==================== Audio ====================
     [Header("Audio")]
-    public AudioClip alarmSound; // 闹铃响声
+    [Tooltip("闹铃响声 (建议勾选 Loop, 提供可循环的短 wav)")]
+    public SoundSlot alarmSound;
+    // ===============================================
 
     private bool isWaiting = false;
     private float waitTimer = 0f;
@@ -43,7 +46,6 @@ public class TableClock : MonoBehaviour
 
     void Update()
     {
-        // 延迟等待
         if (isWaiting)
         {
             waitTimer += Time.deltaTime;
@@ -78,8 +80,15 @@ public class TableClock : MonoBehaviour
                 transform.position = pos;
                 Debug.Log("[TableClock] Bounce finished! Waking up girl now.");
 
-                // 停止闹铃音效
-                if (audioSource) audioSource.Stop();
+                // 停止闹铃循环音
+                StopAlarm();
+
+                // 强制玩家退出附身 + zoom out
+                PlayerController player = FindObjectOfType<PlayerController>();
+                if (player != null && player.isPossessing)
+                {
+                    player.ExitPossess();
+                }
 
                 if (GameManager.Instance != null)
                 {
@@ -96,15 +105,30 @@ public class TableClock : MonoBehaviour
         currentBounce = 0;
         startY = transform.position.y;
         currentBounceHeight = bounceHeight;
-
-        // 开始播放闹铃音效
-        if (audioSource && alarmSound)
-        {
-            audioSource.clip = alarmSound;
-            audioSource.loop = true; // 循环播放，直到跳跃结束
-            audioSource.Play();
-        }
+        
+        PlayAlarm();
 
         Debug.Log("[TableClock] ALARM! Bouncing!");
+    }
+
+    void PlayAlarm()
+    {
+        if (alarmSound == null || alarmSound.clip == null) return;
+        if (audioSource == null) return;
+
+        audioSource.clip = alarmSound.clip;
+        audioSource.volume = alarmSound.volume;
+        audioSource.pitch = alarmSound.pitch + Random.Range(-alarmSound.randomPitchRange, alarmSound.randomPitchRange);
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
+    void StopAlarm()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            audioSource.loop = false;
+        }
     }
 }

@@ -13,7 +13,7 @@ public class TutorialManager : MonoBehaviour
     public Transform catTargetPoint;
 
     [Header("Settings")]
-    public float autoAdvanceDelay = 7f;   // 每句话停留7秒
+    public float autoAdvanceDelay = 10f;   // 每句话停留
 
     [Header("Scene Transition")]
     public string nextSceneName;
@@ -24,7 +24,7 @@ public class TutorialManager : MonoBehaviour
     
     private bool waitingForCat = false;
     private float catArrivedTime = -1f;
-    public float catWaitDuration = 2f;    // 猫到位后等2秒切换
+    public float catWaitDuration = 1f;    // 猫到位后切换
 
     void Start()
     {

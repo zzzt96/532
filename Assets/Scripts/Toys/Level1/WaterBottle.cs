@@ -14,21 +14,29 @@ public class WaterBottle : ToyBase
     public float maxZ = 0.5f;
 
     [Header("Scripted Fall Heights")]
-    public float tableEdgeY = 1.2f;   // 桌面高度（在Inspector里对照实际桌面Y设置）
-    public float landingY = 0.1f;     // 地面落点高度
+    public float tableEdgeY = 1.2f;
+    public float landingY = 0.1f;
     public float rollDuration = 0.4f;
     public float fallDuration = 0.3f;
     public float bounceDuration = 0.15f;
 
     [Header("References")]
-    public CatNPC cat;                // 拖入 Cat_L_Black
+    public CatNPC cat;
 
+    // ==================== Audio ===================
     [Header("Audio")]
-    public AudioClip dropGroundSound;
+    [Tooltip("移动摩擦声 (建议勾选 Loop, 提供可循环的短 wav)")]
+    public SoundSlot moveSound;
 
-    // 记录掉落时的X位置，用于动态计算落点
+    [Tooltip("金属落地声 (单次触发, 不需要 loop)")]
+    public SoundSlot landSound;
+    // ====================================================================
+
     private float fallFromX;
     private float fallFromZ;
+
+    // 用于检测移动状态变化
+    private bool wasMoving = false;
 
     public override void ToyUpdate()
     {
@@ -40,11 +48,25 @@ public class WaterBottle : ToyBase
         if (Input.GetKey(KeyCode.A)) moveX = 1f;
         if (Input.GetKey(KeyCode.D)) moveX = -1f;
 
+        bool isMoving = (moveX != 0f || moveZ != 0f);
+
+        // ===== 移动音效控制 =====
+        if (isMoving && !wasMoving)
+        {
+            // 从静止 → 开始移动：启动循环摩擦声
+            PlaySound(moveSound);
+        }
+        else if (!isMoving && wasMoving)
+        {
+            // 从移动 → 停止：停止循环音
+            StopSound();
+        }
+        wasMoving = isMoving;
+
         transform.position += new Vector3(moveX, 0, moveZ) * moveSpeed * Time.deltaTime;
 
         Vector3 pos = transform.position;
 
-        // 超出桌面边界 → 触发掉落
         if (pos.x < minX || pos.x > maxX || pos.z < minZ || pos.z > maxZ)
         {
             PlayerController player = FindObjectOfType<PlayerController>();
@@ -72,7 +94,9 @@ public class WaterBottle : ToyBase
         isKnockedDown = true;
         canBePossessed = false;
 
-        // 记录当前X和Z，作为整个掉落路径的基准
+        // 翻倒时确保停止移动循环音
+        StopSound();
+
         fallFromX = transform.position.x;
         fallFromZ = transform.position.z;
 
@@ -85,9 +109,8 @@ public class WaterBottle : ToyBase
         Quaternion startRot = transform.rotation;
         Quaternion tiltedRot = startRot * Quaternion.Euler(0, 0, -90f);
 
-        // ========== 阶段1：在桌面倒下滚到边缘（保持当前X，Y锁定桌面高度）==========
+        // 阶段1：滚到桌边
         Vector3 edgePos = new Vector3(fallFromX, tableEdgeY, fallFromZ);
-
         float elapsed = 0f;
         while (elapsed < rollDuration)
         {
@@ -101,9 +124,8 @@ public class WaterBottle : ToyBase
         transform.position = edgePos;
         transform.rotation = tiltedRot;
 
-        // ========== 阶段2：从桌边垂直落到地面（保持同一X）==========
+        // 阶段2：垂直下落
         Vector3 landPos = new Vector3(fallFromX, landingY, fallFromZ);
-
         elapsed = 0f;
         while (elapsed < fallDuration)
         {
@@ -116,13 +138,11 @@ public class WaterBottle : ToyBase
         }
         transform.position = landPos;
 
-        // 落地音效
-        if (audioSrc && dropGroundSound)
-            audioSrc.PlayOneShot(dropGroundSound);
+        // ===== 落地音效 =====
+        PlaySound(landSound);
 
-        // ========== 阶段3：弹跳 ==========
+        // 阶段3：弹跳
         Vector3 bounceUp = landPos + Vector3.up * 0.3f;
-
         elapsed = 0f;
         float halfBounce = bounceDuration * 0.4f;
         while (elapsed < halfBounce)
@@ -142,7 +162,7 @@ public class WaterBottle : ToyBase
         }
         transform.position = landPos;
 
-        // ========== 触发猫咪 ==========
+        // 触发猫咪
         if (cat != null)
         {
             cat.AttractedBySound(landPos);
@@ -151,11 +171,10 @@ public class WaterBottle : ToyBase
 
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = false;
-        
+
         GetComponent<InteractableTag>()?.SetCompleted();
     }
 
-    // 保留旧的球碰撞触发接口
     void OnTriggerEnter(Collider other)
     {
         if (!isKnockedDown && other.CompareTag("Ball"))
@@ -166,5 +185,11 @@ public class WaterBottle : ToyBase
     {
         if (!isKnockedDown && collision.collider.CompareTag("Ball"))
             KnockDown(transform.position - collision.transform.position);
+    }
+    
+    public override void UnPossess()
+    {
+        base.UnPossess();
+        StopSound();
     }
 }

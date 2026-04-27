@@ -80,4 +80,41 @@ public abstract class ToyBase : MonoBehaviour
     /// 子类重写这个方法实现具体的交互逻辑
     /// </summary>
     public abstract void ToyUpdate();
+    
+    
+    // ==================== Audio System (通用音效系统) ====================
+    // 所有子类都可以直接调用 PlaySound(soundSlot) / StopSound() 来触发音效，
+    protected void PlaySound(SoundSlot slot)
+    {
+        if (slot == null || !slot.IsValid()) return;
+        if (audioSrc == null) return;
+
+        if (slot.loop)
+        {
+            // 循环音效：如果当前已经在播同一个 clip，就不要重启（避免抖动）
+            if (audioSrc.isPlaying && audioSrc.clip == slot.clip) return;
+
+            audioSrc.clip = slot.clip;
+            audioSrc.volume = slot.volume;
+            audioSrc.pitch = slot.GetPitch();
+            audioSrc.loop = true;
+            audioSrc.Play();
+        }
+        else
+        {
+            // 单次音效：用 PlayOneShot 不会打断其他正在播放的循环音
+            audioSrc.pitch = slot.GetPitch();
+            audioSrc.PlayOneShot(slot.clip, slot.volume);
+        }
+    }
+    
+    protected void StopSound()
+    {
+        if (audioSrc == null) return;
+        if (audioSrc.isPlaying && audioSrc.loop)
+        {
+            audioSrc.Stop();
+            audioSrc.loop = false;
+        }
+    }
 }

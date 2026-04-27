@@ -535,9 +535,14 @@ public class PlayerController : MonoBehaviour
     void HandleKeyboardMovement()
     {
         if (isPossessing) return;
+        
+        float h = 0f;
+        float v = 0f;
 
-        float h = -Input.GetAxisRaw("Horizontal"); 
-        float v = Input.GetAxisRaw("Vertical"); 
+        if (Input.GetKey(KeyCode.A)) h += 1f; 
+        if (Input.GetKey(KeyCode.D)) h -= 1f;  
+        if (Input.GetKey(KeyCode.W)) v += 1f;
+        if (Input.GetKey(KeyCode.S)) v -= 1f;
 
         Vector3 pos = transform.position;
         float logicalY = pos.y - currentBobOffset;
@@ -550,7 +555,7 @@ public class PlayerController : MonoBehaviour
         pos.z = transform.position.z;
         transform.position = pos;
     }
-
+    
     void ApplyGhostJuice()
     {
         if (!enableJuice) return;

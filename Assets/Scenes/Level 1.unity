@@ -1594,9 +1594,9 @@ AudioSource:
   m_GameObject: {fileID: 425790598}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8874102700620732304, guid: e3f4773cac694064882f958347a2b366, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: e17eb7e5b897ea948857badd73d3fd99, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2338,6 +2338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pot_Ivy
       objectReference: {fileID: 0}
+    - target: {fileID: 6020261589325224017, guid: 1dce141ef1d82e84b81ab612eb910856, type: 3}
+      propertyPath: m_TagString
+      value: Plant
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2599,7 +2603,12 @@ MonoBehaviour:
   shakeDuration: 1.2
   shakeMagnitude: 0.15
   shakeSpeed: 20
-  shakeSound: {fileID: 0}
+  leavesShakeSound:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    randomPitchRange: 0
+    loop: 0
 --- !u!82 &652142490
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2843,7 +2852,18 @@ MonoBehaviour:
   fallDuration: 0.8
   bounceDuration: 0.15
   cat: {fileID: 1667452268}
-  dropGroundSound: {fileID: 8300000, guid: 5ec9f6af1ed10fe42b9108f9b6e27fb4, type: 3}
+  moveSound:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    randomPitchRange: 0
+    loop: 0
+  landSound:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    randomPitchRange: 0
+    loop: 0
 --- !u!54 &663702224
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3097,9 +3117,9 @@ AudioSource:
   m_GameObject: {fileID: 663702219}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8874102700620732304, guid: e3f4773cac694064882f958347a2b366, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 5ec9f6af1ed10fe42b9108f9b6e27fb4, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -4586,16 +4606,43 @@ MonoBehaviour:
   jumpHeight: 7
   jumpSpeed: 5
   minX: -36
-  maxX: -24
+  maxX: -26
   minZ: -8
   maxZ: -4
   fixedY: 4.59
   landingOnDeskTarget: {fileID: 619318659}
   fallDuration: 0.4
   bounceDuration: 0.15
-  jumpSound: {fileID: 8300000, guid: 39d7424af9ddc2847992d917abb75ec7, type: 3}
-  hitSound: {fileID: 8300000, guid: 39d7424af9ddc2847992d917abb75ec7, type: 3}
-  dropSound: {fileID: 8300000, guid: 39d7424af9ddc2847992d917abb75ec7, type: 3}
+  jumpSound:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    randomPitchRange: 0
+    loop: 0
+  landSound:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    randomPitchRange: 0
+    loop: 0
+  hitHangerSound:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    randomPitchRange: 0
+    loop: 0
+  hitPlantSound:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    randomPitchRange: 0
+    loop: 0
+  hitBottleSound:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    randomPitchRange: 0
+    loop: 0
 --- !u!65 &787035591
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4870,9 +4917,9 @@ AudioSource:
   m_GameObject: {fileID: 787035589}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8874102700620732304, guid: e3f4773cac694064882f958347a2b366, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 39d7424af9ddc2847992d917abb75ec7, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -7210,9 +7257,9 @@ AudioSource:
   m_GameObject: {fileID: 1167528402}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8874102700620732304, guid: e3f4773cac694064882f958347a2b366, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: d8754036a170da54fbc12b51da7ba4a9, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -7552,11 +7599,11 @@ Transform:
   - {fileID: 1789879937}
   - {fileID: 787035588}
   - {fileID: 795091922}
+  - {fileID: 749917980}
   - {fileID: 652142481}
   - {fileID: 1167528401}
   - {fileID: 697594691}
   - {fileID: 356053611}
-  - {fileID: 749917980}
   - {fileID: 1877635390}
   - {fileID: 425790597}
   - {fileID: 1875083841}
@@ -9646,7 +9693,12 @@ MonoBehaviour:
   bounceHeight: 3
   bounceSpeed: 5
   bounceCount: 3
-  alarmSound: {fileID: 8300000, guid: 16a08cc7d5a6216428bacc03a161ff5e, type: 3}
+  alarmSound:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    randomPitchRange: 0
+    loop: 0
 --- !u!114 &1875083847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9873,9 +9925,9 @@ AudioSource:
   m_GameObject: {fileID: 1875083842}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8874102700620732304, guid: e3f4773cac694064882f958347a2b366, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 16a08cc7d5a6216428bacc03a161ff5e, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -10307,7 +10359,7 @@ AudioSource:
   m_GameObject: {fileID: 1877635391}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8874102700620732304, guid: e3f4773cac694064882f958347a2b366, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0

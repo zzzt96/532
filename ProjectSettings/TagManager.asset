@@ -11,6 +11,7 @@ TagManager:
   - IronHanger
   - 'Ball '
   - Ghost
+  - Plant
   layers:
   - Default
   - TransparentFX

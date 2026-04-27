@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class LittleGirlControllerWakeUp : MonoBehaviour
 {
@@ -13,17 +14,34 @@ public class LittleGirlControllerWakeUp : MonoBehaviour
     [Header("State")]
     public bool hasWokenUp = false;
 
-    // ─── 新增：动画控制 ───
     [Header("Animator Control")]
     public Animator animator;
 
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("起床声 (布料摩擦, 醒来瞬间播放)")]
+    public SoundSlot clothRustleSound;
+
+    [Tooltip("下床声 (脚步落地, 起床后短暂延迟播放)")]
+    public SoundSlot stepDownSound;
+
+    [Tooltip("下床声延迟 (秒, 起床后多久触发下床声)")]
+    public float stepDownDelay = 0.5f;
+
+    [Tooltip("行走脚步声 (建议勾选 Loop, 提供可循环短 wav)")]
+    public SoundSlot walkingSound;
+    // ===============================================
+
+    private AudioSource audioSrc;
+    private bool isWalkingSoundPlaying = false;
+
     void Start()
     {
-        // 自动获取挂在模型子物体上的 Animator
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
         }
+        audioSrc = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -33,9 +51,6 @@ public class LittleGirlControllerWakeUp : MonoBehaviour
         MoveToNextWaypoint();
     }
 
-    /// <summary>
-    /// 醒来并开始移动
-    /// </summary>
     public void WakeUpAndMove()
     {
         if (hasWokenUp) return;
@@ -44,13 +59,24 @@ public class LittleGirlControllerWakeUp : MonoBehaviour
         canMove = true;
         currentWaypointIndex = 0;
 
-        // Capsule 从躺下变成站立
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        // ─── 新增：触发站立并开始行走的动画 ───
         SetMovingAnim(true);
 
+        // 启动音效序列: 起床 -> (延迟) -> 下床 -> 行走 loop
+        StartCoroutine(PlayWakeUpSequence());
+
         Debug.Log("[LittleGirl] Woke up! Starting to move.");
+    }
+
+    IEnumerator PlayWakeUpSequence()
+    {
+        PlayOneShotSlot(clothRustleSound);
+
+        yield return new WaitForSeconds(stepDownDelay);
+        PlayOneShotSlot(stepDownSound);
+
+        StartWalkingSound();
     }
 
     void MoveToNextWaypoint()
@@ -69,16 +95,12 @@ public class LittleGirlControllerWakeUp : MonoBehaviour
             return;
         }
 
-        // 【修复点】：直接使用目标点的完整坐标（包括高度），不再锁定Y轴
         Vector3 targetPos = target.position;
 
-        // 使用 MoveTowards 平滑移动，比算 direction 更稳
         transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
 
-        // 翻转朝向（只看X轴的相对位置）
         FlipTowards(targetPos);
 
-        // 检查是否到达（缩小判定范围，让她完全走到点上）
         if (Vector3.Distance(transform.position, targetPos) < 0.1f)
         {
             Debug.Log($"[LittleGirl] Reached waypoint {currentWaypointIndex}");
@@ -90,37 +112,71 @@ public class LittleGirlControllerWakeUp : MonoBehaviour
     {
         canMove = false;
 
-        // ─── 新增：到达终点，停下行走动画 ───
         SetMovingAnim(false);
+
+        // 停止行走 loop
+        StopWalkingSound();
 
         Debug.Log("[LittleGirl] Reached the door!");
 
-        // 通知 GameManager 游戏完成
         if (GameManager.Instance != null)
         {
             GameManager.Instance.GameComplete();
         }
     }
 
-    // ─── 新增：动画与辅助方法 ───
     private void SetMovingAnim(bool moving)
     {
         if (animator != null)
         {
-            // 依赖 Animator 中配置好的 "isMoving" 布尔值
             animator.SetBool("isMoving", moving);
         }
     }
 
     private void FlipTowards(Vector3 target)
     {
-        // 距离太近就不翻转，防止到达目标点时鬼畜抽搐
         if (Mathf.Abs(target.x - transform.position.x) < 0.01f) return;
 
-        // 根据目标 X 坐标和当前 X 坐标对比，决定朝左还是朝右
         float dir = target.x > transform.position.x ? 1f : -1f;
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * dir;
         transform.localScale = scale;
+    }
+
+    // ==================== Audio Methods ====================
+
+    void PlayOneShotSlot(SoundSlot slot)
+    {
+        if (slot == null || slot.clip == null) return;
+        if (audioSrc == null) return;
+
+        audioSrc.pitch = slot.pitch +
+            Random.Range(-slot.randomPitchRange, slot.randomPitchRange);
+        audioSrc.PlayOneShot(slot.clip, slot.volume);
+    }
+
+    void StartWalkingSound()
+    {
+        if (walkingSound == null || walkingSound.clip == null) return;
+        if (audioSrc == null) return;
+        if (isWalkingSoundPlaying) return;
+
+        audioSrc.clip = walkingSound.clip;
+        audioSrc.volume = walkingSound.volume;
+        audioSrc.pitch = walkingSound.pitch +
+            Random.Range(-walkingSound.randomPitchRange, walkingSound.randomPitchRange);
+        audioSrc.loop = true;
+        audioSrc.Play();
+        isWalkingSoundPlaying = true;
+    }
+
+    void StopWalkingSound()
+    {
+        if (audioSrc == null) return;
+        if (!isWalkingSoundPlaying) return;
+
+        audioSrc.Stop();
+        audioSrc.loop = false;
+        isWalkingSoundPlaying = false;
     }
 }

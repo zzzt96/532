@@ -587,7 +587,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -24.879997, y: 10.12}
-  m_SizeDelta: {x: 20, y: 5}
+  m_SizeDelta: {x: 25, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &374397566
 MonoBehaviour:
@@ -2109,9 +2109,9 @@ MonoBehaviour:
   tutorialToy: {fileID: 1112345369}
   tutorialCat: {fileID: 161156280}
   catTargetPoint: {fileID: 700685685}
-  autoAdvanceDelay: 5
+  autoAdvanceDelay: 8
   nextSceneName: Level 1
-  catWaitDuration: 2
+  catWaitDuration: 1
 --- !u!1 &1689267009
 GameObject:
   m_ObjectHideFlags: 0

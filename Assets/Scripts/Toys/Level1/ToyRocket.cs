@@ -21,7 +21,7 @@ public class ToyRocket : ToyBase
 
     [Header("Clock Detection")]
     public TableClock targetClock;
-    public float clockHitDistance = 1.0f; // 调小了判定距离，需要靠得更近
+    public float clockHitDistance = 1.0f; 
 
     [Header("Audio")]
     public AudioClip hitClockSound; // 撞击闹钟音效
@@ -62,7 +62,7 @@ public class ToyRocket : ToyBase
         Debug.Log("[ToyRocket] Starting to fall over...");
     }
 
-    // ★ 重写附身方法：记录附身时的初始位置
+    // 重写附身方法：记录附身时的初始位置
     public override void Possess()
     {
         base.Possess();
@@ -107,12 +107,12 @@ public class ToyRocket : ToyBase
             return;
         }
 
-        // ★ 核心修复：检查玩家是否真的移动了火箭
+        // 核心修复：检查玩家是否真的移动了火箭
         if (isPossessed && !hasMovedSincePossess)
         {
             if (Mathf.Abs(transform.position.x - possessStartX) > 0.1f)
             {
-                hasMovedSincePossess = true; // 玩家确实操作了火箭
+                hasMovedSincePossess = true; 
             }
         }
 
