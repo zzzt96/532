@@ -1,33 +1,35 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 紫色气球 - 玩家附身后用AD左右移动
-/// 移动碰到白色气球触发碰撞 → 吸引猫跳起 → cube掉落到风扇
-/// </summary>
 public class Balloon : ToyBase
 {
     [Header("WASD Movement")]
     public float moveSpeed = 3f;
-    [Tooltip("左右移动范围（相对于初始位置）")]
     public float moveRangeX = 3f;
 
     [Header("White Balloon Trigger")]
-    [Tooltip("白色气球的位置（空物体放在白气球处）")]
     public Transform whiteBalloonTrigger;
-    [Tooltip("触发距离：紫气球离白气球多近时触发")]
     public float triggerDistance = 1.0f;
 
     [Header("Hanging Cube")]
-    [Tooltip("白色气球下挂的cube")]
     public GameObject hangingCube;
-    [Tooltip("cube掉落目标位置（风扇开关上方）")]
     public Transform cubeDropTarget;
     public float dropDuration = 0.5f;
 
     [Header("Cat Landing")]
-    [Tooltip("猫腾空后落在风扇桌上的位置")]
     public Transform catLandingPosition;
+
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("气球移动空气摩擦呼呼声 (按 AD 移动时持续 loop)")]
+    public SoundSlot balloonMoveSound;
+
+    [Tooltip("撞白气球瞬间的橡胶拉扯嗖+吱声")]
+    public SoundSlot balloonPullSound;
+
+    [Tooltip("金属cube掉到风扇开关上的清脆当啷声")]
+    public SoundSlot metalDropSound;
+    // ===============================================
 
     private bool triggered = false;
     private Vector3 startPosition;
@@ -39,18 +41,32 @@ public class Balloon : ToyBase
         canBePossessed = false;
     }
 
+    public override void UnPossess()
+    {
+        base.UnPossess();
+        // 玩家退出附身时停止移动 loop 音
+        StopSound();
+    }
+
     public override void ToyUpdate()
     {
         if (triggered) return;
 
+        // 只接受 WASD, 不接受方向键
         float input = 0f;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  input = 1f;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) input = -1f;
+        if (Input.GetKey(KeyCode.A)) input = 1f;
+        if (Input.GetKey(KeyCode.D)) input = -1f;
 
         Vector3 pos = transform.position;
         pos.x += input * moveSpeed * Time.deltaTime;
         pos.x = Mathf.Clamp(pos.x, startPosition.x - moveRangeX, startPosition.x + moveRangeX);
         transform.position = pos;
+
+        // 移动中持续播 loop, 不动时停
+        if (Mathf.Abs(input) > 0.01f)
+            PlaySound(balloonMoveSound);
+        else
+            StopSound();
 
         // 检测是否碰到白气球
         if (whiteBalloonTrigger != null)
@@ -66,23 +82,35 @@ public class Balloon : ToyBase
                 canBePossessed = false;
                 GetComponent<InteractableTag>()?.SetCompleted();
                 Debug.Log("[Balloon] Hit white balloon!");
+
+                // 停止移动音, 播撞击声
+                StopSound();
+                PlaySound(balloonPullSound);
+
                 StartCoroutine(TriggerSequence());
             }
         }
     }
-    
+
     IEnumerator TriggerSequence()
     {
+        // zoom out 修复: 触发演出后让玩家退出附身, 看猫腾空 + cube 掉落
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null && player.isPossessing && player.currentToy == this)
+        {
+            player.ExitPossess();
+            Debug.Log("[Balloon] Auto-exited possession for cinematic.");
+        }
+
         var cat = Level2Manager.Instance?.cat;
         if (cat != null && catLandingPosition != null)
             cat.JumpToPosition(catLandingPosition);
 
-        // 等猫跳到最高点（jumpDuration的一半）触发cube掉落
         float halfJump = cat != null ? cat.jumpDuration * 0.6f : 0.3f;
         yield return new WaitForSeconds(halfJump);
         StartCoroutine(DropCube());
     }
-    
+
     IEnumerator DropCube()
     {
         if (hangingCube == null || cubeDropTarget == null)
@@ -103,6 +131,9 @@ public class Balloon : ToyBase
             yield return null;
         }
         hangingCube.transform.position = cubeDropTarget.position;
+
+        // 金属cube落地瞬间
+        PlaySound(metalDropSound);
 
         Debug.Log("[Balloon] Cube hit fan!");
         Level2Manager.Instance?.OnBalloonTriggeredFan();

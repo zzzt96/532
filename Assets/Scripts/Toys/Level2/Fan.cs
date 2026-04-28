@@ -26,15 +26,42 @@ public class Fan : ToyBase
     [Header("Domino Chain")]
     public DominoChain dominoChain;
 
-    // ─── 新增：回忆特效引用 ───
     [Header("Memory Effect")]
     public MemoryEffect memoryEffect;
+
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("风扇启动时电机嗡嗡渐强声 (TurnOn 被调用时一次性播)")]
+    public SoundSlot fanStartSound;
+
+    [Tooltip("风扇运转持续呼呼风声 (建议勾选 Loop, 风扇开启后持续播)")]
+    public SoundSlot fanRunningSound;
+
+    [Tooltip("纸筒(厕纸)掉落的中空扑通+滚动声")]
+    public SoundSlot paperTubeDropSound;
+
+    [Header("Fan Volume Control")]
+    [Range(0f, 1f)]
+    [Tooltip("玩家附身风扇时的运转音量 (满音量, 突出主交互)")]
+    public float runningVolumePossessed = 1.0f;
+
+    [Range(0f, 1f)]
+    [Tooltip("玩家退出附身或吹完厕纸后的运转背景音量 (建议 0.15~0.25, 让其他声音突出)")]
+    public float runningVolumeBackground = 0.2f;
+
+    [Tooltip("音量切换的淡入淡出时长 (秒)")]
+    public float volumeFadeDuration = 0.5f;
+    // ===============================================
 
     private bool isOn = false;
     private float currentHeadAngle = 0f;
     private bool blowTriggered = false;
     private float blowTimer = 0f;
     private Quaternion initialRotation;
+
+    // 当前风扇 loop 应该播放的目标音量 (附身=高, 退出/吹完=低)
+    private bool isInBackgroundVolumeMode = false;
+    private Coroutine fadeCoroutine;
 
     protected override void Start()
     {
@@ -49,16 +76,31 @@ public class Fan : ToyBase
             fanBlades.RotateAround(fanCenter.position, Vector3.left, bladeSpinSpeed * Time.deltaTime);
     }
 
+    public override void Possess()
+    {
+        base.Possess();
+        // 玩家附身风扇 -> 运转音切回前景音量
+        if (isOn && audioSrc != null && audioSrc.isPlaying)
+            FadeRunningVolumeTo(runningVolumePossessed);
+    }
+
+    public override void UnPossess()
+    {
+        base.UnPossess();
+        // 玩家退出附身 -> 运转音降到背景音量 (淡出, 不立即静音, 风扇还在转)
+        if (isOn && audioSrc != null && audioSrc.isPlaying)
+            FadeRunningVolumeTo(runningVolumeBackground);
+    }
+
     public override void ToyUpdate()
     {
         if (!isOn || blowTriggered) return;
 
         float input = 0f;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) input = -1f;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) input = 1f;
+        if (Input.GetKey(KeyCode.A)) input = -1f;
+        if (Input.GetKey(KeyCode.D)) input = 1f;
 
         currentHeadAngle += input * headRotateSpeed * Time.deltaTime;
-        // currentHeadAngle = Mathf.Clamp(currentHeadAngle, -maxHeadAngle, maxHeadAngle);
         currentHeadAngle = Mathf.Clamp(currentHeadAngle, -maxHeadAngle, 0f);
         transform.localRotation = initialRotation * Quaternion.Euler(0f, currentHeadAngle, 0f);
 
@@ -78,13 +120,46 @@ public class Fan : ToyBase
     {
         isOn = true;
         Debug.Log("[Fan] Turned on!");
+
+        PlaySound(fanStartSound);
+        StartCoroutine(StartRunningLoopAfterDelay());
+    }
+
+    IEnumerator StartRunningLoopAfterDelay()
+    {
+        float startSoundLength = 0.5f;
+        if (fanStartSound != null && fanStartSound.clip != null)
+            startSoundLength = fanStartSound.clip.length;
+
+        yield return new WaitForSeconds(startSoundLength);
+
+        if (!blowTriggered)
+        {
+            PlaySound(fanRunningSound);
+            // 启动时默认音量 = SoundSlot 配置的 volume (Berklee 在 Inspector 里设的值)
+            // 没附身就直接进入背景音模式
+            if (!isPossessed && audioSrc != null)
+                FadeRunningVolumeTo(runningVolumeBackground);
+        }
     }
 
     IEnumerator BlowToiletPaper()
     {
+        // zoom out: 触发吹厕纸演出后让玩家退出附身
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null && player.isPossessing && player.currentToy == this)
+        {
+            player.ExitPossess();
+            Debug.Log("[Fan] Auto-exited possession for cinematic.");
+        }
+
+        // 吹厕纸事件触发后, 风扇运转声永久降为背景音量
+        // (UnPossess 也会触发降低, 这里再加一层保证: 即使玩家还附着也降低)
+        if (audioSrc != null && audioSrc.isPlaying)
+            FadeRunningVolumeTo(runningVolumeBackground);
+
         if (toiletPaper == null)
         {
-            // 防御性处理：如果没有配置卫生纸，直接触发特效和多米诺
             memoryEffect?.ActivateEffect();
             dominoChain?.StartChain();
             yield break;
@@ -93,13 +168,9 @@ public class Fan : ToyBase
         Debug.Log("[Fan] Blowing toilet paper!");
 
         Vector3 startPos = toiletPaper.transform.position;
-
-        // 如果没有指定落点，就往左滚1.5单位后落地
         Vector3 landPos = toiletPaperLandTarget != null
             ? toiletPaperLandTarget.position
             : new Vector3(startPos.x - 1.5f, 0.15f, startPos.z);
-
-        // 中间经过桌子边缘（和起点同高，落点X位置）
         Vector3 edgePos = new Vector3(landPos.x, startPos.y, startPos.z);
 
         // 滚到桌边
@@ -125,7 +196,8 @@ public class Fan : ToyBase
         }
         toiletPaper.transform.position = landPos;
 
-        // 落地后禁用重力防止继续掉落
+        PlaySound(paperTubeDropSound);
+
         Rigidbody rb = toiletPaper.GetComponent<Rigidbody>();
         if (rb != null) { rb.isKinematic = true; rb.linearVelocity = Vector3.zero; }
 
@@ -133,7 +205,6 @@ public class Fan : ToyBase
 
         Debug.Log("[Fan] Toilet paper landed! Starting domino chain.");
 
-        // ─── 新增：在这里触发回忆特效 ───
         if (memoryEffect != null)
         {
             memoryEffect.ActivateEffect();
@@ -141,5 +212,34 @@ public class Fan : ToyBase
         }
 
         dominoChain?.StartChain();
+    }
+
+    /// <summary>
+    /// 平滑过渡运转音量到目标值 (淡入淡出)。
+    /// </summary>
+    void FadeRunningVolumeTo(float targetVolume)
+    {
+        if (audioSrc == null) return;
+
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(FadeRoutine(targetVolume));
+    }
+
+    IEnumerator FadeRoutine(float targetVolume)
+    {
+        float startVolume = audioSrc.volume;
+        float elapsed = 0f;
+
+        while (elapsed < volumeFadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / volumeFadeDuration;
+            audioSrc.volume = Mathf.Lerp(startVolume, targetVolume, t);
+            yield return null;
+        }
+        audioSrc.volume = targetVolume;
+        fadeCoroutine = null;
     }
 }

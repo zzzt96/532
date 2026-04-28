@@ -1,10 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 天窗手柄开关 - 玩家附身后按 space 打开天窗
-/// 触发：猫走向光斑 + 女孩开始自动移动
-/// </summary>
 public class SkyLightSwitch : ToyBase
 {
     [Header("Skylight Visuals")]
@@ -14,6 +10,15 @@ public class SkyLightSwitch : ToyBase
     [Header("Open Animation")]
     public float openAngleX = -90f;
     public float openDuration = 0.6f;
+
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("把手旋转的金属/木质咔哒+旋转声 (按下 Space 那一瞬间)")]
+    public SoundSlot handleRotateSound;
+
+    [Tooltip("窗户打开的老旧结构咯吱声 (开窗动画期间)")]
+    public SoundSlot skylightOpenSound;
+    // ===============================================
 
     private bool isOpen = false;
 
@@ -30,7 +35,15 @@ public class SkyLightSwitch : ToyBase
         canBePossessed = false;
         GetComponent<InteractableTag>()?.SetCompleted();
 
-        // 天窗旋转打开
+        // 把手旋转音效 (按下瞬间)
+        PlaySound(handleRotateSound);
+
+        // 短暂等待让把手声先响, 再播窗户咯吱声
+        yield return new WaitForSeconds(0.15f);
+
+        // 窗户咯吱开启音效
+        PlaySound(skylightOpenSound);
+
         if (skylightPanel != null)
         {
             skylightPanel.SetActive(true);
@@ -50,10 +63,17 @@ public class SkyLightSwitch : ToyBase
             skylightPanel.transform.localRotation = endRot;
         }
 
-        // 光柱出现
         if (sunlightBeam != null) sunlightBeam.SetActive(true);
 
         Debug.Log("[SkyLight] Opened!");
         Level2Manager.Instance?.OnSkylightOpened();
+
+        // zoom out 修复: 天窗打开后玩家退出附身, 看猫和小女孩开始动作
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null && player.isPossessing && player.currentToy == this)
+        {
+            player.ExitPossess();
+            Debug.Log("[SkyLight] Auto-exited possession.");
+        }
     }
 }

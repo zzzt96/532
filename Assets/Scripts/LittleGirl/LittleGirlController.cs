@@ -1,9 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 小女孩移动控制器 - 适配 Level 2 动画、跟随逻辑与最终坐下逻辑
-/// </summary>
 public class LittleGirlController : MonoBehaviour
 {
     [Header("Movement")]
@@ -26,9 +23,14 @@ public class LittleGirlController : MonoBehaviour
     [Header("Debug")]
     public bool testMode = false;
 
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("行走脚步声 (建议勾选 Loop, 提供可循环短 wav)。Level 2 全程跟随猫和走向相册都用这一个声音。")]
+    public SoundSlot walkingSound;
+    // ===============================================
+
     // 内部状态
     private bool canMove = false;
-    private int currentStopPointIndex = 0;
     private bool reachedFinalStop = false;
 
     // Level 2 路径点相关
@@ -37,20 +39,24 @@ public class LittleGirlController : MonoBehaviour
     private bool waypointMode = false;
     private const float waypointArrivalThreshold = 0.3f;
 
+    // 音频
+    private AudioSource audioSrc;
+    private bool isWalkingSoundPlaying = false;
+
     void Start()
     {
-        // 自动获取挂在模型子物体上的 Animator
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
         }
+
+        audioSrc = GetComponent<AudioSource>();
 
         if (autoStart) canMove = true;
     }
 
     void Update()
     {
-        // 基础游戏状态检查
         if (GameManager.Instance != null)
         {
             if (GameManager.Instance.isGameOver || GameManager.Instance.isIntroPlaying)
@@ -70,14 +76,14 @@ public class LittleGirlController : MonoBehaviour
             return;
         }
 
-        // --- Level 2 核心：指定点移动模式 ---
+        // --- Level 2 核心：走向指定点模式 ---
         if (waypointMode)
         {
             HandleWaypointMove();
         }
         else
         {
-            // 基础移动逻辑 (兼顾 Level 1 或测试)
+            // 基础移动逻辑 (兼容测试模式)
             if (testMode || canMove)
             {
                 transform.position += moveDirection.normalized * moveSpeed * Time.deltaTime;
@@ -90,7 +96,9 @@ public class LittleGirlController : MonoBehaviour
         }
     }
 
-    // ─── Level 2 动画与状态控制逻辑 ─────────────────────────────────
+    // ─── 动画 + 音效统一控制 ─────────────────────────────────
+    // SetMovingAnim 现在同时控制行走动画 + 脚步音效
+    // 这样 3 种移动场景 (基础移动/跟随猫/走向指定点) 全部自动获得脚步声
 
     private void SetMovingAnim(bool moving)
     {
@@ -98,11 +106,16 @@ public class LittleGirlController : MonoBehaviour
         {
             animator.SetBool("isMoving", moving);
         }
+
+        // 同步控制脚步声
+        if (moving)
+            StartWalkingSound();
+        else
+            StopWalkingSound();
     }
 
     /// <summary>
-    /// 强制坐下（对应 AlbumBox 调用）
-    /// 包含先拾取、再坐下的完整流程
+    /// 强制坐下（保留方法供未来扩展使用，目前 Level 2 终点不调用此方法）
     /// </summary>
     public void SitDown()
     {
@@ -113,19 +126,13 @@ public class LittleGirlController : MonoBehaviour
 
         if (animator != null)
         {
-            // 触发拾取动作，并启动坐下协程
             animator.SetTrigger("pickUp");
             StartCoroutine(SitRoutine());
         }
     }
 
-    /// <summary>
-    /// 延迟进入坐下状态的协程
-    /// </summary>
     private IEnumerator SitRoutine()
     {
-        // 等待拾取动作播放一瞬间，根据你的 pickUp 动画实际长度调整这个时间
-        // 如果捡起动作需要1秒，这里就填 1.0f
         yield return new WaitForSeconds(0.8f);
 
         if (animator != null)
@@ -134,55 +141,44 @@ public class LittleGirlController : MonoBehaviour
         }
         Debug.Log("[Girl] Character is now sitting.");
     }
+
     /// <summary>
     /// 停止所有移动，并播放弯腰捡起动画
+    /// (保留方法供未来扩展使用，目前 Level 2 终点不调用此方法)
     /// </summary>
     public void PlayPickUp()
     {
-        // 1. 彻底停止移动状态
         canMove = false;
         waypointMode = false;
         followCatMode = false;
 
+        SetMovingAnim(false);
+
         if (animator != null)
         {
-            animator.SetBool("isMoving", false); // 关掉行走动画
-            animator.SetTrigger("pickUp");       // 触发弯腰捡东西动画
-
-            // 如果你需要她捡完东西后坐下，可以解除下面这行的注释
-            // StartCoroutine(SitRoutine());
+            animator.SetTrigger("pickUp");
         }
     }
-
-    
 
     // ─── Level 2 移动行为实现 ─────────────────────────────────────
 
     void HandleFollowCat()
     {
-        // 【修复核心 1】判断小女孩在猫的左边还是右边
-        // 如果 x 更大，说明在右边 (side = 1)；如果更小，说明在左边 (side = -1)
         float side = transform.position.x > catTransform.position.x ? 1f : -1f;
-
-        // 动态计算目标位置：猫的位置 加上/减去 Offset，保证绝不“超车”
         float targetX = catTransform.position.x + (side * Mathf.Abs(followOffsetX));
-
         float distX = Mathf.Abs(transform.position.x - targetX);
 
-        // 【修复核心 2】将停止判定范围缩小到 0.05f，让她停得极其精准
         if (distX > 0.05f)
         {
             Vector3 pos = transform.position;
             pos.x = Mathf.MoveTowards(pos.x, targetX, moveSpeed * Time.deltaTime);
             transform.position = pos;
 
-            // 移动时，始终面向猫的方向
             FlipTowards(catTransform.position);
             SetMovingAnim(true);
         }
         else
         {
-            // 停下时也看着猫
             FlipTowards(catTransform.position);
             SetMovingAnim(false);
         }
@@ -194,7 +190,7 @@ public class LittleGirlController : MonoBehaviour
         waypointTarget = target;
         onArrivalCallback = onArrival;
         waypointMode = true;
-        followCatMode = false; // 开始走向指定点时，必须强制关闭跟随猫模式
+        followCatMode = false;
         canMove = true;
         SetMovingAnim(true);
         FlipTowards(target.position);
@@ -212,17 +208,15 @@ public class LittleGirlController : MonoBehaviour
         {
             canMove = false;
             waypointMode = false;
-            SetMovingAnim(false); // 到达点位，停止动画
+            SetMovingAnim(false);
 
             var cb = onArrivalCallback;
             onArrivalCallback = null;
             waypointTarget = null;
-            cb?.Invoke(); // 执行到达后的回调（比如调用 SitDown）
+            cb?.Invoke();
         }
     }
-
-    // ─── 基础辅助 ────────────────────────────────────────────────
-
+    
     void FlipTowards(Vector3 target)
     {
         float dir = target.x > transform.position.x ? 1f : -1f;
@@ -231,20 +225,30 @@ public class LittleGirlController : MonoBehaviour
         transform.localScale = scale;
     }
 
-    // 保留 Level 1 触发器逻辑以防万一
-    void OnTriggerEnter(Collider other)
+    // ==================== Audio Methods ====================
+
+    void StartWalkingSound()
     {
-        if (waypointMode || followCatMode) return;
-        StopPoint stopPoint = other.GetComponent<StopPoint>();
-        if (stopPoint != null && stopPoint.stopIndex == currentStopPointIndex)
-        {
-            canMove = false;
-            currentStopPointIndex++;
-            if (stopPoint.isFinalStop)
-            {
-                reachedFinalStop = true;
-                GameManager.Instance?.GameWin();
-            }
-        }
+        if (walkingSound == null || walkingSound.clip == null) return;
+        if (audioSrc == null) return;
+        if (isWalkingSoundPlaying) return;  // 防抖: 已经在播就不重启
+
+        audioSrc.clip = walkingSound.clip;
+        audioSrc.volume = walkingSound.volume;
+        audioSrc.pitch = walkingSound.pitch +
+            Random.Range(-walkingSound.randomPitchRange, walkingSound.randomPitchRange);
+        audioSrc.loop = true;
+        audioSrc.Play();
+        isWalkingSoundPlaying = true;
+    }
+
+    void StopWalkingSound()
+    {
+        if (audioSrc == null) return;
+        if (!isWalkingSoundPlaying) return;
+
+        audioSrc.Stop();
+        audioSrc.loop = false;
+        isWalkingSoundPlaying = false;
     }
 }

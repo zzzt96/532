@@ -1,23 +1,30 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 抽屉 - 由 CatNPC.OpenDrawerRoutine() 调用 Open()
-/// 打开完成后通知 Level2Manager，镜子自动转向衣柜
-/// </summary>
 public class Drawer : MonoBehaviour
 {
     [Header("Open Animation")]
-    [Tooltip("抽屉打开方向和距离，通常 X 轴正方向")]
     public Vector3 openOffset = new Vector3(0.6f, 0f, 0f);
     public float openDuration = 0.4f;
 
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("抽屉打开声 (木制滑轨沙沙+轻微卡顿)")]
+    public SoundSlot openSound;
+    // ===============================================
+
     private bool isOpen = false;
     private Vector3 closedLocalPos;
+    private AudioSource audioSrc;
 
     void Awake()
     {
         closedLocalPos = transform.localPosition;
+    }
+
+    void Start()
+    {
+        audioSrc = GetComponent<AudioSource>();
     }
 
     public void Open()
@@ -29,6 +36,9 @@ public class Drawer : MonoBehaviour
 
     IEnumerator OpenRoutine()
     {
+        // 开始打开瞬间播放音效
+        PlayOneShotSlot(openSound);
+
         Vector3 openLocalPos = closedLocalPos + openOffset;
         float elapsed = 0f;
 
@@ -44,12 +54,21 @@ public class Drawer : MonoBehaviour
         Debug.Log("[Drawer] Opened! Notifying Level2Manager.");
         Level2Manager.Instance?.OnDrawerOpened();
     }
-    
-    // 猫跳上来压开抽屉
+
     public void OpenByWeight()
     {
         if (isOpen) return;
         isOpen = true;
         StartCoroutine(OpenRoutine());
+    }
+
+    void PlayOneShotSlot(SoundSlot slot)
+    {
+        if (slot == null || slot.clip == null) return;
+        if (audioSrc == null) return;
+
+        audioSrc.pitch = slot.pitch +
+                         Random.Range(-slot.randomPitchRange, slot.randomPitchRange);
+        audioSrc.PlayOneShot(slot.clip, slot.volume);
     }
 }

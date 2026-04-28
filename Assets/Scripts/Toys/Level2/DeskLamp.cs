@@ -1,10 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// 台灯 - 玩家附身后 AD 键旋转
-/// 旋转基于初始朝向叠加，不会附身瞬间跳位
-/// 附身时光束激活，照到纸盒子区域持续一段时间后猫跳上去
-/// </summary>
 public class DeskLamp : ToyBase
 {
     [Header("Rotation")]
@@ -32,7 +27,7 @@ public class DeskLamp : ToyBase
     protected override void Start()
     {
         base.Start();
-        initialRotation = transform.localRotation; 
+        initialRotation = transform.localRotation;
         canBePossessed = false;
     }
 
@@ -43,23 +38,32 @@ public class DeskLamp : ToyBase
         if (lampBeam != null) lampBeam.SetActive(true);
     }
 
+    public override void UnPossess()
+    {
+        base.UnPossess();
+
+        // 退出附身时关闭灯光和光束
+        if (lampSpotLight != null) lampSpotLight.enabled = false;
+        if (lampBeam != null) lampBeam.SetActive(false);
+    }
+
     public override void ToyUpdate()
     {
         if (triggered) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
             Debug.Log($"[Lamp] current angle: {currentAngle}");
-        
+
+        // 只接受 WASD, 不接受方向键
         float input = 0f;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  input = -1f;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) input =  1f;
+        if (Input.GetKey(KeyCode.A)) input = -1f;
+        if (Input.GetKey(KeyCode.D)) input =  1f;
 
         currentAngle += input * rotateSpeed * Time.deltaTime;
         currentAngle = Mathf.Clamp(currentAngle, minAngle, maxAngle);
 
-        // 基于初始朝向叠加旋转，不覆盖原始角度
         transform.localRotation = initialRotation * Quaternion.Euler(0f, currentAngle, 0f);
-    
+
         bool inZone = currentAngle >= boxAngleMin && currentAngle <= boxAngleMax;
         holdTimer = inZone ? holdTimer + Time.deltaTime : 0f;
 
@@ -69,7 +73,18 @@ public class DeskLamp : ToyBase
             canBePossessed = false;
             GetComponent<InteractableTag>()?.SetCompleted();
             Debug.Log("[Lamp] Light on box! Cat jumping.");
+
+            // 触发猫跳到纸盒子
             Level2Manager.Instance?.cat?.GoToAlbumBox();
+
+            // 关键修复: 触发关卡终点演出后, 强制玩家退出附身 + zoom out
+            // 玩家可以完整看到猫跳上木箱 → 相册掉落 → 小女孩走过来捡起的演出
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player != null && player.isPossessing && player.currentToy == this)
+            {
+                player.ExitPossess();
+                Debug.Log("[Lamp] Auto-exited possession for ending cinematic.");
+            }
         }
     }
 }

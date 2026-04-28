@@ -75,11 +75,29 @@ public class TutorialManager : MonoBehaviour
         if (catTriggered) return;
         catTriggered = true;
 
-        tutorialStep = 4;
-        UpdateText();
-
+        // 触发猫被吸引 (这个不延迟, 立刻执行)
         if (tutorialCat != null && catTargetPoint != null)
             tutorialCat.TriggerAttention(catTargetPoint);
+
+        // 计算 case 3 已显示的时间, 保证总停留时间 >= autoAdvanceDelay
+        float elapsedOnStep3 = Time.time - stepStartTime;
+        float remaining = autoAdvanceDelay - elapsedOnStep3;
+
+        if (remaining > 0f)
+        {
+            // 当前 step 显示不够久, 延迟剩余时间再切
+            Invoke(nameof(AdvanceToCatStep), remaining);
+        }
+        else
+        {
+            AdvanceToCatStep();
+        }
+    }
+
+    void AdvanceToCatStep()
+    {
+        tutorialStep = 4; // 推进到"Shift 退出附身"提示
+        UpdateText();
     }
 
     void UpdateText()
@@ -98,7 +116,7 @@ public class TutorialManager : MonoBehaviour
                 tutorialText.text = "Move close to the train and <color=#FFD700>hold [Space]</color> to possess it.";
                 break;
             case 3:
-                tutorialText.text = "Use <color=#FFD700>[W][A][S][D]</color> to drive the train.\nKnock the ball into the basket!";
+                tutorialText.text = "Use <color=#FFD700>[W][A][S][D]</color> to drive the train.\nKnock the ball into the basket!\n<color=#888888><size=80%>Tip: Some objects hide special actions. Press [Space] to discover them!</size></color>";
                 break;
             case 4:
                 tutorialText.text = "Great! The cat is distracted.\nPress <color=#FFD700>[Shift]</color> to exit the train.";

@@ -1,11 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// 桌上小镜子 - 玩家附身后AD旋转，SpotLight跟着转
-/// 阶段1：光打到抽屉 → 猫从桌面跳到抽屉
-/// 阶段2：玩家继续旋转（不退出附身）→ 光打到柜顶 → 猫跳上柜顶
-/// 整个过程玩家始终附身镜子
-/// </summary>
 public class Mirror : ToyBase
 {
     [Header("Rotation")]
@@ -14,42 +8,54 @@ public class Mirror : ToyBase
     public float maxAngle = 80f;
 
     [Header("SpotLight")]
-    [Tooltip("镜子的子物体 SpotLight，随镜子一起旋转")]
     public Light reflectionLight;
 
     [Header("Beam")]
     public GameObject mirrorBeam;
-    
+
     [Header("Zone 1 - Drawer")]
-    [Tooltip("光打到抽屉时的角度范围 最小值（场景里测出来填）")]
     public float drawerAngleMin = 15f;
     public float drawerAngleMax = 35f;
-    [Tooltip("需要持续照射多少秒才触发")]
     public float holdTimeRequired = 1.0f;
 
     [Header("Zone 2 - Wardrobe Top")]
-    [Tooltip("光打到柜顶时的角度范围 最小值（抽屉触发后才检测这个）")]
     public float wardrobeAngleMin = 50f;
     public float wardrobeAngleMax = 75f;
-    
+
+    [Header("Target Indicators")]
+    [Tooltip("抽屉位置的瞄准点 (一个发光的小物体, 引导玩家'要把光照到这里')")]
+    public GameObject drawerTargetIndicator;
+
+    [Tooltip("衣柜顶位置的瞄准点 (第一阶段完成后才显示)")]
+    public GameObject wardrobeTargetIndicator;
+
     [Header("Debug")]
     public bool showDebugGizmos = true;
 
-    // ─── 私有状态 ──────────────────────────────────────────────
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("木质摩擦+齿轮咯吱声 (按 AD 旋转时持续 loop)")]
+    public SoundSlot mirrorRotateSound;
+    // ===============================================
+
     private float currentAngle = 0f;
     private float holdTimer = 0f;
     private Quaternion initialRotation;
 
-    // 两个阶段的触发状态
     private bool drawerTriggered = false;
     private bool wardrobeTriggered = false;
 
     protected override void Start()
     {
         base.Start();
-        initialRotation = transform.rotation; // 记录场景里摆好的初始朝向
+        initialRotation = transform.rotation;
         canBePossessed = false;
+
+        // 初始状态: 抽屉标记亮, 衣柜标记暗
+        if (drawerTargetIndicator != null) drawerTargetIndicator.SetActive(true);
+        if (wardrobeTargetIndicator != null) wardrobeTargetIndicator.SetActive(false);
     }
+
     public override void Possess()
     {
         base.Possess();
@@ -60,8 +66,10 @@ public class Mirror : ToyBase
     public override void UnPossess()
     {
         base.UnPossess();
-        // 光束保留，玩家退出附身后光还在照着
+        // 玩家退出附身时停止旋转音 (光束保留)
+        StopSound();
     }
+
     public override void ToyUpdate()
     {
         HandleRotationInput();
@@ -72,22 +80,29 @@ public class Mirror : ToyBase
             CheckZone(wardrobeAngleMin, wardrobeAngleMax, ref holdTimer, OnWardrobeZoneHeld);
     }
 
-  void HandleRotationInput()
+    void HandleRotationInput()
     {
+        // 只接受 WASD, 不接受方向键
         float input = 0f;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  input = -1f;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) input =  1f;
+        if (Input.GetKey(KeyCode.A)) input = -1f;
+        if (Input.GetKey(KeyCode.D)) input =  1f;
 
         currentAngle += input * rotateSpeed * Time.deltaTime;
         currentAngle = Mathf.Clamp(currentAngle, minAngle, maxAngle);
-        
+
         transform.rotation = initialRotation * Quaternion.Euler(0f, 0f, currentAngle);
+
+        if (Mathf.Abs(input) > 0.01f)
+            PlaySound(mirrorRotateSound);
+        else
+            StopSound();
     }
+
     void CheckZone(float min, float max, ref float timer, System.Action onTriggered)
     {
         bool inZone = currentAngle >= min && currentAngle <= max;
         timer = inZone ? timer + Time.deltaTime : 0f;
-        if (inZone && timer >= holdTimeRequired) 
+        if (inZone && timer >= holdTimeRequired)
         {
             timer = 0f;
             onTriggered?.Invoke();
@@ -99,21 +114,32 @@ public class Mirror : ToyBase
         drawerTriggered = true;
         Debug.Log("[Mirror] Zone 1: Drawer triggered!");
         Level2Manager.Instance?.OnMirrorAimedAtDrawer();
-        // 玩家不退出附身，继续旋转进入阶段2
+
+        // 视觉反馈: 抽屉标记暗掉, 衣柜标记亮起 (引导玩家看到"还有一个目标")
+        if (drawerTargetIndicator != null) drawerTargetIndicator.SetActive(false);
+        if (wardrobeTargetIndicator != null) wardrobeTargetIndicator.SetActive(true);
     }
-    
+
     void OnWardrobeZoneHeld()
     {
         wardrobeTriggered = true;
         canBePossessed = false;
         Debug.Log("[Mirror] Zone 2: Wardrobe triggered!");
-        Level2Manager.Instance?.OnMirrorAimedAtWardrobe(); // 改这里
-    }
-    
-    /// <summary>外部调用接口保留（Level2Manager里有引用）</summary>
-    public void AutoRedirectToWardrobe() { /* 新流程不需要自动转，玩家手动转 */ }
+        Level2Manager.Instance?.OnMirrorAimedAtWardrobe();
 
-    // ════════════════════════════════════════════════════════════
+        // 视觉反馈: 衣柜标记也暗掉, 镜子任务全部完成
+        if (wardrobeTargetIndicator != null) wardrobeTargetIndicator.SetActive(false);
+
+        // zoom out: 第二阶段完成后玩家任务结束, 退出附身
+        StopSound();
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null && player.isPossessing && player.currentToy == this)
+        {
+            player.ExitPossess();
+            Debug.Log("[Mirror] Auto-exited possession after wardrobe phase.");
+        }
+    }
+
     void OnDrawGizmos()
     {
         if (!showDebugGizmos) return;
