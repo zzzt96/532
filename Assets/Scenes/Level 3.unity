@@ -5353,6 +5353,7 @@ MonoBehaviour:
   amplitudeDecayRate: 5
   swingSpeed: 2
   swingAxis: {x: 0, y: 0, z: 1}
+  postTriggerDecayRate: 8
   currentAmplitude: 0
   pendantPossessFOV: 55
 --- !u!135 &905168339
@@ -6687,7 +6688,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 9289f9df67ac54114be7dd98d60047c0, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.8
   m_Pitch: 1

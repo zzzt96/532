@@ -12,6 +12,10 @@ public class PendantLight : ToyBase
     public float swingSpeed = 2f;
     public Vector3 swingAxis = Vector3.forward;
 
+    [Header("Post-Trigger Decay")]
+    [Tooltip("触发后吊灯自动衰减到停止的速度 (越大停得越快)")]
+    public float postTriggerDecayRate = 8f;
+
     [Header("Visual Feedback")]
     [SerializeField] float currentAmplitude = 0f;
 
@@ -29,6 +33,27 @@ public class PendantLight : ToyBase
         base.Start();
         canBePossessed = false;
         initialRotation = RotTarget.localRotation;
+    }
+
+    void Update()
+    {
+        // 触发后吊灯继续摆动 + 幅度自然衰减 (即使玩家不在附身状态也要执行)
+        if (triggered && currentAmplitude > 0.01f)
+        {
+            // 幅度衰减
+            currentAmplitude -= postTriggerDecayRate * Time.deltaTime;
+            currentAmplitude = Mathf.Max(0f, currentAmplitude);
+
+            // 继续做 sin 摆动
+            swingTime += swingSpeed * Time.deltaTime;
+            float swingAngle = -Mathf.Sin(swingTime) * currentAmplitude;
+            RotTarget.localRotation = initialRotation * Quaternion.AngleAxis(swingAngle, swingAxis);
+        }
+        else if (triggered && currentAmplitude <= 0.01f)
+        {
+            // 完全停止: 归位到垂直
+            RotTarget.localRotation = initialRotation;
+        }
     }
 
     public override void ToyUpdate()
@@ -56,11 +81,11 @@ public class PendantLight : ToyBase
         if (currentAmplitude >= triggerAngle)
         {
             triggered = true;
-            RotTarget.localRotation = initialRotation * Quaternion.AngleAxis(triggerAngle, swingAxis);
-            Debug.Log("[PendantLight] Trigger reached! Lamp stays tilted left.");
+            // 注意: 让 Update 接管, 自然衰减
+            Debug.Log("[PendantLight] Trigger reached! Lamp continues swinging and decays naturally.");
             Level3Manager.Instance?.OnLampSwung();
 
-            // zoom out 修复: 灯摆到位后, 玩家任务结束
+            // zoom out 修复: 灯达到触发幅度后玩家任务结束
             PlayerController player = FindObjectOfType<PlayerController>();
             if (player != null && player.isPossessing && player.currentToy == this)
             {

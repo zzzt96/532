@@ -72,7 +72,11 @@ public class CatNPC : MonoBehaviour
     public Drawer drawerRef;                // 抽屉脚本引用
     
     public Transform catFanTablePosition; // 猫在风扇桌上的准确位置
+    [Tooltip("猫从桌面起跳的位置 (在桌子真实左边缘内侧)")]
+    public Transform catTableEdgeStartJump;
     public Transform tableEdgeGroundPos; // 猫跳下风扇桌的位置
+    [Tooltip("猫到达摇椅前的真实地面位置 (避免 RockingChairPosition 本身腾空导致猫跟着飘)")]
+    public Transform catRockingChairArrival;
     
     // ─── 私有状态 ──────────────────────────────────────────────
     private Vector3 targetPos;
@@ -180,45 +184,81 @@ public class CatNPC : MonoBehaviour
         }));
     }
 
-    // 从风扇桌走向摇摇椅
     public void GoToRockingChair()
+{
+    if (rockingChairPosition == null || tableEdgeGroundPos == null)
     {
-        if (rockingChairPosition == null || tableEdgeGroundPos == null) return;
-
-        float groundY = tableEdgeGroundPos.position.y;
-        float tableY  = catFanTablePosition != null 
-            ? catFanTablePosition.position.y 
-            : transform.position.y;
-
-        // 先强制修正猫的Y到桌面高度
-        Vector3 corrected = transform.position;
-        corrected.y = tableY;
-        transform.position = corrected;
-
-        // 第一步：走到桌边，X和Z都用tableEdgeGroundPos
-        SetWalkTarget(
-            new Vector3(tableEdgeGroundPos.position.x, tableY, tableEdgeGroundPos.position.z),
-            CatState.WalkToChair,
-            () => {
-                Vector3 groundPos = tableEdgeGroundPos.position;
-                StartCoroutine(DoJump(transform.position, groundPos, CatState.JumpOnChair, () =>
-                {
-                    transform.position = groundPos; // 强制对齐所有轴
-
-                    // 第三步：走到摇椅，X和Z都用rockingChairPosition
-                    SetWalkTarget(
-                        rockingChairPosition.position, // 直接用完整position，不再只取X
-                        CatState.WalkToChair,
-                        () => {
-                            currentState = CatState.SitOnChair;
-                            PlayAnim(clipIdle);
-                            Level2Manager.Instance?.OnCatOnRockingChair();
-                        }
-                    );
-                }));
-            }
-        );
+        Debug.LogWarning("[Cat] tableEdgeGroundPos or rockingChairPosition not assigned!");
+        return;
     }
+
+    float groundY = tableEdgeGroundPos.position.y;
+    float tableY  = catFanTablePosition != null
+        ? catFanTablePosition.position.y
+        : transform.position.y;
+
+    // 修正猫到桌面高度
+    Vector3 corrected = transform.position;
+    corrected.y = tableY;
+    transform.position = corrected;
+
+    // ===== 第一步: 桌面上走到桌子真实边缘 (不是地面引用点!) =====
+    Vector3 tableEdgeOnTable;
+    if (catTableEdgeStartJump != null)
+    {
+        tableEdgeOnTable = new Vector3(
+            catTableEdgeStartJump.position.x,
+            tableY,
+            catTableEdgeStartJump.position.z);
+    }
+    else
+    {
+        Debug.LogWarning("[Cat] catTableEdgeStartJump not assigned, fallback (may float).");
+        tableEdgeOnTable = new Vector3(
+            tableEdgeGroundPos.position.x,
+            tableY,
+            transform.position.z);
+    }
+
+    SetWalkTarget(
+        tableEdgeOnTable,
+        CatState.WalkToChair,
+        () => {
+            // ===== 第二步: 从桌边跳到地面 =====
+            Vector3 groundPos = tableEdgeGroundPos.position;
+            StartCoroutine(DoJump(transform.position, groundPos, CatState.JumpOnChair, () =>
+            {
+                transform.position = groundPos;
+
+                // ===== 第三步: 在地面走到摇椅前 =====
+                // 走路时 Y 用 tableEdgeGroundPos.y (-1.14, 让走路动画贴地)
+                // 到达后 Y 切换到 catRockingChairArrival.y (0.48, 让坐姿动画贴地)
+
+                float walkY = tableEdgeGroundPos.position.y;  // -1.14, 走路用
+
+                Vector3 finalTarget = new Vector3(
+                    catRockingChairArrival.position.x,
+                    walkY,                                      // 走路阶段用 walkY
+                    catRockingChairArrival.position.z);
+
+                SetWalkTarget(
+                    finalTarget,
+                    CatState.WalkToChair,
+                    () => {
+                        // ★ 到达瞬间: 切到坐姿前调整 Y 到坐姿贴地高度
+                        Vector3 sitPos = transform.position;
+                        sitPos.y = catRockingChairArrival.position.y;  // 0.48
+                        transform.position = sitPos;
+        
+                        currentState = CatState.SitOnChair;
+                        PlayAnim(clipIdle);
+                        Level2Manager.Instance?.OnCatOnRockingChair();
+                    }
+                );
+            }));
+        }
+    );
+}
 
     // 从摇摇椅走到相册下方
     public void GoToAlbumBox()
