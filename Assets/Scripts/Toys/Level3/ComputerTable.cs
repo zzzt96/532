@@ -1,11 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// 桌子震动脚本
-/// 由Level3Manager调用TriggerShake()
-/// 震动一段时间后自动停止，并通知Manager木板可以倒下
-/// </summary>
 public class ComputerTable : MonoBehaviour
 {
     [Header("Shake Settings")]
@@ -13,10 +8,18 @@ public class ComputerTable : MonoBehaviour
     public float shakeAmplitude = 0.08f;
     public float shakeFrequency = 25f;
 
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("桌子共振的低频'嗡/咚'震动声")]
+    public SoundSlot tableResonanceSound;
+    // ===============================================
+
     Vector3 startLocalPos;
+    AudioSource audioSrc;
 
     void Start()
     {
+        audioSrc = GetComponent<AudioSource>();
         startLocalPos = transform.localPosition;
     }
 
@@ -27,12 +30,14 @@ public class ComputerTable : MonoBehaviour
 
     IEnumerator ShakeRoutine()
     {
+        // 桌子共振音效 (一次性, 跟震动同步)
+        PlayOneShotSlot(tableResonanceSound);
+
         float elapsed = 0f;
         while (elapsed < shakeDuration)
         {
             elapsed += Time.deltaTime;
             float progress = elapsed / shakeDuration;
-            // 震动幅度先增后减
             float amp = shakeAmplitude * Mathf.Sin(progress * Mathf.PI);
             float offsetX = Mathf.Sin(Time.time * shakeFrequency) * amp;
             float offsetY = Mathf.Cos(Time.time * shakeFrequency * 1.5f) * amp * 0.4f;
@@ -43,5 +48,15 @@ public class ComputerTable : MonoBehaviour
         transform.localPosition = startLocalPos;
         Debug.Log("[ComputerTable] Shake done.");
         Level3Manager.Instance?.OnTableShakeDone();
+    }
+
+    void PlayOneShotSlot(SoundSlot slot)
+    {
+        if (slot == null || slot.clip == null) return;
+        if (audioSrc == null) return;
+
+        audioSrc.pitch = slot.pitch +
+                         Random.Range(-slot.randomPitchRange, slot.randomPitchRange);
+        audioSrc.PlayOneShot(slot.clip, slot.volume);
     }
 }

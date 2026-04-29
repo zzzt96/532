@@ -1,10 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// 易拉罐组 - 保龄球式散开
-/// 自动检测所有子物体，支持单独设置特定罐子的Drop Y
-/// </summary>
 public class Cans : MonoBehaviour
 {
     [Header("Animation Settings")]
@@ -18,26 +14,32 @@ public class Cans : MonoBehaviour
     public float scatterAngle = 160f;
 
     [Header("Default Drop Y")]
-    [Tooltip("默认Y轴下落距离，0=不下落")]
     public float dropY = 0f;
 
-    [Header("Special Drop Y（叠放罐子单独设置）")]
-    [Tooltip("需要额外下落的罐子，单独设置Drop Y")]
+    [Header("Special Drop Y")]
     public SpecialDrop[] specialDrops;
+
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("易拉罐被撞散落的连续金属当啷哐啷声")]
+    public SoundSlot scatterSound;
+    // ===============================================
 
     [System.Serializable]
     public class SpecialDrop
     {
         public Transform canTransform;
-        [Tooltip("这个罐子单独的Drop Y")]
         public float dropY = 0.5f;
     }
 
     Transform[] canObjects;
     bool hasScattered = false;
+    AudioSource audioSrc;
 
     void Start()
     {
+        audioSrc = GetComponent<AudioSource>();
+
         canObjects = new Transform[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
             canObjects[i] = transform.GetChild(i);
@@ -49,6 +51,10 @@ public class Cans : MonoBehaviour
     {
         if (hasScattered) return;
         hasScattered = true;
+
+        // 散落音效 (一次性, 涵盖整个散落过程)
+        PlayOneShotSlot(scatterSound);
+
         StartCoroutine(ScatterRoutine());
     }
 
@@ -65,7 +71,6 @@ public class Cans : MonoBehaviour
             float angle = Mathf.Lerp(-scatterAngle / 2f, scatterAngle / 2f, t);
             Vector3 dir = Quaternion.Euler(0f, angle, 0f) * impactDirection.normalized;
 
-            // 查找是否有特殊Drop Y设置 -- 目前场景里有两个！
             float thisDropY = dropY;
             foreach (var special in specialDrops)
             {
@@ -107,5 +112,15 @@ public class Cans : MonoBehaviour
 
         can.localPosition = endPos;
         can.localRotation = endRot;
+    }
+
+    void PlayOneShotSlot(SoundSlot slot)
+    {
+        if (slot == null || slot.clip == null) return;
+        if (audioSrc == null) return;
+
+        audioSrc.pitch = slot.pitch +
+            Random.Range(-slot.randomPitchRange, slot.randomPitchRange);
+        audioSrc.PlayOneShot(slot.clip, slot.volume);
     }
 }

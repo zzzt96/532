@@ -4,24 +4,31 @@ using UnityEngine;
 public class GiftBox : MonoBehaviour
 {
     [Header("Box")]
-    [Tooltip("纸盒子Transform")]
     public Transform box;
-    [Tooltip("盒子推倒的目标世界旋转")]
     public Vector3 boxFallRotation = new Vector3(0f, 0f, 90f);
-    [Tooltip("盒子推倒时的位移")]
     public Vector3 boxFallSlide = new Vector3(0.3f, 0f, 0f);
     public float boxFallDuration = 0.4f;
 
     [Header("Gift")]
     public GameObject gift;
-    [Tooltip("礼物滑出后的中间位置（桌边）")]
     public Vector3 giftSlideWorldPosition;
-    [Tooltip("礼物最终落地的世界位置")]
     public Vector3 giftFinalWorldPosition;
     public float giftSlideDuration = 0.4f;
     public float giftFallDuration = 0.3f;
 
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("纸盒打开的纸质摩擦+结构展开声 (盒子被推倒瞬间播放)")]
+    public SoundSlot paperOpenSound;
+    // ===============================================
+
     bool triggered = false;
+    AudioSource audioSrc;
+
+    void Start()
+    {
+        audioSrc = GetComponent<AudioSource>();
+    }
 
     public void TriggerKnock()
     {
@@ -32,19 +39,19 @@ public class GiftBox : MonoBehaviour
 
     IEnumerator KnockSequence()
     {
-        // 1. 盒子被推倒
+        // 盒子被推倒瞬间: 纸质打开声
+        PlayOneShotSlot(paperOpenSound);
+
         if (box != null)
             yield return StartCoroutine(KnockBox());
 
         yield return new WaitForSeconds(0.2f);
 
-        // 2. 礼物滑出
         if (gift != null)
             yield return StartCoroutine(SlideGift());
 
         yield return new WaitForSeconds(0.3f);
 
-        // 3. 通知Manager
         Debug.Log("[GiftBox] Gift revealed!");
         Level3Manager.Instance?.OnGiftRevealed();
     }
@@ -74,7 +81,6 @@ public class GiftBox : MonoBehaviour
         gift.SetActive(true);
         Vector3 startPos = gift.transform.position;
 
-        // 第一段：从盒子里滑到桌边
         float elapsed = 0f;
         while (elapsed < giftSlideDuration)
         {
@@ -85,17 +91,25 @@ public class GiftBox : MonoBehaviour
         }
         gift.transform.position = giftSlideWorldPosition;
 
-        // 第二段：从桌边落到地面
         elapsed = 0f;
         while (elapsed < giftFallDuration)
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / giftFallDuration);
-            // 加速下落（ease-in）
             float eased = t * t;
             gift.transform.position = Vector3.Lerp(giftSlideWorldPosition, giftFinalWorldPosition, eased);
             yield return null;
         }
         gift.transform.position = giftFinalWorldPosition;
+    }
+
+    void PlayOneShotSlot(SoundSlot slot)
+    {
+        if (slot == null || slot.clip == null) return;
+        if (audioSrc == null) return;
+
+        audioSrc.pitch = slot.pitch +
+            Random.Range(-slot.randomPitchRange, slot.randomPitchRange);
+        audioSrc.PlayOneShot(slot.clip, slot.volume);
     }
 }

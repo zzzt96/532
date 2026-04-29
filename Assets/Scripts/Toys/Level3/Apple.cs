@@ -5,23 +5,24 @@ public class Apple : ToyBase
 {
     [Header("Movement")]
     public float moveSpeed = 3f;
-    [Tooltip("移动范围")]
     public float minX = -60f;
     public float maxX = -40f;
     public float minZ = -10f;
     public float maxZ = 0f;
 
     [Header("Trigger Zone")]
-    [Tooltip("蜡烛前方的触发位置（拖入空物体或蜡烛Transform）")]
     public Transform candlePosition;
-    [Tooltip("距离蜡烛多近时触发")]
     public float triggerRadius = 1.5f;
 
     [Header("Shadow")]
-    [Tooltip("圆形影子GameObject（初始invisible的Quad或Sprite）")]
     public GameObject roundShadow;
-    [Tooltip("影子fade in持续时间")]
     public float shadowFadeDuration = 1f;
+
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("金属在轨道上滑动的'哗啦/咔啦'声 (按 WASD 移动时持续 loop)")]
+    public SoundSlot slideRailSound;
+    // ===============================================
 
     float fixedY;
     bool triggered = false;
@@ -32,7 +33,6 @@ public class Apple : ToyBase
         canBePossessed = false;
         fixedY = transform.position.y;
 
-        // 初始隐藏圆形影子
         if (roundShadow != null)
         {
             var r = roundShadow.GetComponent<Renderer>();
@@ -45,11 +45,17 @@ public class Apple : ToyBase
         }
     }
 
+    public override void UnPossess()
+    {
+        base.UnPossess();
+        // 玩家退出附身时停止滑动声
+        StopSound();
+    }
+
     public override void ToyUpdate()
     {
         if (triggered) return;
 
-        // WASD移动，固定Y轴
         float moveX = 0f;
         float moveZ = 0f;
         if (Input.GetKey(KeyCode.W)) moveZ -= 1f;
@@ -64,7 +70,13 @@ public class Apple : ToyBase
         newPos.z = Mathf.Clamp(newPos.z, minZ, maxZ);
         transform.position = newPos;
 
-        // 检测是否到达蜡烛前方
+        // 移动时持续播滑动 loop, 不动时停止
+        bool isMoving = (Mathf.Abs(moveX) > 0.01f || Mathf.Abs(moveZ) > 0.01f);
+        if (isMoving)
+            PlaySound(slideRailSound);
+        else
+            StopSound();
+
         if (candlePosition != null)
         {
             float dist = Vector3.Distance(
@@ -75,8 +87,20 @@ public class Apple : ToyBase
             {
                 triggered = true;
                 Debug.Log("[Apple] Covered candle! Triggering shadow change.");
+
+                // 停止滑动音
+                StopSound();
+
                 StartCoroutine(FadeInShadow());
                 Level3Manager.Instance?.OnAppleCoveredCandle();
+
+                // zoom out 修复: 苹果到位, 玩家退出附身看影子变化
+                PlayerController player = FindObjectOfType<PlayerController>();
+                if (player != null && player.isPossessing && player.currentToy == this)
+                {
+                    player.ExitPossess();
+                    Debug.Log("[Apple] Auto-exited possession.");
+                }
             }
         }
     }

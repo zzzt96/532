@@ -1,19 +1,17 @@
 using UnityEngine;
 
-/// <summary>
-/// 桌上闹钟
-/// 附身后按住Space → 闹钟震动（越来越剧烈）
-/// 震动持续一定时间 → 通知Level3Manager触发桌子震动+木板倒下
-/// </summary>
 public class TableClock3 : ToyBase
 {
     [Header("Shake Settings")]
-    [Tooltip("需要持续震动多少秒才触发")]
     public float shakeRequiredTime = 2f;
-    [Tooltip("震动幅度（位移）")]
     public float shakeAmplitude = 0.15f;
-    [Tooltip("震动频率")]
     public float shakeFrequency = 30f;
+
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("闹钟震动的高频'嗡嗡'声 (建议勾选 Loop, 按住 Space 时持续)")]
+    public SoundSlot clockBuzzSound;
+    // ===============================================
 
     Vector3 startLocalPos;
     float shakeTimer = 0f;
@@ -34,29 +32,43 @@ public class TableClock3 : ToyBase
         {
             shakeTimer += Time.deltaTime;
 
-            // 震动幅度随时间增加
             float progress = Mathf.Clamp01(shakeTimer / shakeRequiredTime);
             float currentAmplitude = shakeAmplitude * (0.5f + progress * 0.5f);
 
-            // 随机震动偏移
             float offsetX = Mathf.Sin(Time.time * shakeFrequency) * currentAmplitude;
             float offsetY = Mathf.Cos(Time.time * shakeFrequency * 1.3f) * currentAmplitude * 0.5f;
             transform.localPosition = startLocalPos + new Vector3(offsetX, offsetY, 0f);
+
+            // 震动期间持续播 loop
+            PlaySound(clockBuzzSound);
 
             if (shakeTimer >= shakeRequiredTime)
             {
                 triggered = true;
                 transform.localPosition = startLocalPos;
+
+                // 停止震动 loop
+                StopSound();
+
                 Debug.Log("[TableClock] Shake complete! Triggering table.");
                 Level3Manager.Instance?.OnClockShaken();
+
+                // zoom out 修复: 触发桌子震动演出, 玩家退出附身
+                PlayerController player = FindObjectOfType<PlayerController>();
+                if (player != null && player.isPossessing && player.currentToy == this)
+                {
+                    player.ExitPossess();
+                    Debug.Log("[TableClock] Auto-exited possession.");
+                }
             }
         }
         else
         {
-            // 松开Space：归位
+            // 松开 Space: 归位 + 停止震动音
             shakeTimer = 0f;
             transform.localPosition = Vector3.Lerp(
                 transform.localPosition, startLocalPos, Time.deltaTime * 10f);
+            StopSound();
         }
     }
 
@@ -71,5 +83,6 @@ public class TableClock3 : ToyBase
     {
         base.UnPossess();
         transform.localPosition = startLocalPos;
+        StopSound();
     }
 }

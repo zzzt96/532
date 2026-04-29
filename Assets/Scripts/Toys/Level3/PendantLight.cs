@@ -3,7 +3,6 @@ using UnityEngine;
 public class PendantLight : ToyBase
 {
     [Header("Pivot")]
-    [Tooltip("拖入LampPivot，旋转这个而不是自身")]
     public Transform pivotTransform;
 
     [Header("Swing Settings")]
@@ -23,7 +22,6 @@ public class PendantLight : ToyBase
     float swingTime = 0f;
     bool triggered = false;
 
-    // 旋转目标：pivot优先，否则自身
     Transform RotTarget => pivotTransform != null ? pivotTransform : transform;
 
     protected override void Start()
@@ -52,17 +50,23 @@ public class PendantLight : ToyBase
         }
 
         swingTime += swingSpeed * Time.deltaTime;
-        // 负号：先向左摆
         float swingAngle = -Mathf.Sin(swingTime) * currentAmplitude;
         RotTarget.localRotation = initialRotation * Quaternion.AngleAxis(swingAngle, swingAxis);
 
         if (currentAmplitude >= triggerAngle)
         {
             triggered = true;
-            // 停在左边triggerAngle度，不回摆
             RotTarget.localRotation = initialRotation * Quaternion.AngleAxis(triggerAngle, swingAxis);
             Debug.Log("[PendantLight] Trigger reached! Lamp stays tilted left.");
             Level3Manager.Instance?.OnLampSwung();
+
+            // zoom out 修复: 灯摆到位后, 玩家任务结束
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player != null && player.isPossessing && player.currentToy == this)
+            {
+                player.ExitPossess();
+                Debug.Log("[PendantLight] Auto-exited possession.");
+            }
         }
     }
 

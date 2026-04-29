@@ -4,17 +4,23 @@ using UnityEngine;
 public class Blank : MonoBehaviour
 {
     [Header("Fall Settings")]
-    [Tooltip("木板倒下后的目标世界旋转（在Editor里手动摆好位置后填入）")]
     public Vector3 targetWorldRotation = new Vector3(3f, -18.6f, -0.4f);
-    [Tooltip("木板倒下后的目标世界位置（在Editor里手动摆好位置后填入）")]
     public Vector3 targetWorldPosition;
     public float fallDuration = 0.6f;
 
+    // ==================== Audio ====================
+    [Header("Audio")]
+    [Tooltip("木板倒地的木质'哐/砰'声 (倒下完成瞬间播放)")]
+    public SoundSlot plankFallSound;
+    // ===============================================
+
     Quaternion startRot;
     Vector3 startPos;
+    AudioSource audioSrc;
 
     void Start()
     {
+        audioSrc = GetComponent<AudioSource>();
         startRot = transform.rotation;
         startPos = transform.position;
     }
@@ -43,7 +49,20 @@ public class Blank : MonoBehaviour
         transform.rotation = endRot;
         transform.position = endPos;
 
+        // 木板倒地瞬间
+        PlayOneShotSlot(plankFallSound);
+
         Debug.Log("[Blank] Plank fell, puddle covered.");
         Level3Manager.Instance?.OnPlankFell();
+    }
+
+    void PlayOneShotSlot(SoundSlot slot)
+    {
+        if (slot == null || slot.clip == null) return;
+        if (audioSrc == null) return;
+
+        audioSrc.pitch = slot.pitch +
+                         Random.Range(-slot.randomPitchRange, slot.randomPitchRange);
+        audioSrc.PlayOneShot(slot.clip, slot.volume);
     }
 }
