@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}" SchemaVersion="119">
+	<Busses>
+		<WorkUnit Name="Default Work Unit" ID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}" PersistMode="Standalone">
+			<ChildrenList>
+				<Bus Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}">
+					<ReferenceList>
+						<Reference Name="AudioDevice" PluginName="System" CompanyID="0" PluginID="174" PluginType="7">
+							<ObjectRef Name="System" ID="{24E27A29-2FC0-49D6-881A-486E6CDA54FC}" WorkUnitID="{E3C098F9-6F0D-4E35-9C98-0CA8209ED0D7}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Bus Name="Basement_Music_Bus" ID="{572806DA-26D7-459C-AEBA-16724C56CADB}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="1"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Bus>
+						<Bus Name="Ambience_Bus" ID="{C52B4B4B-34A6-480E-AE69-4F3FB1554F7B}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="4"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Bus>
+						<Bus Name="Bedroom_Music_Bus" ID="{814AC676-4AB7-475C-BDE0-B393C9EEC791}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="24"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Bus>
+						<Bus Name="Attic_Music_Bus" ID="{4ED03B98-70DA-4F96-98D1-1FA15AAB594B}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="7"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Bus>
+					</ChildrenList>
+				</Bus>
+			</ChildrenList>
+		</WorkUnit>
+	</Busses>
+</WwiseDocument>

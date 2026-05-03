@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{B40AEDF5-32A3-4400-88F7-7B9D93613C39}" SchemaVersion="119">
+	<Events>
+		<WorkUnit Name="Events" ID="{B40AEDF5-32A3-4400-88F7-7B9D93613C39}" PersistMode="Standalone">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="13"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<Folder Name="Music_Event" ID="{9A22E6FA-FE97-4086-A684-020E778066A2}" ShortID="174319147">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="24"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Event Name="Play_Bedroom_Music_Phrase_Branching" ID="{C9F92A12-F2BF-4A0F-A015-E81FB75A6E52}">
+							<ChildrenList>
+								<Action Name="" ID="{F48C97D7-3216-4AD2-89F2-8FBCC64A8DBE}" ShortID="277152816">
+									<PropertyList>
+										<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Bedroom_Music_Phrase_Branching" ID="{6C528CE7-8AA5-4F5F-8AEC-CED08E421D1B}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{9DD8CAFD-2648-474A-9063-70A671E1841E}" ShortID="370213453">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+										<Property Name="FadeTime" Type="Real64" Value="1"/>
+										<Property Name="Scope" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Menu_Story_Tutorial_Music" ID="{1377FC95-C46B-4728-80AF-0A0F846505A7}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Folder Name="Attic_Music" ID="{6A5D0D5B-A09B-413B-B866-0C57E7581712}" ShortID="513041926">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="7"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Event Name="Play_Attic_Music_Start" ID="{9CD4F708-E876-43EB-B029-E16DDDC67FB5}">
+									<PropertyList>
+										<Property Name="Color" Type="int16" Value="7"/>
+										<Property Name="OverrideColor" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<Action Name="" ID="{38B7FB4F-8A76-460A-A50D-05B52055B782}" ShortID="537484608">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_1" ID="{E4B35201-CF7D-4A70-96FF-301D51BD5057}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{8B0E11F7-BAF5-4049-BF60-8E145F0A30D7}" ShortID="659188549">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_2" ID="{06D0CF33-A840-4D4C-9379-E709DC8A25FC}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{1E4360F0-885E-48E4-A526-6F7208CE4C79}" ShortID="708843075">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_3" ID="{A9F1231E-B3D9-4B20-8DA3-1D01E6957014}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{FAC05C22-753C-40A4-8361-56D80153E557}" ShortID="540163637">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_1" ID="{E4B35201-CF7D-4A70-96FF-301D51BD5057}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{2FDE0C6C-5CB4-4711-85D0-EAC51B7F30FB}" ShortID="913521004">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-96"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_3" ID="{A9F1231E-B3D9-4B20-8DA3-1D01E6957014}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{52C09D4D-7CBA-4C8B-B146-32B2ED84468E}" ShortID="25949937">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-96"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_2" ID="{06D0CF33-A840-4D4C-9379-E709DC8A25FC}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{1D42CEA1-0382-41AF-8B97-70669D800F05}" ShortID="654590826">
+											<PropertyList>
+												<Property Name="FadeTime" Type="Real64" Value="2"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="LH_SFX_Attic_Ambience" ID="{34131CAF-BB74-4285-9EDD-B23D2419E39A}" WorkUnitID="{65446623-658B-49D7-8DD8-957D6E773D7B}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Play_Attic_Music_Layer2" ID="{273F0379-8E94-44E2-81C3-D154F7C5F2ED}">
+									<ChildrenList>
+										<Action Name="" ID="{10BFD2F9-F427-49A2-89C5-28AD6C77CE39}" ShortID="184980101">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_1" ID="{E4B35201-CF7D-4A70-96FF-301D51BD5057}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{398336F4-AF49-414B-9934-739B79D0A832}" ShortID="563461722">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_2" ID="{06D0CF33-A840-4D4C-9379-E709DC8A25FC}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{37C76AE0-D70A-481B-8B19-921B7D8D603A}" ShortID="1047796271">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-96"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_3" ID="{A9F1231E-B3D9-4B20-8DA3-1D01E6957014}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Play_Attic_Music_Layer3" ID="{B1ED2F63-657A-4D81-BF09-F185F2490FF6}">
+									<ChildrenList>
+										<Action Name="" ID="{FBDF5B1C-106E-49B8-BE88-88FC8461DBE2}" ShortID="492090958">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_1" ID="{E4B35201-CF7D-4A70-96FF-301D51BD5057}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{FF0CC8F0-7014-4F32-875A-CA59FC7E627C}" ShortID="554651688">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_2" ID="{06D0CF33-A840-4D4C-9379-E709DC8A25FC}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{37EE3253-76BE-47A8-B44E-18C5D4D8202B}" ShortID="783900742">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-5"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_3" ID="{A9F1231E-B3D9-4B20-8DA3-1D01E6957014}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Play_MX_Transition_Bedroom_to_Attic_90bpm" ID="{AECE6444-B9D4-48A1-9DEE-B6CFF3A94401}">
+									<ChildrenList>
+										<Action Name="" ID="{B2B421E7-FE70-4C2F-B2E1-057B4F4CCE49}" ShortID="791943967">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="MX_Transition_Bedroom to Attic_90bpm" ID="{774C7590-E6CC-41B1-865A-CF27A23C27AB}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{E8301544-9488-4042-9F5B-B1135C2C2A99}" ShortID="12212424">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Bedroom_Music_Phrase_Branching" ID="{6C528CE7-8AA5-4F5F-8AEC-CED08E421D1B}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{CE5B148F-2ABD-4683-9DBD-98595DC8A4E6}" ShortID="1067120594">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="LH_SFX_Bedroom_Ambience" ID="{8810410E-B3EF-4848-8BE0-AF9958F794B4}" WorkUnitID="{65446623-658B-49D7-8DD8-957D6E773D7B}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+							</ChildrenList>
+						</Folder>
+						<Folder Name="Basement_Music" ID="{ABE269A2-CD1B-489C-BD4B-D3A3EEBB1FD6}" ShortID="759274083">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="1"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Event Name="Play_Basement_Start" ID="{BB9D9D0A-CAAD-4CA4-BBE7-41E92593B725}">
+									<ChildrenList>
+										<Action Name="" ID="{EF2C0FA2-94A2-4B8C-8086-DAB7A329EDBC}" ShortID="353553057">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_1" ID="{C2076C24-B7D9-467C-AFBB-CE87EE78DC74}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{A4E4698D-EDAB-41C4-A29E-39E3FB1ABF35}" ShortID="58942256">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_2" ID="{EDA73FD7-A8B4-45D7-8DC5-5AB1151D117C}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{B37CAD88-8E1A-415A-AAA2-681C01F055FB}" ShortID="300939652">
+											<PropertyList>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_3" ID="{DE8DA59D-D80D-43E5-B63A-708764A022B8}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{99ADCEDA-EBD2-4667-9E00-A6029C405653}" ShortID="425096390">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-96"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_1" ID="{C2076C24-B7D9-467C-AFBB-CE87EE78DC74}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{6A4B0355-C2A7-4D1B-97BF-174F9330EF63}" ShortID="913749131">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-96"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_2" ID="{EDA73FD7-A8B4-45D7-8DC5-5AB1151D117C}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{ED6907FA-449B-47A3-A1B7-38A60E172CFB}" ShortID="964194380">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="FadeTime" Type="Real64" Value="3.5"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-4"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_3" ID="{DE8DA59D-D80D-43E5-B63A-708764A022B8}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{45E07971-561D-41AF-8279-DFE86A12D84B}" ShortID="411727821">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-96"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_1" ID="{E4B35201-CF7D-4A70-96FF-301D51BD5057}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{C4F0845D-34B4-436B-98AD-66D9B34DAB21}" ShortID="598328924">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-96"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_2" ID="{06D0CF33-A840-4D4C-9379-E709DC8A25FC}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{CC3E6E8E-4F84-49F7-9ABE-21749B88C8D8}" ShortID="59703139">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-96"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_3" ID="{A9F1231E-B3D9-4B20-8DA3-1D01E6957014}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Basement_music_Layer2" ID="{DC2E9CB8-8569-4F9D-B7E3-35DF9D489CE7}">
+									<ChildrenList>
+										<Action Name="" ID="{005512B5-E52C-4DE4-8189-861B6D8096B7}" ShortID="858846859">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-96"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_1" ID="{C2076C24-B7D9-467C-AFBB-CE87EE78DC74}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{FE67D728-C8ED-47E4-BBFD-DE2DD95FBFBF}" ShortID="568377853">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_2" ID="{EDA73FD7-A8B4-45D7-8DC5-5AB1151D117C}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{08A4701F-A3A5-4D09-AC09-C48EFE237180}" ShortID="586255318">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_3" ID="{DE8DA59D-D80D-43E5-B63A-708764A022B8}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{BDECBE22-BCB1-456A-A06D-E2E333CF50F7}" ShortID="756128791">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_1" ID="{E4B35201-CF7D-4A70-96FF-301D51BD5057}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{03C0F217-0407-4146-BD5E-C93FA19410E7}" ShortID="792275420">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_2" ID="{06D0CF33-A840-4D4C-9379-E709DC8A25FC}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{2D4E5CD2-19EF-4CD8-9548-FE16F9D53603}" ShortID="692798654">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Attic_Music_Vertical_Layer_3" ID="{A9F1231E-B3D9-4B20-8DA3-1D01E6957014}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Basement_music_Layer3" ID="{35AEF4DD-7AFB-4D60-97C8-E7A2E5F074AB}">
+									<ChildrenList>
+										<Action Name="" ID="{DDE17C45-CECC-4FD1-9D02-83E9A754749E}" ShortID="915157266">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="FadeTime" Type="Real64" Value="2"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64" Value="-5"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_1" ID="{C2076C24-B7D9-467C-AFBB-CE87EE78DC74}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{5AD4A28B-2D77-4B04-A93C-1378E092E023}" ShortID="408221233">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_2" ID="{EDA73FD7-A8B4-45D7-8DC5-5AB1151D117C}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{C98EEFF5-7A2C-4144-87EE-1183696CD9D8}" ShortID="510072396">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="12"/>
+												<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+												<Property Name="Scope" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Basement_Music_Layer_3" ID="{DE8DA59D-D80D-43E5-B63A-708764A022B8}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+							</ChildrenList>
+						</Folder>
+						<Event Name="Play_Menu_Story_Tutorial_Music" ID="{CA7D1308-58A4-447A-9B84-538749468949}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="23"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{22F940C3-CDF7-416F-BF2D-9AA094090699}" ShortID="182036661">
+									<PropertyList>
+										<Property Name="FadeTime" Type="Real64" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Menu_Story_Tutorial_Music" ID="{1377FC95-C46B-4728-80AF-0A0F846505A7}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{E22D8BEB-AF77-477F-B1F1-EC62ECACF92F}" ShortID="950214429">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+										<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+										<Property Name="Scope" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Celebrate_Music" ID="{6F11E36A-5044-47D6-B43E-DC875D324D28}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_Celebrate_Music" ID="{9C8A6907-9620-4245-B262-757656630824}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="19"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{4F993D50-040C-4F05-9C01-62FD8923EC18}" ShortID="127968270">
+									<PropertyList>
+										<Property Name="FadeTime" Type="Real64" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Celebrate_Music" ID="{6F11E36A-5044-47D6-B43E-DC875D324D28}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{DA1FAE06-A4AA-4BD7-B226-DD0AEB2DC5E9}" ShortID="136114488">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+										<Property Name="FadeTime" Type="Real64" Value="2.5"/>
+										<Property Name="Scope" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Basement_Music_Layer_1" ID="{C2076C24-B7D9-467C-AFBB-CE87EE78DC74}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{3B7F2B34-93BE-417C-9926-EE30942BA490}" ShortID="886330775">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+										<Property Name="FadeTime" Type="Real64" Value="2.5"/>
+										<Property Name="Scope" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Basement_Music_Layer_2" ID="{EDA73FD7-A8B4-45D7-8DC5-5AB1151D117C}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{60DA6BA3-C6EA-41D6-B32A-A0700BC6E7B9}" ShortID="474795823">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+										<Property Name="FadeTime" Type="Real64" Value="2.5"/>
+										<Property Name="Scope" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Basement_Music_Layer_3" ID="{DE8DA59D-D80D-43E5-B63A-708764A022B8}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Ambience" ID="{A4C1E5DD-6651-48C4-BC11-482D5A3788F5}" ShortID="745840527">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="4"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Event Name="Play_LH_SFX_Attic_Ambience" ID="{C79D7858-0E99-43E1-B111-AE004481BBF7}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="4"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{4B67536D-6D0E-41E8-A498-9C7CBB838D7B}" ShortID="34170307">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="LH_SFX_Attic_Ambience" ID="{34131CAF-BB74-4285-9EDD-B23D2419E39A}" WorkUnitID="{65446623-658B-49D7-8DD8-957D6E773D7B}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_LH_SFX_Bedroom_Ambience" ID="{AC8E2BA0-DE6A-4EBE-942E-659953E8306A}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="4"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{7B40FE15-6825-474B-B718-38627C3C015E}" ShortID="817147216">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="LH_SFX_Bedroom_Ambience" ID="{8810410E-B3EF-4848-8BE0-AF9958F794B4}" WorkUnitID="{65446623-658B-49D7-8DD8-957D6E773D7B}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_LH_SFX_Basement_Ambience" ID="{76C1A9C6-0B51-40E1-A1E3-7476CE5FAC3A}">
+							<ChildrenList>
+								<Action Name="" ID="{BA1CBC69-AB95-4A4D-BA48-296AEEF80A5D}" ShortID="373953993">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="LH_SFX_Basement_Ambience" ID="{A656F9C9-1CAB-4BC1-8E47-64CB3F97F908}" WorkUnitID="{65446623-658B-49D7-8DD8-957D6E773D7B}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

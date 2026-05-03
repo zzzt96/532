@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<RootPaths>
+		<ProjectRoot>../..</ProjectRoot>
+		<SourceFilesRoot>../../.cache/Windows</SourceFilesRoot>
+		<SoundBanksRoot>.</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>.</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{634A9D6A-BE6E-2661-8F37-0FC7F5096993}">
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<Plugins>
+				<AudioDevices>
+					<Plugin Id="2317455096" Name="No_Output" LibName="No Output" LibId="11862023"/>
+					<Plugin Id="3859886410" Name="System" LibName="System" LibId="11403271"/>
+				</AudioDevices>
+			</Plugins>
+			<Busses>
+				<Bus Id="116948705" Name="Attic_Music_Bus"/>
+				<Bus Id="174546974" Name="Ambience_Bus"/>
+				<Bus Id="701019509" Name="Basement_Music_Bus"/>
+				<Bus Id="3036294840" Name="Bedroom_Music_Bus"/>
+				<Bus Id="3803692087" Name="Master Audio Bus"/>
+			</Busses>
+			<StateGroups>
+				<StateGroup Id="3541645002" Name="Attic">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="3409644909" Name="Attic_Layer1"/>
+						<State Id="3409644910" Name="Attic_Layer2"/>
+						<State Id="3409644911" Name="Attic_Layer3"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+		<SoundBank Id="1661994096" Type="User" Language="SFX" Hash="{C9D8CADE-287C-2D5E-8B7A-A32356A435AC}">
+			<ShortName>Soundbank</ShortName>
+			<Path>Soundbank.bnk</Path>
+			<Media>
+				<File Id="65487109" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>LH_SFX_Attic_Ambience_Loop_V1.wav</ShortName>
+					<CachePath>SFX/LH_SFX_Attic_Ambience_Loop_V1_762A135E.wem</CachePath>
+				</File>
+				<File Id="142286990" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Celebration_115bpm.wav</ShortName>
+					<CachePath>SFX/MX_Celebration_115bpm_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="227685152" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Attic_110bpm_L2.wav</ShortName>
+					<CachePath>SFX/MX_Attic_110bpm_L2_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="367793105" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>LH_SFX_Basement_Ambience.wav</ShortName>
+					<CachePath>SFX/LH_SFX_Basement_Ambience_C6CEAA9C.wem</CachePath>
+				</File>
+				<File Id="423223309" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Basement_115bpm_L3.wav</ShortName>
+					<CachePath>SFX/MX_Basement_115bpm_L3_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="431987746" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Bedroom_90bpm_BR1.wav</ShortName>
+					<CachePath>SFX/MX_Bedroom_90bpm_BR1_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="555679296" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Menu_Story_65bpm.wav</ShortName>
+					<CachePath>SFX/MX_Menu_Story_65bpm_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="586172110" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Littlehelpers_4-4_110bpm_Attic_L3.wav</ShortName>
+					<CachePath>SFX/Littlehelpers_4-4_110bpm_Attic_L3_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="591465244" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Basement_115bpm_L1.wav</ShortName>
+					<CachePath>SFX/MX_Basement_115bpm_L1_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="596234943" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Basement_115bpm_L2.wav</ShortName>
+					<CachePath>SFX/MX_Basement_115bpm_L2_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="695984814" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Attic_110bpm_L1.wav</ShortName>
+					<CachePath>SFX/MX_Attic_110bpm_L1_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="718196963" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Bedroom_90bpm_BR2.wav</ShortName>
+					<CachePath>SFX/MX_Bedroom_90bpm_BR2_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="779919774" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Bedroom_90bpm_BR3.wav</ShortName>
+					<CachePath>SFX/MX_Bedroom_90bpm_BR3_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="816107610" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Basement_to_Celebration_Transition_115bpm.wav</ShortName>
+					<CachePath>SFX/MX_Basement_to_Celebration_Transition_115bpm_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="833984909" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MX_Transition_Bedroom to Attic_90bpm.wav</ShortName>
+					<CachePath>SFX/MX_Transition_Bedroom to Attic_90bpm_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="882964143" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>LH_SFX_Bedroom_Ambience.wav</ShortName>
+					<CachePath>SFX/LH_SFX_Bedroom_Ambience_F261AB1C.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1646315474" Name="Basement_music_Layer2" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+				<Event Id="1646315475" Name="Basement_music_Layer3" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+				<Event Id="2926203361" Name="Play_Attic_Music_Layer2" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+				<Event Id="2926203360" Name="Play_Attic_Music_Layer3" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+				<Event Id="3031313914" Name="Play_Attic_Music_Start" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="65487109"/>
+						<MediaRef Id="227685152"/>
+						<MediaRef Id="586172110"/>
+						<MediaRef Id="695984814"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3127203060" Name="Play_Basement_Start" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="423223309"/>
+						<MediaRef Id="591465244"/>
+						<MediaRef Id="596234943"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="97166795" Name="Play_Bedroom_Music_Phrase_Branching" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="431987746"/>
+						<MediaRef Id="718196963"/>
+						<MediaRef Id="779919774"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1539113365" Name="Play_Celebrate_Music" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="142286990"/>
+						<MediaRef Id="816107610"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="596144269" Name="Play_LH_SFX_Attic_Ambience" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="65487109"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3845453577" Name="Play_LH_SFX_Basement_Ambience" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="367793105"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="303477462" Name="Play_LH_SFX_Bedroom_Ambience" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="882964143"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="816650710" Name="Play_Menu_Story_Tutorial_Music" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="555679296"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="322824155" Name="Play_MX_Transition_Bedroom_to_Attic_90bpm" DurationType="OneShot" DurationMin="6.363646" DurationMax="6.363646">
+					<MediaRefs>
+						<MediaRef Id="833984909"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{BA387CB1-D6AA-74E2-882D-223215581F5B}</FileHash>
+</SoundBanksInfo>

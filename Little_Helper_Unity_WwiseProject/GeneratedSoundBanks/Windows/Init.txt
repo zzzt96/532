@@ -1,0 +1,20 @@
+State Group	ID	Name			Wwise Object Path	Notes
+	3541645002	Attic			\Default Work Unit\Music_State\Attic	
+
+State	ID	Name	State Group			Notes
+	748895195	None	Attic			
+	3409644909	Attic_Layer1	Attic			
+	3409644910	Attic_Layer2	Attic			
+	3409644911	Attic_Layer3	Attic			
+
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	116948705	Attic_Music_Bus			\Default Work Unit\Master Audio Bus\Attic_Music_Bus	
+	174546974	Ambience_Bus			\Default Work Unit\Master Audio Bus\Ambience_Bus	
+	701019509	Basement_Music_Bus			\Default Work Unit\Master Audio Bus\Basement_Music_Bus	
+	3036294840	Bedroom_Music_Bus			\Default Work Unit\Master Audio Bus\Bedroom_Music_Bus	
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+
+Audio Devices	ID	Name	Type				Notes
+	2317455096	No_Output	No Output			
+	3859886410	System	System			
+

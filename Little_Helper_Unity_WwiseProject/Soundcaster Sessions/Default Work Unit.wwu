@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{09245ED9-EE9B-456F-8170-4028BB7CC1AE}" SchemaVersion="119">
+	<SoundcasterSessions>
+		<WorkUnit Name="Default Work Unit" ID="{09245ED9-EE9B-456F-8170-4028BB7CC1AE}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="Soundcaster" ID="{FE3238DD-7FDE-4507-AAC4-5496D4AE9648}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Play_Bedroom_Music_Phrase_Branching" ID="{C9F92A12-F2BF-4A0F-A015-E81FB75A6E52}" WorkUnitID="{B40AEDF5-32A3-4400-88F7-7B9D93613C39}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_Attic_Music_Start" ID="{9CD4F708-E876-43EB-B029-E16DDDC67FB5}" WorkUnitID="{B40AEDF5-32A3-4400-88F7-7B9D93613C39}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_LH_SFX_Bedroom_Ambience" ID="{AC8E2BA0-DE6A-4EBE-942E-659953E8306A}" WorkUnitID="{B40AEDF5-32A3-4400-88F7-7B9D93613C39}"/>
+							<Position X="0" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_Attic_Music_Layer2" ID="{273F0379-8E94-44E2-81C3-D154F7C5F2ED}" WorkUnitID="{B40AEDF5-32A3-4400-88F7-7B9D93613C39}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_LH_SFX_Attic_Ambience" ID="{C79D7858-0E99-43E1-B111-AE004481BBF7}" WorkUnitID="{B40AEDF5-32A3-4400-88F7-7B9D93613C39}"/>
+							<Position X="1" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_Attic_Music_Layer3" ID="{B1ED2F63-657A-4D81-BF09-F185F2490FF6}" WorkUnitID="{B40AEDF5-32A3-4400-88F7-7B9D93613C39}"/>
+							<Position X="2" Y="1"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true"/>
+					<CurrentStateList ShowAll="true">
+						<CurrentStateRef Name="None" ID="{B7441D9C-078A-41DC-B960-53494FD433CF}"/>
+					</CurrentStateList>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundcasterSessions>
+</WwiseDocument>

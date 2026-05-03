@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{060C99AA-130B-4FFB-A598-13553F2513BE}" SchemaVersion="119" RootDocumentID="{797EA24E-5E51-4D82-98A5-530C01DFD21B}" ParentDocumentID="{797EA24E-5E51-4D82-98A5-530C01DFD21B}">
+	<States>
+		<WorkUnit Name="Music_State" ID="{060C99AA-130B-4FFB-A598-13553F2513BE}" OwnerID="{797EA24E-5E51-4D82-98A5-530C01DFD21B}" PersistMode="Nested">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="24"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<StateGroup Name="Attic" ID="{AB352795-817D-4B07-8B56-259895F6A9ED}">
+					<ChildrenList>
+						<State Name="None" ID="{B7441D9C-078A-41DC-B960-53494FD433CF}"/>
+						<State Name="Attic_Layer1" ID="{AA1AD35E-8920-4CCA-9B33-73B0C7415AFB}"/>
+						<State Name="Attic_Layer2" ID="{2D845390-61A9-419F-9C59-D2905C7E7B2E}"/>
+						<State Name="Attic_Layer3" ID="{0060EC50-071D-40A5-B49B-B8B7C47606CD}"/>
+					</ChildrenList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</States>
+</WwiseDocument>

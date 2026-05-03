@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{65446623-658B-49D7-8DD8-957D6E773D7B}" SchemaVersion="119">
+	<AudioObjects>
+		<WorkUnit Name="SFX" ID="{65446623-658B-49D7-8DD8-957D6E773D7B}" PersistMode="Standalone">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="2"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<Folder Name="Ambience" ID="{15FE8E69-BF3C-4D9F-B8FB-0CADB339A736}" ShortID="559160034">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="4"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Sound Name="LH_SFX_Attic_Ambience" ID="{34131CAF-BB74-4285-9EDD-B23D2419E39A}" ShortID="349404701">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-11</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Ambience_Bus" ID="{C52B4B4B-34A6-480E-AE69-4F3FB1554F7B}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="LH_SFX_Attic_Ambience_Loop_V1" ID="{757D88CC-8351-4EFF-9EA4-322595E4BA73}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="2.46746865399838"/>
+										<Property Name="FadeInShape" Type="int16" Value="6"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="2.02903068360328"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>LH_SFX_Attic_Ambience_Loop_V1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="65487109"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="LH_SFX_Attic_Ambience_Loop_V1" ID="{757D88CC-8351-4EFF-9EA4-322595E4BA73}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="LH_SFX_Basement_Ambience" ID="{A656F9C9-1CAB-4BC1-8E47-64CB3F97F908}" ShortID="152454633">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Ambience_Bus" ID="{C52B4B4B-34A6-480E-AE69-4F3FB1554F7B}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="LH_SFX_Basement_Ambience" ID="{DE0B8550-327C-4F23-A3AA-157147D91CC9}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.259332023575638"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.129666011787819"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>LH_SFX_Basement_Ambience.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="367793105"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="LH_SFX_Basement_Ambience" ID="{DE0B8550-327C-4F23-A3AA-157147D91CC9}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="LH_SFX_Bedroom_Ambience" ID="{8810410E-B3EF-4848-8BE0-AF9958F794B4}" ShortID="1010883929">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>2</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Ambience_Bus" ID="{C52B4B4B-34A6-480E-AE69-4F3FB1554F7B}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="LH_SFX_Bedroom_Ambience" ID="{795A5F31-B5B9-4DE2-AC5E-7310DC74CFE7}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="1.17878192534381"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.707269155206284"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>LH_SFX_Bedroom_Ambience.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="882964143"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="LH_SFX_Bedroom_Ambience" ID="{795A5F31-B5B9-4DE2-AC5E-7310DC74CFE7}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

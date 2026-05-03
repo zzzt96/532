@@ -1,0 +1,2228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}" SchemaVersion="119">
+	<InteractiveMusic>
+		<WorkUnit Name="Music" ID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}" PersistMode="Standalone">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="24"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<MusicPlaylistContainer Name="Bedroom_Music_Phrase_Branching" ID="{6C528CE7-8AA5-4F5F-8AEC-CED08E421D1B}" ShortID="987109719">
+					<PropertyList>
+						<Property Name="Tempo" Type="Real64" Value="90"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-1</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Bedroom_Music_Bus" ID="{814AC676-4AB7-475C-BDE0-B393C9EEC791}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+						</Reference>
+						<Reference Name="PlaylistRoot">
+							<Custom>
+								<MusicPlaylistItem Name="" ID="{B9F389FE-A0AB-4038-BBCC-E8CBAF0B55CB}" ShortID="44337352">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{BD17A39F-55C3-44EC-92F3-185D31E25FE7}" ShortID="819006444">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="MX_Bedroom_90bpm_BR1" ID="{9DFEDD01-E76A-4308-926C-A2830CE38E13}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{2CA637B3-7BC5-4F2C-AD75-E44B78A77334}" ShortID="708274512">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="MX_Bedroom_90bpm_BR2" ID="{10F0B96E-F49F-4E62-BADB-8767561895A1}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{2EA7C897-5EB0-4DD4-BC4E-52A8AFF39E32}" ShortID="696911006">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="MX_Bedroom_90bpm_BR3" ID="{AFA2945F-5056-4A41-9228-C8FA4AE1275C}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Custom>
+						</Reference>
+						<Reference Name="TransitionRoot">
+							<Custom>
+								<MusicTransition Name="Root" ID="{50867238-DDD0-4B28-BE1E-07DDD53ECFCB}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{A680C68E-E363-49A3-BE24-3CC3732B820D}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</Custom>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicSegment Name="MX_Bedroom_90bpm_BR1" ID="{9DFEDD01-E76A-4308-926C-A2830CE38E13}" ShortID="18233588">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="36000"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="MX_Bedroom_90bpm_BR1" ID="{63D12314-24AD-4CEE-A93C-1D12F5B7059E}" ShortID="529665145">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{6556AF06-85B6-47B9-A3D6-14BB8F0C8EAE}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="MX_Bedroom_90bpm_BR1" ID="{7ED349B8-BE9F-490F-A343-CA111BC1CED2}">
+											<Language>SFX</Language>
+											<AudioFile>MX_Bedroom_90bpm_BR1.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="431987746"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{0DB35569-67F4-4BB9-B59E-9FB383BC58F7}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="MX_Bedroom_90bpm_BR1" ID="{7D0EB993-75B1-4A3E-8443-CB6B28404AEA}">
+																			<PropertyList>
+																				<Property Name="BeginTrimOffset" Type="Real64" Value="2000"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="36000"/>
+																				<Property Name="FadeInDuration" Type="Real64" Value="670.212765957447"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																				<Property Name="PlayAt" Type="Real64" Value="-2000"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="MX_Bedroom_90bpm_BR1" ID="{7ED349B8-BE9F-490F-A343-CA111BC1CED2}"/>
+																			<PropertyCurveList>
+																				<PropertyCurve PropertyName="Highpass">
+																					<Curve Name="" ID="{40E10E43-9101-4F31-AD68-1F5210A76807}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>2</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>36</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Lowpass">
+																					<Curve Name="" ID="{4BF998CD-561A-4E11-BB29-27F37B65C4F6}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>2</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>36</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Volume">
+																					<Curve Name="" ID="{DBCD653A-AAA1-4B2E-AA6E-4F3C98CB399F}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="3"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>2</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>36</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																			</PropertyCurveList>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{28FE2816-BA32-40CC-BB92-6C30DE7D26CB}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{7A5F09DF-3BA9-4F1B-B492-99F198DE13E9}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="32000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="MX_Bedroom_90bpm_BR2" ID="{10F0B96E-F49F-4E62-BADB-8767561895A1}" ShortID="691590557">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="20000"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="MX_Bedroom_90bpm_BR2" ID="{6F25CBF0-3672-458C-B335-37331CAE4F00}" ShortID="302964264">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{B841D245-4A04-4469-85AF-9A91E918E37D}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="MX_Bedroom_90bpm_BR2" ID="{8CEBE3A6-EEDB-4EB8-A724-377CC0DE5B1D}">
+											<Language>SFX</Language>
+											<AudioFile>MX_Bedroom_90bpm_BR2.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="718196963"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{E3282FD4-349C-4DDD-8529-9147013CC37C}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="MX_Bedroom_90bpm_BR2" ID="{0708645F-7768-4DE4-AE8C-658CF3A1441D}">
+																			<PropertyList>
+																				<Property Name="BeginTrimOffset" Type="Real64" Value="2000"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="20000"/>
+																				<Property Name="FadeInDuration" Type="Real64" Value="106.382978723405"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																				<Property Name="PlayAt" Type="Real64" Value="-2000"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="MX_Bedroom_90bpm_BR2" ID="{8CEBE3A6-EEDB-4EB8-A724-377CC0DE5B1D}"/>
+																			<PropertyCurveList>
+																				<PropertyCurve PropertyName="Highpass">
+																					<Curve Name="" ID="{3869764F-E3B9-4FBF-990B-7ECA7DEC0DA7}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>2</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>20</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Lowpass">
+																					<Curve Name="" ID="{7A1FF178-B797-4809-9B1F-38F97720070A}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>2</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>20</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Volume">
+																					<Curve Name="" ID="{CE20B035-7CF6-419E-89B5-CF6529429A9D}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="3"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>2</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>20</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																			</PropertyCurveList>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{EF6C594C-639E-420F-B388-B1776D939638}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{8D0C8083-6892-42B8-9413-74E42867C083}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="16000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="MX_Bedroom_90bpm_BR3" ID="{AFA2945F-5056-4A41-9228-C8FA4AE1275C}" ShortID="105165089">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="20000"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="MX_Bedroom_90bpm_BR3" ID="{70989067-F327-4540-A334-BDBC7D3E6DE9}" ShortID="256332645">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{477A01CE-1F25-4452-988E-5F71B4A05DF7}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="MX_Bedroom_90bpm_BR3" ID="{6DBF0CC7-74A9-416B-B73B-C319EA2F2B95}">
+											<Language>SFX</Language>
+											<AudioFile>MX_Bedroom_90bpm_BR3.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="779919774"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{225D8943-6403-4E4B-9123-F6B437045884}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="MX_Bedroom_90bpm_BR3" ID="{A618016D-E614-4CC1-8334-ED1B4A032C48}">
+																			<PropertyList>
+																				<Property Name="BeginTrimOffset" Type="Real64" Value="2000"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="20000"/>
+																				<Property Name="FadeInDuration" Type="Real64" Value="132.978723404256"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																				<Property Name="PlayAt" Type="Real64" Value="-2000"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="MX_Bedroom_90bpm_BR3" ID="{6DBF0CC7-74A9-416B-B73B-C319EA2F2B95}"/>
+																			<PropertyCurveList>
+																				<PropertyCurve PropertyName="Highpass">
+																					<Curve Name="" ID="{4E06ADDE-63D3-4752-B8DB-CA23D1D1C186}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>2</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>20</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Lowpass">
+																					<Curve Name="" ID="{9D7B416B-0F4D-4849-9D4D-D4ABF3BA047D}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>2</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>20</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Volume">
+																					<Curve Name="" ID="{7526489C-FC86-41EE-B07F-6C61101F28E5}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="3"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>2</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>20</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																			</PropertyCurveList>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{3ED2B43A-3691-4A82-8581-E71AA1CF79B1}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{C1183B86-02D4-4219-B58A-62D11E1C6412}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="16000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+					</ChildrenList>
+				</MusicPlaylistContainer>
+				<Folder Name="Attic_Music" ID="{A4008E0A-6A1B-4AD0-8C2A-B111B238689E}" ShortID="43164941">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="7"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<MusicPlaylistContainer Name="Attic_Music_Vertical_Layer_1" ID="{E4B35201-CF7D-4A70-96FF-301D51BD5057}" ShortID="724549981">
+							<PropertyList>
+								<Property Name="Tempo" Type="Real64" Value="110"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-5</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Attic_Music_Bus" ID="{4ED03B98-70DA-4F96-98D1-1FA15AAB594B}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+								<Reference Name="PlaylistRoot">
+									<Custom>
+										<MusicPlaylistItem Name="" ID="{0CAB0F0B-13BD-4EB5-A8C7-B04586177EB1}" ShortID="661110101">
+											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicPlaylistItem Name="" ID="{CCDA22B7-7C38-4E4E-B135-2660B788DE8A}" ShortID="636379863">
+													<PropertyList>
+														<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Segment">
+															<ObjectRef Name="MX_Attic_110bpm_L1" ID="{DCAF5C2D-0672-4F5C-AB98-DACDA1886ABA}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+														</Reference>
+													</ReferenceList>
+												</MusicPlaylistItem>
+											</ChildrenList>
+										</MusicPlaylistItem>
+									</Custom>
+								</Reference>
+								<Reference Name="TransitionRoot">
+									<Custom>
+										<MusicTransition Name="Root" ID="{E581A581-03A2-4E2A-BE80-F7AAFCE1B8EB}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicTransition Name="Transition" ID="{2A3AAFA5-D623-48C6-9812-9D0E7A5CD9BA}">
+													<TransitionInfo/>
+												</MusicTransition>
+											</ChildrenList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</Custom>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="MX_Attic_110bpm_L1" ID="{DCAF5C2D-0672-4F5C-AB98-DACDA1886ABA}" ShortID="961290274">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="39272.7291666667"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-8</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="MX_Attic_110bpm_L1" ID="{F13FC5C9-C945-4CB7-9A2F-2EB5EFE85EDB}" ShortID="291116029">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+												</Reference>
+												<Reference Name="TransitionRoot">
+													<Custom>
+														<MusicTransition Name="Root" ID="{BE346587-A978-4CDC-9184-221C899DA887}">
+															<PropertyList>
+																<Property Name="IsFolder" Type="bool" Value="True"/>
+															</PropertyList>
+															<TransitionInfo/>
+														</MusicTransition>
+													</Custom>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="MX_Attic_110bpm_L1" ID="{4E030184-39E2-426C-82F7-675B151044DA}">
+													<Language>SFX</Language>
+													<AudioFile>MX_Attic_110bpm_L1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="695984814"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists>
+												<ObjectList Name="Sequences">
+													<Reference>
+														<Local>
+															<MusicTrackSequence Name="" ID="{FCAB5E0A-BF77-4515-9D5F-D34941301DA8}">
+																<ObjectLists>
+																	<ObjectList Name="Clips">
+																		<Reference>
+																			<Local>
+																				<MusicClip Name="MX_Attic_110bpm_L1" ID="{032994FE-F3FE-497E-B8F3-6DCE146659CE}">
+																					<PropertyList>
+																						<Property Name="EndTrimOffset" Type="Real64" Value="35454.5454545455"/>
+																						<Property Name="FadeInMode" Type="int16" Value="0"/>
+																						<Property Name="FadeOutDuration" Type="Real64" Value="818.963105338058"/>
+																					</PropertyList>
+																					<AudioSourceRef Name="MX_Attic_110bpm_L1" ID="{4E030184-39E2-426C-82F7-675B151044DA}"/>
+																					<PropertyCurveList>
+																						<PropertyCurve PropertyName="Highpass">
+																							<Curve Name="" ID="{E5D4C78D-CD75-4E1D-A4F9-DD5EDEFA1581}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="1"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>35.45455</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																						<PropertyCurve PropertyName="Lowpass">
+																							<Curve Name="" ID="{07592AC8-6409-43A3-AC19-F4909D921F97}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="1"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>35.45455</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																						<PropertyCurve PropertyName="Volume">
+																							<Curve Name="" ID="{02007278-46BD-4D04-B42E-A8EA356AC0F7}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="3"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>35.45455</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																					</PropertyCurveList>
+																				</MusicClip>
+																			</Local>
+																		</Reference>
+																	</ObjectList>
+																</ObjectLists>
+															</MusicTrackSequence>
+														</Local>
+													</Reference>
+												</ObjectList>
+											</ObjectLists>
+										</MusicTrack>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Cues">
+											<Reference>
+												<Local>
+													<MusicCue Name="Entry Cue" ID="{FFFA0024-92B5-42AD-9BC2-AE8DC7BD7A06}"/>
+												</Local>
+											</Reference>
+											<Reference>
+												<Local>
+													<MusicCue Name="Exit Cue" ID="{87B40D3C-91D9-439C-98F0-C644A97B3D2F}">
+														<PropertyList>
+															<Property Name="CueType" Type="int16" Value="1"/>
+															<Property Name="TimeMs" Type="Real64" Value="34909.0909090909"/>
+														</PropertyList>
+													</MusicCue>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicSegment>
+							</ChildrenList>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Attic_Music_Vertical_Layer_2" ID="{06D0CF33-A840-4D4C-9379-E709DC8A25FC}" ShortID="953443384">
+							<PropertyList>
+								<Property Name="Tempo" Type="Real64" Value="110"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Attic_Music_Bus" ID="{4ED03B98-70DA-4F96-98D1-1FA15AAB594B}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+								<Reference Name="PlaylistRoot">
+									<Custom>
+										<MusicPlaylistItem Name="" ID="{F72436E9-38FC-430B-818D-1B68721E0111}" ShortID="451766956">
+											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicPlaylistItem Name="" ID="{5E2F704D-0A0B-42DE-8732-C9E389102F76}" ShortID="1021972999">
+													<PropertyList>
+														<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Segment">
+															<ObjectRef Name="MX_Attic_110bpm_L2" ID="{EEB02DD5-6D7B-4128-8D94-5554E57EC21A}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+														</Reference>
+													</ReferenceList>
+												</MusicPlaylistItem>
+											</ChildrenList>
+										</MusicPlaylistItem>
+									</Custom>
+								</Reference>
+								<Reference Name="TransitionRoot">
+									<Custom>
+										<MusicTransition Name="Root" ID="{4AD4C994-CA5C-446B-AA6B-E536FCE63407}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicTransition Name="Transition" ID="{A40E1CDC-23A1-4791-AAF8-EAEEA7E3CABD}">
+													<TransitionInfo/>
+												</MusicTransition>
+											</ChildrenList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</Custom>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="MX_Attic_110bpm_L2" ID="{EEB02DD5-6D7B-4128-8D94-5554E57EC21A}" ShortID="439849432">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="39272.7291666667"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-10</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="MX_Attic_110bpm_L2" ID="{9778256D-27DA-47A1-AD3D-C4D553D0B3B0}" ShortID="266927371">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+												</Reference>
+												<Reference Name="TransitionRoot">
+													<Custom>
+														<MusicTransition Name="Root" ID="{93DB7444-F01A-4E59-B295-BCBF3865D561}">
+															<PropertyList>
+																<Property Name="IsFolder" Type="bool" Value="True"/>
+															</PropertyList>
+															<TransitionInfo/>
+														</MusicTransition>
+													</Custom>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="MX_Attic_110bpm_L2" ID="{C81698ED-E598-41DA-8799-5B0C2EA551EC}">
+													<Language>SFX</Language>
+													<AudioFile>MX_Attic_110bpm_L2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="227685152"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists>
+												<ObjectList Name="Sequences">
+													<Reference>
+														<Local>
+															<MusicTrackSequence Name="" ID="{53DD8759-127A-46D7-BD41-007C5251EA3E}">
+																<ObjectLists>
+																	<ObjectList Name="Clips">
+																		<Reference>
+																			<Local>
+																				<MusicClip Name="MX_Attic_110bpm_L2" ID="{0488B137-E3F6-457C-B7D9-7945AE9677C2}">
+																					<PropertyList>
+																						<Property Name="EndTrimOffset" Type="Real64" Value="35454.5454545455"/>
+																						<Property Name="FadeInMode" Type="int16" Value="0"/>
+																						<Property Name="FadeOutDuration" Type="Real64" Value="782.325282204518"/>
+																					</PropertyList>
+																					<AudioSourceRef Name="MX_Attic_110bpm_L2" ID="{C81698ED-E598-41DA-8799-5B0C2EA551EC}"/>
+																					<PropertyCurveList>
+																						<PropertyCurve PropertyName="Highpass">
+																							<Curve Name="" ID="{01898123-DB00-44B7-9B10-DB297A1FB1DD}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="1"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>35.45455</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																						<PropertyCurve PropertyName="Lowpass">
+																							<Curve Name="" ID="{0C3DE1E7-5A97-409A-8E7A-15E5356EEBF6}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="1"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>35.45455</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																						<PropertyCurve PropertyName="Volume">
+																							<Curve Name="" ID="{C7458E16-309B-4010-AC06-1EC161F556AC}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="3"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>35.45455</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																					</PropertyCurveList>
+																				</MusicClip>
+																			</Local>
+																		</Reference>
+																	</ObjectList>
+																</ObjectLists>
+															</MusicTrackSequence>
+														</Local>
+													</Reference>
+												</ObjectList>
+											</ObjectLists>
+										</MusicTrack>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Cues">
+											<Reference>
+												<Local>
+													<MusicCue Name="Entry Cue" ID="{1A3EC2EC-388F-4BBD-A69D-770E547446EC}"/>
+												</Local>
+											</Reference>
+											<Reference>
+												<Local>
+													<MusicCue Name="Exit Cue" ID="{7A8ABD70-C7FD-4216-B59E-65A386B61410}">
+														<PropertyList>
+															<Property Name="CueType" Type="int16" Value="1"/>
+															<Property Name="TimeMs" Type="Real64" Value="34909.0909090909"/>
+														</PropertyList>
+													</MusicCue>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicSegment>
+							</ChildrenList>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Attic_Music_Vertical_Layer_3" ID="{A9F1231E-B3D9-4B20-8DA3-1D01E6957014}" ShortID="527881745">
+							<PropertyList>
+								<Property Name="Tempo" Type="Real64" Value="110"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-15</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Attic_Music_Bus" ID="{4ED03B98-70DA-4F96-98D1-1FA15AAB594B}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+								<Reference Name="PlaylistRoot">
+									<Custom>
+										<MusicPlaylistItem Name="" ID="{9BD7041E-96FB-49BF-8E82-73AA44F2ED43}" ShortID="385056407">
+											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicPlaylistItem Name="" ID="{E6593060-4C21-4AFF-BCCA-7C8E724AECDA}" ShortID="200884831">
+													<PropertyList>
+														<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Segment">
+															<ObjectRef Name="Littlehelpers_4-4_110bpm_Attic_L3" ID="{643C0588-BDAA-4710-8AFA-9480408CBD81}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+														</Reference>
+													</ReferenceList>
+												</MusicPlaylistItem>
+											</ChildrenList>
+										</MusicPlaylistItem>
+									</Custom>
+								</Reference>
+								<Reference Name="TransitionRoot">
+									<Custom>
+										<MusicTransition Name="Root" ID="{74DF48AF-001D-4F64-8DCF-D105E025F8E9}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicTransition Name="Transition" ID="{63978FBE-D57B-4385-8202-A9C44DF7DAE3}">
+													<TransitionInfo/>
+												</MusicTransition>
+											</ChildrenList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</Custom>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Littlehelpers_4-4_110bpm_Attic_L3" ID="{643C0588-BDAA-4710-8AFA-9480408CBD81}" ShortID="935953797">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="37430.0600312224"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-10</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Littlehelpers_4-4_110bpm_Attic_L3" ID="{807D7688-D090-4F13-A6E9-603ADB410E2E}" ShortID="856833982">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+												</Reference>
+												<Reference Name="TransitionRoot">
+													<Custom>
+														<MusicTransition Name="Root" ID="{833BB86F-3EFB-44E7-9705-92DD954F8F3C}">
+															<PropertyList>
+																<Property Name="IsFolder" Type="bool" Value="True"/>
+															</PropertyList>
+															<TransitionInfo/>
+														</MusicTransition>
+													</Custom>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Littlehelpers_4-4_110bpm_Attic_L3" ID="{1B2245E8-9051-40AA-A1EB-8A6A741B0F38}">
+													<Language>SFX</Language>
+													<AudioFile>Littlehelpers_4-4_110bpm_Attic_L3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="586172110"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists>
+												<ObjectList Name="Sequences">
+													<Reference>
+														<Local>
+															<MusicTrackSequence Name="" ID="{676AE529-1E98-4F5B-A0D9-7D9E8B84BFDD}">
+																<ObjectLists>
+																	<ObjectList Name="Clips">
+																		<Reference>
+																			<Local>
+																				<MusicClip Name="Littlehelpers_4-4_110bpm_Attic_L3" ID="{35A11FE2-6A38-4C81-8264-B7C4894E95D2}">
+																					<PropertyList>
+																						<Property Name="EndTrimOffset" Type="Real64" Value="34909.0909090909"/>
+																						<Property Name="FadeInMode" Type="int16" Value="0"/>
+																						<Property Name="FadeOutDuration" Type="Real64" Value="589.254229965434"/>
+																					</PropertyList>
+																					<AudioSourceRef Name="Littlehelpers_4-4_110bpm_Attic_L3" ID="{1B2245E8-9051-40AA-A1EB-8A6A741B0F38}"/>
+																					<PropertyCurveList>
+																						<PropertyCurve PropertyName="Highpass">
+																							<Curve Name="" ID="{B47EFB9A-667D-42EE-BD0D-78458325E442}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="1"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>34.90909</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																						<PropertyCurve PropertyName="Lowpass">
+																							<Curve Name="" ID="{ABAB2D88-7BC2-4D3C-B453-85F388A7F9FA}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="1"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>34.90909</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																						<PropertyCurve PropertyName="Volume">
+																							<Curve Name="" ID="{C2424B43-8BE9-4F40-9614-67CDDAFE815A}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="3"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>34.90909</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																					</PropertyCurveList>
+																				</MusicClip>
+																			</Local>
+																		</Reference>
+																	</ObjectList>
+																</ObjectLists>
+															</MusicTrackSequence>
+														</Local>
+													</Reference>
+												</ObjectList>
+											</ObjectLists>
+										</MusicTrack>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Cues">
+											<Reference>
+												<Local>
+													<MusicCue Name="Entry Cue" ID="{364BEEFF-FF99-4A8D-B23C-0807F76225EC}"/>
+												</Local>
+											</Reference>
+											<Reference>
+												<Local>
+													<MusicCue Name="Exit Cue" ID="{C413FE19-D7EF-4DAE-94CE-86941B7A9AE2}">
+														<PropertyList>
+															<Property Name="CueType" Type="int16" Value="1"/>
+															<Property Name="TimeMs" Type="Real64" Value="35454.5454545455"/>
+														</PropertyList>
+													</MusicCue>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicSegment>
+							</ChildrenList>
+						</MusicPlaylistContainer>
+						<MusicSegment Name="MX_Transition_Bedroom to Attic_90bpm" ID="{774C7590-E6CC-41B1-865A-CF27A23C27AB}" ShortID="910468859">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="11000"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Attic_Music_Bus" ID="{4ED03B98-70DA-4F96-98D1-1FA15AAB594B}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="MX_Transition_Bedroom to Attic_90bpm" ID="{B1A8141E-723B-4297-AC08-FA1A5B3ADDBD}" ShortID="964821151">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{E032F1A5-22DF-407E-9DAC-0BB0CE0B4857}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="MX_Transition_Bedroom to Attic_90bpm" ID="{4EA03465-5E4B-4FDD-865D-D3BC88282C14}">
+											<Language>SFX</Language>
+											<AudioFile>MX_Transition_Bedroom to Attic_90bpm.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="833984909"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{7008FD24-240F-493D-9DDD-5BB6BC7A4C83}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="MX_Transition_Bedroom to Attic_90bpm" ID="{82FD32B5-EE70-4E73-9288-54988219D209}">
+																			<PropertyList>
+																				<Property Name="BeginTrimOffset" Type="Real64" Value="4000"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="10363.6458333333"/>
+																				<Property Name="FadeInDuration" Type="Real64" Value="106.021952259164"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																				<Property Name="PlayAt" Type="Real64" Value="-4000"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="MX_Transition_Bedroom to Attic_90bpm" ID="{4EA03465-5E4B-4FDD-865D-D3BC88282C14}"/>
+																			<PropertyCurveList>
+																				<PropertyCurve PropertyName="Highpass">
+																					<Curve Name="" ID="{E17F0E15-00A8-4C44-A948-9F3D4AD79599}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>4</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>10.3636458333333</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Lowpass">
+																					<Curve Name="" ID="{B65E0D90-AAED-4F0E-A598-3C48A9DF4566}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>4</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>10.3636458333333</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Volume">
+																					<Curve Name="" ID="{4467F70A-2D9C-4991-A5BD-A5AE87090CC6}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="3"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>4</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>10.3636458333333</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																			</PropertyCurveList>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{3EDE7AE3-7D54-44C6-AE3D-C25DCC987F74}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{D22B5446-9E44-4334-8832-6CBE1459A140}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="4909.09090909091"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Basement_Music" ID="{3DAEA78B-E6E9-4A2C-982C-8C2876CF0C08}" ShortID="396813189">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="1"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<MusicPlaylistContainer Name="Basement_Music_Layer_1" ID="{C2076C24-B7D9-467C-AFBB-CE87EE78DC74}" ShortID="756034644">
+							<PropertyList>
+								<Property Name="Tempo" Type="Real64" Value="115"/>
+								<Property Name="TimeSignatureUpper" Type="int16" Value="3"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-10</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Basement_Music_Bus" ID="{572806DA-26D7-459C-AEBA-16724C56CADB}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+								<Reference Name="PlaylistRoot">
+									<Custom>
+										<MusicPlaylistItem Name="" ID="{8ABD1C01-E1E8-478F-8622-31F22C3EE975}" ShortID="197392244">
+											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicPlaylistItem Name="" ID="{0C2F2710-7B91-48C8-8903-1A622EB6BFD1}" ShortID="292515206">
+													<PropertyList>
+														<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Segment">
+															<ObjectRef Name="MX_Basement_115bpm_L1" ID="{A90C7240-0F12-499D-90A5-2CF238D856E5}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+														</Reference>
+													</ReferenceList>
+												</MusicPlaylistItem>
+											</ChildrenList>
+										</MusicPlaylistItem>
+									</Custom>
+								</Reference>
+								<Reference Name="TransitionRoot">
+									<Custom>
+										<MusicTransition Name="Root" ID="{86F4E823-C8C7-499A-A439-3D735162E474}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicTransition Name="Transition" ID="{E1E74DE9-9DCF-452D-B510-0BE863C540F9}">
+													<TransitionInfo/>
+												</MusicTransition>
+											</ChildrenList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</Custom>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="MX_Basement_115bpm_L1" ID="{A90C7240-0F12-499D-90A5-2CF238D856E5}" ShortID="684833738">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="136568.270833333"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="MX_Basement_115bpm_L1" ID="{5036BD2F-CA5F-40C4-81D4-C6164F955EFE}" ShortID="330871509">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+												</Reference>
+												<Reference Name="TransitionRoot">
+													<Custom>
+														<MusicTransition Name="Root" ID="{DA824D1A-7149-475C-9B17-7458BEC77398}">
+															<PropertyList>
+																<Property Name="IsFolder" Type="bool" Value="True"/>
+															</PropertyList>
+															<TransitionInfo/>
+														</MusicTransition>
+													</Custom>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="MX_Basement_115bpm_L1" ID="{81C439A1-6BD1-4FD8-B94D-EA1FDB63382B}">
+													<Language>SFX</Language>
+													<AudioFile>MX_Basement_115bpm_L1.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="591465244"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists>
+												<ObjectList Name="Sequences">
+													<Reference>
+														<Local>
+															<MusicTrackSequence Name="" ID="{F3B713B3-CAEF-46FE-AADD-CDF9E1E76709}">
+																<ObjectLists>
+																	<ObjectList Name="Clips">
+																		<Reference>
+																			<Local>
+																				<MusicClip Name="MX_Basement_115bpm_L1" ID="{2DB58C8A-4BDC-4DF0-B804-F74A8A8EB6FE}">
+																					<PropertyList>
+																						<Property Name="EndTrimOffset" Type="Real64" Value="136568.270833333"/>
+																						<Property Name="FadeInDuration" Type="Real64" Value="544.820229388297"/>
+																						<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																					</PropertyList>
+																					<AudioSourceRef Name="MX_Basement_115bpm_L1" ID="{81C439A1-6BD1-4FD8-B94D-EA1FDB63382B}"/>
+																				</MusicClip>
+																			</Local>
+																		</Reference>
+																	</ObjectList>
+																</ObjectLists>
+															</MusicTrackSequence>
+														</Local>
+													</Reference>
+												</ObjectList>
+											</ObjectLists>
+										</MusicTrack>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Cues">
+											<Reference>
+												<Local>
+													<MusicCue Name="Entry Cue" ID="{5410163E-4DB6-41E4-9EBB-8EB24B46EEE1}"/>
+												</Local>
+											</Reference>
+											<Reference>
+												<Local>
+													<MusicCue Name="Exit Cue" ID="{E7866215-6E89-47C8-BC87-8035F3ED144C}">
+														<PropertyList>
+															<Property Name="CueType" Type="int16" Value="1"/>
+															<Property Name="TimeMs" Type="Real64" Value="125217.391304348"/>
+														</PropertyList>
+													</MusicCue>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicSegment>
+							</ChildrenList>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Basement_Music_Layer_2" ID="{EDA73FD7-A8B4-45D7-8DC5-5AB1151D117C}" ShortID="316800395">
+							<PropertyList>
+								<Property Name="Tempo" Type="Real64" Value="115"/>
+								<Property Name="TimeSignatureUpper" Type="int16" Value="3"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Basement_Music_Bus" ID="{572806DA-26D7-459C-AEBA-16724C56CADB}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+								<Reference Name="PlaylistRoot">
+									<Custom>
+										<MusicPlaylistItem Name="" ID="{D4E6FA1A-8686-4948-AB44-C8176407DCFA}" ShortID="450692142">
+											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicPlaylistItem Name="" ID="{C1612FF3-F1DC-4669-9DEA-81741C8C1C70}" ShortID="408279480">
+													<PropertyList>
+														<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Segment">
+															<ObjectRef Name="MX_Basement_115bpm_L2" ID="{ED24A1F7-2050-471B-9A27-FB66B33C8876}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+														</Reference>
+													</ReferenceList>
+												</MusicPlaylistItem>
+											</ChildrenList>
+										</MusicPlaylistItem>
+									</Custom>
+								</Reference>
+								<Reference Name="TransitionRoot">
+									<Custom>
+										<MusicTransition Name="Root" ID="{567E4989-DF38-4AFF-8BE8-D8EE76DFF604}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicTransition Name="Transition" ID="{AA9B2D3C-9DDB-4BEB-B353-EE803DB83D93}">
+													<TransitionInfo/>
+												</MusicTransition>
+											</ChildrenList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</Custom>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="MX_Basement_115bpm_L2" ID="{ED24A1F7-2050-471B-9A27-FB66B33C8876}" ShortID="345113943">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="136568.270833333"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="MX_Basement_115bpm_L2" ID="{4B9E2C35-EFDA-4BC0-9EA9-50C8D23579AF}" ShortID="974483953">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+												</Reference>
+												<Reference Name="TransitionRoot">
+													<Custom>
+														<MusicTransition Name="Root" ID="{9B743729-0D46-46E2-B7A5-62BF0D438179}">
+															<PropertyList>
+																<Property Name="IsFolder" Type="bool" Value="True"/>
+															</PropertyList>
+															<TransitionInfo/>
+														</MusicTransition>
+													</Custom>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="MX_Basement_115bpm_L2" ID="{E6908DE9-017E-4A04-8F87-A56667407DAA}">
+													<Language>SFX</Language>
+													<AudioFile>MX_Basement_115bpm_L2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="596234943"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists>
+												<ObjectList Name="Sequences">
+													<Reference>
+														<Local>
+															<MusicTrackSequence Name="" ID="{C8E3AABE-3627-4553-A6ED-3760C57C0572}">
+																<ObjectLists>
+																	<ObjectList Name="Clips">
+																		<Reference>
+																			<Local>
+																				<MusicClip Name="MX_Basement_115bpm_L2" ID="{4E1E0A73-5E28-4286-850C-EC453A0936C7}">
+																					<PropertyList>
+																						<Property Name="EndTrimOffset" Type="Real64" Value="136568.270833333"/>
+																						<Property Name="FadeInDuration" Type="Real64" Value="726.426972517733"/>
+																						<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																					</PropertyList>
+																					<AudioSourceRef Name="MX_Basement_115bpm_L2" ID="{E6908DE9-017E-4A04-8F87-A56667407DAA}"/>
+																				</MusicClip>
+																			</Local>
+																		</Reference>
+																	</ObjectList>
+																</ObjectLists>
+															</MusicTrackSequence>
+														</Local>
+													</Reference>
+												</ObjectList>
+											</ObjectLists>
+										</MusicTrack>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Cues">
+											<Reference>
+												<Local>
+													<MusicCue Name="Entry Cue" ID="{8079BDB8-B772-44B0-984E-765A0631917A}"/>
+												</Local>
+											</Reference>
+											<Reference>
+												<Local>
+													<MusicCue Name="Exit Cue" ID="{78563303-9CE5-47C6-8697-8861C3E56068}">
+														<PropertyList>
+															<Property Name="CueType" Type="int16" Value="1"/>
+															<Property Name="TimeMs" Type="Real64" Value="125217.391304348"/>
+														</PropertyList>
+													</MusicCue>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicSegment>
+							</ChildrenList>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Basement_Music_Layer_3" ID="{DE8DA59D-D80D-43E5-B63A-708764A022B8}" ShortID="301577979">
+							<PropertyList>
+								<Property Name="Tempo" Type="Real64" Value="115"/>
+								<Property Name="TimeSignatureUpper" Type="int16" Value="3"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Basement_Music_Bus" ID="{572806DA-26D7-459C-AEBA-16724C56CADB}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+								<Reference Name="PlaylistRoot">
+									<Custom>
+										<MusicPlaylistItem Name="" ID="{64CE01DD-F5CC-4C99-8B72-60E97C131D51}" ShortID="645027259">
+											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicPlaylistItem Name="" ID="{13204CF1-EB3B-45B0-AE2C-0691B891986D}" ShortID="79750754">
+													<PropertyList>
+														<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Segment">
+															<ObjectRef Name="MX_Basement_115bpm_L3" ID="{5DC5763A-C9E6-409E-A178-E5507BFC2734}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+														</Reference>
+													</ReferenceList>
+												</MusicPlaylistItem>
+											</ChildrenList>
+										</MusicPlaylistItem>
+									</Custom>
+								</Reference>
+								<Reference Name="TransitionRoot">
+									<Custom>
+										<MusicTransition Name="Root" ID="{8D8578F2-92F5-4BCA-9FB7-AC0973822E91}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicTransition Name="Transition" ID="{BEC76523-FCF7-4808-911A-A7392E301CB7}">
+													<TransitionInfo/>
+												</MusicTransition>
+											</ChildrenList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</Custom>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="MX_Basement_115bpm_L3" ID="{5DC5763A-C9E6-409E-A178-E5507BFC2734}" ShortID="513500891">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="136568.270833333"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="MX_Basement_115bpm_L3" ID="{BB0E5E01-D49D-4A3A-8A22-28A879FF5002}" ShortID="939810987">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+												</Reference>
+												<Reference Name="TransitionRoot">
+													<Custom>
+														<MusicTransition Name="Root" ID="{7423E3C6-43B4-4FFA-A990-8CC740D6B66B}">
+															<PropertyList>
+																<Property Name="IsFolder" Type="bool" Value="True"/>
+															</PropertyList>
+															<TransitionInfo/>
+														</MusicTransition>
+													</Custom>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="MX_Basement_115bpm_L3" ID="{C2A25226-7105-40CE-B639-64D4DEE73D5A}">
+													<Language>SFX</Language>
+													<AudioFile>MX_Basement_115bpm_L3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="423223309"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists>
+												<ObjectList Name="Sequences">
+													<Reference>
+														<Local>
+															<MusicTrackSequence Name="" ID="{B542BC50-A5CC-4C6D-A46E-515261F5FF86}">
+																<ObjectLists>
+																	<ObjectList Name="Clips">
+																		<Reference>
+																			<Local>
+																				<MusicClip Name="MX_Basement_115bpm_L3" ID="{DFC897F8-9B8C-45E8-AAE9-C93640C6FDF9}">
+																					<PropertyList>
+																						<Property Name="EndTrimOffset" Type="Real64" Value="136568.270833333"/>
+																						<Property Name="FadeInMode" Type="int16" Value="0"/>
+																						<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																					</PropertyList>
+																					<AudioSourceRef Name="MX_Basement_115bpm_L3" ID="{C2A25226-7105-40CE-B639-64D4DEE73D5A}"/>
+																				</MusicClip>
+																			</Local>
+																		</Reference>
+																	</ObjectList>
+																</ObjectLists>
+															</MusicTrackSequence>
+														</Local>
+													</Reference>
+												</ObjectList>
+											</ObjectLists>
+										</MusicTrack>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Cues">
+											<Reference>
+												<Local>
+													<MusicCue Name="Entry Cue" ID="{649FBA17-32D8-472C-A25A-01AD8AD83449}"/>
+												</Local>
+											</Reference>
+											<Reference>
+												<Local>
+													<MusicCue Name="Exit Cue" ID="{2297DEC4-F691-490D-9716-771297E7C7A7}">
+														<PropertyList>
+															<Property Name="CueType" Type="int16" Value="1"/>
+															<Property Name="TimeMs" Type="Real64" Value="125217.391304348"/>
+														</PropertyList>
+													</MusicCue>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicSegment>
+							</ChildrenList>
+						</MusicPlaylistContainer>
+					</ChildrenList>
+				</Folder>
+				<MusicPlaylistContainer Name="Menu_Story_Tutorial_Music" ID="{1377FC95-C46B-4728-80AF-0A0F846505A7}" ShortID="228834165">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="23"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+						<Property Name="Tempo" Type="Real64" Value="65"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+						</Reference>
+						<Reference Name="PlaylistRoot">
+							<Custom>
+								<MusicPlaylistItem Name="" ID="{0F09E180-EFBD-471A-9630-4E21C612B7E2}" ShortID="948209014">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{541C5872-5AA2-4C92-A9D1-4FB12FD69119}" ShortID="462248641">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="MX_Menu_Story_65bpm" ID="{70E00D07-609F-41E6-A2C6-7F923C4C952F}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Custom>
+						</Reference>
+						<Reference Name="TransitionRoot">
+							<Custom>
+								<MusicTransition Name="Root" ID="{1EDA129A-DDE2-4C70-8215-448EB9385F7A}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{7F62E872-F08A-401C-A3AB-D165221B31F0}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</Custom>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicSegment Name="MX_Menu_Story_65bpm" ID="{70E00D07-609F-41E6-A2C6-7F923C4C952F}" ShortID="537166815">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="87369.3333333333"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="MX_Menu_Story_65bpm" ID="{11D553AB-183B-4ECB-924D-D38DB3F6A76C}" ShortID="452319092">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{A724720F-23A2-433F-82FF-1827E4F6331D}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="MX_Menu_Story_65bpm" ID="{0A9388A6-CD6A-426F-8D48-7CC009110A9E}">
+											<Language>SFX</Language>
+											<AudioFile>MX_Menu_Story_65bpm.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="555679296"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{BE93E9AB-AE12-4721-970A-1FD14F3A1AB1}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="MX_Menu_Story_65bpm" ID="{3A646494-4CCF-4477-8E61-91BC9D8CD45C}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="87369.3333333333"/>
+																				<Property Name="FadeInDuration" Type="Real64" Value="811.12113174182"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="MX_Menu_Story_65bpm" ID="{0A9388A6-CD6A-426F-8D48-7CC009110A9E}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{0F12DF04-FF5B-4D5F-AB40-D1F6304899CC}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{69B880C0-EEC3-473F-BF00-386517706CA7}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="73846.1538461539"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+					</ChildrenList>
+				</MusicPlaylistContainer>
+				<MusicPlaylistContainer Name="Celebrate_Music" ID="{6F11E36A-5044-47D6-B43E-DC875D324D28}" ShortID="734324749">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="19"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+						<Property Name="Tempo" Type="Real64" Value="115"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-13</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+						</Reference>
+						<Reference Name="PlaylistRoot">
+							<Custom>
+								<MusicPlaylistItem Name="" ID="{74AF0589-FD0B-4446-A4CA-BEE5F64E24DF}" ShortID="985753125">
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{0809A562-7696-406F-A42B-03AC74AE4CB8}" ShortID="960784627">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="MX_Basement_to_Celebration_Transition_115bpm" ID="{25815327-4ADC-4E76-B62F-8C2A143E1A75}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{8A98B5F0-8A8F-414D-8526-2384ACFB14AF}" ShortID="630211549">
+											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicPlaylistItem Name="" ID="{417D7FFE-4724-4599-AB80-9558DEF16A9C}" ShortID="374593649">
+													<PropertyList>
+														<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Segment">
+															<ObjectRef Name="MX_Celebration_115bpm" ID="{05AB1027-33E5-4C79-AA1B-D6A3929A0251}" WorkUnitID="{BBDB2640-DA34-45F6-994B-FD66CB28CA7E}"/>
+														</Reference>
+													</ReferenceList>
+												</MusicPlaylistItem>
+											</ChildrenList>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Custom>
+						</Reference>
+						<Reference Name="TransitionRoot">
+							<Custom>
+								<MusicTransition Name="Root" ID="{DDF697A6-206F-43B9-AE76-A22EFBA21CFA}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{F29B86B7-244F-4656-9531-F5CE6DD03E79}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</Custom>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicSegment Name="MX_Basement_to_Celebration_Transition_115bpm" ID="{25815327-4ADC-4E76-B62F-8C2A143E1A75}" ShortID="857978045">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="10956.5217391304"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="MX_Basement_to_Celebration_Transition_115bpm" ID="{BC4BDBA5-BED2-49AC-AAF4-988B675A58A1}" ShortID="818976382">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{AE00EAEC-0F05-4136-B38B-870BAE60947F}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="MX_Basement_to_Celebration_Transition_115bpm" ID="{B10E58DA-11FD-4FC5-ADE7-0B3D44F7B69A}">
+											<Language>SFX</Language>
+											<AudioFile>MX_Basement_to_Celebration_Transition_115bpm.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="816107610"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{E3349452-46F5-4237-B0DF-1C43BE1E1226}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="MX_Basement_to_Celebration_Transition_115bpm" ID="{46A05748-61ED-4B6D-B104-9764787B8C46}">
+																			<PropertyList>
+																				<Property Name="BeginTrimOffset" Type="Real64" Value="1043.47826086956"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="8014.17629646716"/>
+																				<Property Name="FadeInDuration" Type="Real64" Value="130.376657824934"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																				<Property Name="PlayAt" Type="Real64" Value="-1043.47826086956"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="MX_Basement_to_Celebration_Transition_115bpm" ID="{B10E58DA-11FD-4FC5-ADE7-0B3D44F7B69A}"/>
+																			<PropertyCurveList>
+																				<PropertyCurve PropertyName="Highpass">
+																					<Curve Name="" ID="{B6A1E34D-27D8-4262-8A9C-E3D11A9DB55E}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>1.04348</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>8.01418</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Lowpass">
+																					<Curve Name="" ID="{9E022A1F-8BE6-4B33-9AAF-E08B58E5B2FF}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>1.04348</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>8.01418</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Volume">
+																					<Curve Name="" ID="{0E1ECC8F-3CA9-43BD-AB1F-4FFF71987934}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="3"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>1.04348</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>8.01418</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																			</PropertyCurveList>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{DD3B0CD3-1185-4DBB-9659-5C8C5D3747CF}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{C0A42DB2-1693-486E-9DAA-D81A4084FEAB}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="2608.69565217391"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="MX_Celebration_115bpm" ID="{05AB1027-33E5-4C79-AA1B-D6A3929A0251}" ShortID="1071552437">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="31304.347826087"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{57951664-1C2B-47B0-95B1-6960FA374A48}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="MX_Celebration_115bpm" ID="{DEF518FE-52B6-4FF3-8718-3C89E8BE7F2A}" ShortID="1025648438">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{B194FA3A-F44F-4801-AA48-0259F26D42F9}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{FBF7E156-0B99-4512-9529-0F294B172400}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="MX_Celebration_115bpm" ID="{0D3D923E-EB3E-47A0-8466-C7E32ACE5BEF}">
+											<Language>SFX</Language>
+											<AudioFile>MX_Celebration_115bpm.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="142286990"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{C2E96F31-C4DE-4CDA-8340-3412EE4FF0A6}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="MX_Celebration_115bpm" ID="{D98A8A56-5B9C-4987-B240-AA86D7C848E8}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="28695.652173913"/>
+																				<Property Name="FadeInDuration" Type="Real64" Value="228.159151193634"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="MX_Celebration_115bpm" ID="{0D3D923E-EB3E-47A0-8466-C7E32ACE5BEF}"/>
+																			<PropertyCurveList>
+																				<PropertyCurve PropertyName="Highpass">
+																					<Curve Name="" ID="{4193F151-6D95-47A1-BEF3-9B35567BB85D}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>0</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>28.69565</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Lowpass">
+																					<Curve Name="" ID="{22EDD1AE-A028-4F45-9B6E-45F218671A7D}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="1"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>0</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>28.69565</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																				<PropertyCurve PropertyName="Volume">
+																					<Curve Name="" ID="{F6097DA4-051E-4B43-B396-4E308956C07B}">
+																						<PropertyList>
+																							<Property Name="Flags" Type="int32" Value="3"/>
+																						</PropertyList>
+																						<PointList>
+																							<Point>
+																								<XPos>0</XPos>
+																								<YPos>0</YPos>
+																								<Flags>5</Flags>
+																							</Point>
+																							<Point>
+																								<XPos>28.69565</XPos>
+																								<YPos>0</YPos>
+																								<Flags>37</Flags>
+																							</Point>
+																						</PointList>
+																					</Curve>
+																				</PropertyCurve>
+																			</PropertyCurveList>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{0F8A1B58-0810-4F1E-8E70-022B43E6D24D}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{DC07DD0F-07CB-474E-8721-42D9909AC724}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="25043.4782608696"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+					</ChildrenList>
+				</MusicPlaylistContainer>
+			</ChildrenList>
+		</WorkUnit>
+	</InteractiveMusic>
+</WwiseDocument>

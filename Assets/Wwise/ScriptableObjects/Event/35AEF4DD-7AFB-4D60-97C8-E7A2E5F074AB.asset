@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1e178920f018410d974c554c2ac9995, type: 3}
+  m_Name: 35AEF4DD-7AFB-4D60-97C8-E7A2E5F074AB
+  m_EditorClassIdentifier: 
+  objectName: Basement_music_Layer3
+  id: 1646315475
+  guid: 35AEF4DD-7AFB-4D60-97C8-E7A2E5F074AB

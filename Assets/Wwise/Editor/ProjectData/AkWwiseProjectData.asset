@@ -1,0 +1,722 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d57ccbb93f1a046a88f251ddde03a41a, type: 3}
+  m_Name: AkWwiseProjectData
+  m_EditorClassIdentifier: 
+  AcousticTextureWwu:
+  - PhysicalPath: Virtual Acoustics/Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Virtual Acoustics
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 4f29cad8442ea7459e8ccfd9d1d7716d
+    ParentPath: Virtual Acoustics/Default Work Unit
+    guid: 4f29cad8442ea7459e8ccfd9d1d7716d
+    GuidInternal: 
+    m_lastTime: -8584239441798197958
+    List: []
+  AuxBusWwu:
+  - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Master-Mixer Hierarchy
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 3afa94b14ff40148aa480259f26d42f9
+    ParentPath: Master-Mixer Hierarchy/Default Work Unit
+    guid: 3afa94b14ff40148aa480259f26d42f9
+    GuidInternal: 
+    m_lastTime: -8584238473365183604
+    List:
+    - name: Ambience_Bus
+      guid: 4b4b2bc5a6340e48ae694f3fb1554f7b
+      id: 174546974
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3afa94b14ff40148aa480259f26d42f9
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Ambience_Bus
+        ObjectType: 2
+        guid: 4b4b2bc5a6340e48ae694f3fb1554f7b
+      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus/Ambience_Bus
+    - name: Attic_Music_Bus
+      guid: 983bd04eda70964f98d11fa15aab594b
+      id: 116948705
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3afa94b14ff40148aa480259f26d42f9
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Attic_Music_Bus
+        ObjectType: 2
+        guid: 983bd04eda70964f98d11fa15aab594b
+      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus/Attic_Music_Bus
+    - name: Basement_Music_Bus
+      guid: da062857d7269c45aeba16724c56cadb
+      id: 701019509
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3afa94b14ff40148aa480259f26d42f9
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Basement_Music_Bus
+        ObjectType: 2
+        guid: da062857d7269c45aeba16724c56cadb
+      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus/Basement_Music_Bus
+    - name: Bedroom_Music_Bus
+      guid: 76c64a81b74a5c47bde0b393c9eec791
+      id: 3036294840
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3afa94b14ff40148aa480259f26d42f9
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Bedroom_Music_Bus
+        ObjectType: 2
+        guid: 76c64a81b74a5c47bde0b393c9eec791
+      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus/Bedroom_Music_Bus
+    - name: Master Audio Bus
+      guid: d8a41415a61d2a41a17e75ca0c2149f3
+      id: 3803692087
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3afa94b14ff40148aa480259f26d42f9
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus
+  BankWwu:
+  - PhysicalPath: SoundBanks/Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: SoundBanks
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 4bf4e089a747664cb1990cefbb1f3149
+    ParentPath: SoundBanks/Default Work Unit
+    guid: 4bf4e089a747664cb1990cefbb1f3149
+    GuidInternal: 
+    m_lastTime: -8584239441798208983
+    List: []
+  - PhysicalPath: SoundBanks/Soundbank.wwu
+    PathAndIcons:
+    - ElementName: SoundBanks
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Soundbank
+      ObjectType: 12
+      guid: 69e70c399efd294e8eb39e462878e78d
+    ParentPath: SoundBanks/Soundbank
+    guid: 69e70c399efd294e8eb39e462878e78d
+    GuidInternal: 
+    m_lastTime: -8584239162552449537
+    List:
+    - name: Soundbank
+      guid: 161051b31b85f64a98263143e6358d91
+      id: 1661994096
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Soundbank
+        ObjectType: 12
+        guid: 69e70c399efd294e8eb39e462878e78d
+      - ElementName: Soundbank
+        ObjectType: 7
+        guid: 161051b31b85f64a98263143e6358d91
+      Path: SoundBanks/Soundbank/Soundbank
+  EventWwu:
+  - PhysicalPath: Events/Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 92957612d432ec4f89e38190ebc5c8ad
+    ParentPath: Events/Default Work Unit
+    guid: 92957612d432ec4f89e38190ebc5c8ad
+    GuidInternal: 
+    m_lastTime: -8584238317575039331
+    List: []
+  - PhysicalPath: Events/Events.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Events
+      ObjectType: 12
+      guid: f5ed0ab4a332004488f77b9d93613c39
+    ParentPath: Events/Events
+    guid: f5ed0ab4a332004488f77b9d93613c39
+    GuidInternal: 
+    m_lastTime: -8584237694087050941
+    List:
+    - name: Ambience
+      guid: dde5c1a45166c448bc11482d5a3788f5
+      id: 85412153
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: dde5c1a45166c448bc11482d5a3788f5
+      Path: Events/Events/Ambience
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Attic_Music
+      guid: 5b0d5d6a9ba03b41b8660c57e7581712
+      id: 779536346
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Attic_Music
+        ObjectType: 4
+        guid: 5b0d5d6a9ba03b41b8660c57e7581712
+      Path: Events/Events/Music_Event/Attic_Music
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Basement_Music
+      guid: a269e2ab1bcd9c48bd4bd3a3eebb1fd6
+      id: 3444525198
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Basement_Music
+        ObjectType: 4
+        guid: a269e2ab1bcd9c48bd4bd3a3eebb1fd6
+      Path: Events/Events/Music_Event/Basement_Music
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Basement_music_Layer2
+      guid: b89c2edc69859d4fb7e335df9d489ce7
+      id: 1646315474
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Basement_Music
+        ObjectType: 4
+        guid: a269e2ab1bcd9c48bd4bd3a3eebb1fd6
+      - ElementName: Basement_music_Layer2
+        ObjectType: 3
+        guid: b89c2edc69859d4fb7e335df9d489ce7
+      Path: Events/Events/Music_Event/Basement_Music/Basement_music_Layer2
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Basement_music_Layer3
+      guid: ddf4ae35fb7a604d97c8e7a2e5f074ab
+      id: 1646315475
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Basement_Music
+        ObjectType: 4
+        guid: a269e2ab1bcd9c48bd4bd3a3eebb1fd6
+      - ElementName: Basement_music_Layer3
+        ObjectType: 3
+        guid: ddf4ae35fb7a604d97c8e7a2e5f074ab
+      Path: Events/Events/Music_Event/Basement_Music/Basement_music_Layer3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Music_Event
+      guid: fae6229a97fe8640a684020e778066a2
+      id: 55565095
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      Path: Events/Events/Music_Event
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Attic_Music_Layer2
+      guid: 79033f27948ee24481c3d154f7c5f2ed
+      id: 2926203361
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Attic_Music
+        ObjectType: 4
+        guid: 5b0d5d6a9ba03b41b8660c57e7581712
+      - ElementName: Play_Attic_Music_Layer2
+        ObjectType: 3
+        guid: 79033f27948ee24481c3d154f7c5f2ed
+      Path: Events/Events/Music_Event/Attic_Music/Play_Attic_Music_Layer2
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_Attic_Music_Layer3
+      guid: 632fedb17a65814dbf09f185f2490ff6
+      id: 2926203360
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Attic_Music
+        ObjectType: 4
+        guid: 5b0d5d6a9ba03b41b8660c57e7581712
+      - ElementName: Play_Attic_Music_Layer3
+        ObjectType: 3
+        guid: 632fedb17a65814dbf09f185f2490ff6
+      Path: Events/Events/Music_Event/Attic_Music/Play_Attic_Music_Layer3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_Attic_Music_Start
+      guid: 08f7d49c76e8eb43b029e16dddc67fb5
+      id: 3031313914
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Attic_Music
+        ObjectType: 4
+        guid: 5b0d5d6a9ba03b41b8660c57e7581712
+      - ElementName: Play_Attic_Music_Start
+        ObjectType: 3
+        guid: 08f7d49c76e8eb43b029e16dddc67fb5
+      Path: Events/Events/Music_Event/Attic_Music/Play_Attic_Music_Start
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Basement_Start
+      guid: 0a9d9dbbadcaa44cbbe741e92593b725
+      id: 3127203060
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Basement_Music
+        ObjectType: 4
+        guid: a269e2ab1bcd9c48bd4bd3a3eebb1fd6
+      - ElementName: Play_Basement_Start
+        ObjectType: 3
+        guid: 0a9d9dbbadcaa44cbbe741e92593b725
+      Path: Events/Events/Music_Event/Basement_Music/Play_Basement_Start
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Bedroom_Music_Phrase_Branching
+      guid: 122af9c9bff20f4aa015e81fb75a6e52
+      id: 97166795
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Play_Bedroom_Music_Phrase_Branching
+        ObjectType: 3
+        guid: 122af9c9bff20f4aa015e81fb75a6e52
+      Path: Events/Events/Music_Event/Play_Bedroom_Music_Phrase_Branching
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Celebrate_Music
+      guid: 07698a9c20964542b262757656630824
+      id: 1539113365
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Play_Celebrate_Music
+        ObjectType: 3
+        guid: 07698a9c20964542b262757656630824
+      Path: Events/Events/Music_Event/Play_Celebrate_Music
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_LH_SFX_Attic_Ambience
+      guid: 58789dc7990ee143b111ae004481bbf7
+      id: 596144269
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: dde5c1a45166c448bc11482d5a3788f5
+      - ElementName: Play_LH_SFX_Attic_Ambience
+        ObjectType: 3
+        guid: 58789dc7990ee143b111ae004481bbf7
+      Path: Events/Events/Ambience/Play_LH_SFX_Attic_Ambience
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_LH_SFX_Basement_Ambience
+      guid: c6a9c176510be140a1e37476ce5fac3a
+      id: 3845453577
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: dde5c1a45166c448bc11482d5a3788f5
+      - ElementName: Play_LH_SFX_Basement_Ambience
+        ObjectType: 3
+        guid: c6a9c176510be140a1e37476ce5fac3a
+      Path: Events/Events/Ambience/Play_LH_SFX_Basement_Ambience
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_LH_SFX_Bedroom_Ambience
+      guid: a02b8eac6adebe4e942e659953e8306a
+      id: 303477462
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: dde5c1a45166c448bc11482d5a3788f5
+      - ElementName: Play_LH_SFX_Bedroom_Ambience
+        ObjectType: 3
+        guid: a02b8eac6adebe4e942e659953e8306a
+      Path: Events/Events/Ambience/Play_LH_SFX_Bedroom_Ambience
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Menu_Story_Tutorial_Music
+      guid: 08137dcaa4587a449b84538749468949
+      id: 816650710
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Play_Menu_Story_Tutorial_Music
+        ObjectType: 3
+        guid: 08137dcaa4587a449b84538749468949
+      Path: Events/Events/Music_Event/Play_Menu_Story_Tutorial_Music
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_MX_Transition_Bedroom_to_Attic_90bpm
+      guid: 4464ceaed4b9a1489deeb6cff3a94401
+      id: 322824155
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Events
+        ObjectType: 12
+        guid: f5ed0ab4a332004488f77b9d93613c39
+      - ElementName: Music_Event
+        ObjectType: 4
+        guid: fae6229a97fe8640a684020e778066a2
+      - ElementName: Attic_Music
+        ObjectType: 4
+        guid: 5b0d5d6a9ba03b41b8660c57e7581712
+      - ElementName: Play_MX_Transition_Bedroom_to_Attic_90bpm
+        ObjectType: 3
+        guid: 4464ceaed4b9a1489deeb6cff3a94401
+      Path: Events/Events/Music_Event/Attic_Music/Play_MX_Transition_Bedroom_to_Attic_90bpm
+      maxAttenuation: 0
+      maxDuration: 6.363646
+      minDuration: 6.363646
+  RtpcWwu:
+  - PhysicalPath: Game Parameters/Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Game Parameters
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 78bda5d776c86d4c97e993943b0d50c9
+    ParentPath: Game Parameters/Default Work Unit
+    guid: 78bda5d776c86d4c97e993943b0d50c9
+    GuidInternal: 
+    m_lastTime: -8584239441798246914
+    List: []
+  StateWwu:
+  - PhysicalPath: States/Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: States
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 4ea27e79515e824d98a5530c01dfd21b
+    ParentPath: States/Default Work Unit
+    guid: 4ea27e79515e824d98a5530c01dfd21b
+    GuidInternal: 
+    m_lastTime: -8584239221273921741
+    List: []
+  - PhysicalPath: States/Music_State.wwu
+    PathAndIcons:
+    - ElementName: States
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 4ea27e79515e824d98a5530c01dfd21b
+    - ElementName: Music_State
+      ObjectType: 12
+      guid: aa990c060b13fb4fa59813553f2513be
+    ParentPath: States/Default Work Unit/Music_State
+    guid: aa990c060b13fb4fa59813553f2513be
+    GuidInternal: 
+    m_lastTime: -8584239221273773876
+    List:
+    - name: Attic
+      guid: 952735ab7d81074b8b56259895f6a9ed
+      id: 3541645002
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 4ea27e79515e824d98a5530c01dfd21b
+      - ElementName: Music_State
+        ObjectType: 12
+        guid: aa990c060b13fb4fa59813553f2513be
+      - ElementName: Attic
+        ObjectType: 9
+        guid: 952735ab7d81074b8b56259895f6a9ed
+      Path: States/Default Work Unit/Music_State/Attic
+      values:
+      - name: Attic_Layer1
+        guid: 5ed31aaa2089ca4c9b3373b0c7415afb
+        id: 3409644909
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 4ea27e79515e824d98a5530c01dfd21b
+        - ElementName: Music_State
+          ObjectType: 12
+          guid: aa990c060b13fb4fa59813553f2513be
+        - ElementName: Attic
+          ObjectType: 9
+          guid: 952735ab7d81074b8b56259895f6a9ed
+        - ElementName: Attic_Layer1
+          ObjectType: 8
+          guid: 5ed31aaa2089ca4c9b3373b0c7415afb
+      - name: Attic_Layer2
+        guid: 9053842da9619f419c59d2905c7e7b2e
+        id: 3409644910
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 4ea27e79515e824d98a5530c01dfd21b
+        - ElementName: Music_State
+          ObjectType: 12
+          guid: aa990c060b13fb4fa59813553f2513be
+        - ElementName: Attic
+          ObjectType: 9
+          guid: 952735ab7d81074b8b56259895f6a9ed
+        - ElementName: Attic_Layer2
+          ObjectType: 8
+          guid: 9053842da9619f419c59d2905c7e7b2e
+      - name: Attic_Layer3
+        guid: 50ec60001d07a540b49bb8b7c47606cd
+        id: 3409644911
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 4ea27e79515e824d98a5530c01dfd21b
+        - ElementName: Music_State
+          ObjectType: 12
+          guid: aa990c060b13fb4fa59813553f2513be
+        - ElementName: Attic
+          ObjectType: 9
+          guid: 952735ab7d81074b8b56259895f6a9ed
+        - ElementName: Attic_Layer3
+          ObjectType: 8
+          guid: 50ec60001d07a540b49bb8b7c47606cd
+      - name: None
+        guid: 9c1d44b78a07dc41b96053494fd433cf
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 4ea27e79515e824d98a5530c01dfd21b
+        - ElementName: Music_State
+          ObjectType: 12
+          guid: aa990c060b13fb4fa59813553f2513be
+        - ElementName: Attic
+          ObjectType: 9
+          guid: 952735ab7d81074b8b56259895f6a9ed
+        - ElementName: None
+          ObjectType: 8
+          guid: 9c1d44b78a07dc41b96053494fd433cf
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+  SwitchWwu:
+  - PhysicalPath: Switches/Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Switches
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 56b388c9c4e12544a4266c04964b4bce
+    ParentPath: Switches/Default Work Unit
+    guid: 56b388c9c4e12544a4266c04964b4bce
+    GuidInternal: 
+    m_lastTime: -8584239441798202546
+    List: []
+  TriggerWwu:
+  - PhysicalPath: Triggers/Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Triggers
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 726e7a79f764c543b0fe0053f142f6ec
+    ParentPath: Triggers/Default Work Unit
+    guid: 726e7a79f764c543b0fe0053f142f6ec
+    GuidInternal: 
+    m_lastTime: -8584239441798200377
+    List: []
+  ExpandedFileSystemItemIds: 
+  ExpandedWaapiItemIds: 05000000060000000700000008000000090000000b0000000d0000000f0000001a0000001b0000001c0000001e0000002000000022000000350000003700000038000000390000003a0000003c00000049020000
+  AutoSyncSelection: 0
+  autoPopulateEnabled: 1
+  currentDataSource: 0
+  CurrentPluginConfig: 
