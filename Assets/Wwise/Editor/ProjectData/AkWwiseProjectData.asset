@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AkWwiseProjectData
   m_EditorClassIdentifier: 
   AcousticTextureWwu:
-  - PhysicalPath: Virtual Acoustics/Default Work Unit.wwu
+  - PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Virtual Acoustics
       ObjectType: 5
@@ -21,13 +21,13 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 4f29cad8442ea7459e8ccfd9d1d7716d
-    ParentPath: Virtual Acoustics/Default Work Unit
+    ParentPath: Virtual Acoustics\Default Work Unit
     guid: 4f29cad8442ea7459e8ccfd9d1d7716d
     GuidInternal: 
-    m_lastTime: -8584239441798197958
+    m_lastTime: -8584237612346975891
     List: []
   AuxBusWwu:
-  - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
+  - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Master-Mixer Hierarchy
       ObjectType: 5
@@ -35,10 +35,10 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 3afa94b14ff40148aa480259f26d42f9
-    ParentPath: Master-Mixer Hierarchy/Default Work Unit
+    ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 3afa94b14ff40148aa480259f26d42f9
     GuidInternal: 
-    m_lastTime: -8584238473365183604
+    m_lastTime: -8584237612313979183
     List:
     - name: Ambience_Bus
       guid: 4b4b2bc5a6340e48ae694f3fb1554f7b
@@ -56,7 +56,7 @@ MonoBehaviour:
       - ElementName: Ambience_Bus
         ObjectType: 2
         guid: 4b4b2bc5a6340e48ae694f3fb1554f7b
-      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus/Ambience_Bus
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Ambience_Bus
     - name: Attic_Music_Bus
       guid: 983bd04eda70964f98d11fa15aab594b
       id: 116948705
@@ -73,7 +73,7 @@ MonoBehaviour:
       - ElementName: Attic_Music_Bus
         ObjectType: 2
         guid: 983bd04eda70964f98d11fa15aab594b
-      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus/Attic_Music_Bus
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Attic_Music_Bus
     - name: Basement_Music_Bus
       guid: da062857d7269c45aeba16724c56cadb
       id: 701019509
@@ -90,7 +90,7 @@ MonoBehaviour:
       - ElementName: Basement_Music_Bus
         ObjectType: 2
         guid: da062857d7269c45aeba16724c56cadb
-      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus/Basement_Music_Bus
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Basement_Music_Bus
     - name: Bedroom_Music_Bus
       guid: 76c64a81b74a5c47bde0b393c9eec791
       id: 3036294840
@@ -107,7 +107,7 @@ MonoBehaviour:
       - ElementName: Bedroom_Music_Bus
         ObjectType: 2
         guid: 76c64a81b74a5c47bde0b393c9eec791
-      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus/Bedroom_Music_Bus
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Bedroom_Music_Bus
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
       id: 3803692087
@@ -121,9 +121,9 @@ MonoBehaviour:
       - ElementName: Master Audio Bus
         ObjectType: 2
         guid: d8a41415a61d2a41a17e75ca0c2149f3
-      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus
   BankWwu:
-  - PhysicalPath: SoundBanks/Default Work Unit.wwu
+  - PhysicalPath: SoundBanks\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: SoundBanks
       ObjectType: 5
@@ -131,12 +131,12 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 4bf4e089a747664cb1990cefbb1f3149
-    ParentPath: SoundBanks/Default Work Unit
+    ParentPath: SoundBanks\Default Work Unit
     guid: 4bf4e089a747664cb1990cefbb1f3149
     GuidInternal: 
-    m_lastTime: -8584239441798208983
+    m_lastTime: -8584237612313287083
     List: []
-  - PhysicalPath: SoundBanks/Soundbank.wwu
+  - PhysicalPath: SoundBanks\Soundbank.wwu
     PathAndIcons:
     - ElementName: SoundBanks
       ObjectType: 5
@@ -144,10 +144,10 @@ MonoBehaviour:
     - ElementName: Soundbank
       ObjectType: 12
       guid: 69e70c399efd294e8eb39e462878e78d
-    ParentPath: SoundBanks/Soundbank
+    ParentPath: SoundBanks\Soundbank
     guid: 69e70c399efd294e8eb39e462878e78d
     GuidInternal: 
-    m_lastTime: -8584239162552449537
+    m_lastTime: -8584237612313171132
     List:
     - name: Soundbank
       guid: 161051b31b85f64a98263143e6358d91
@@ -162,9 +162,9 @@ MonoBehaviour:
       - ElementName: Soundbank
         ObjectType: 7
         guid: 161051b31b85f64a98263143e6358d91
-      Path: SoundBanks/Soundbank/Soundbank
+      Path: SoundBanks\Soundbank\Soundbank
   EventWwu:
-  - PhysicalPath: Events/Default Work Unit.wwu
+  - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Events
       ObjectType: 5
@@ -172,12 +172,12 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 92957612d432ec4f89e38190ebc5c8ad
-    ParentPath: Events/Default Work Unit
+    ParentPath: Events\Default Work Unit
     guid: 92957612d432ec4f89e38190ebc5c8ad
     GuidInternal: 
-    m_lastTime: -8584238317575039331
+    m_lastTime: -8584237612313436179
     List: []
-  - PhysicalPath: Events/Events.wwu
+  - PhysicalPath: Events\Events.wwu
     PathAndIcons:
     - ElementName: Events
       ObjectType: 5
@@ -185,10 +185,10 @@ MonoBehaviour:
     - ElementName: Events
       ObjectType: 12
       guid: f5ed0ab4a332004488f77b9d93613c39
-    ParentPath: Events/Events
+    ParentPath: Events\Events
     guid: f5ed0ab4a332004488f77b9d93613c39
     GuidInternal: 
-    m_lastTime: -8584237694087050941
+    m_lastTime: -8584237612313416132
     List:
     - name: Ambience
       guid: dde5c1a45166c448bc11482d5a3788f5
@@ -203,7 +203,7 @@ MonoBehaviour:
       - ElementName: Ambience
         ObjectType: 4
         guid: dde5c1a45166c448bc11482d5a3788f5
-      Path: Events/Events/Ambience
+      Path: Events\Events\Ambience
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -223,7 +223,7 @@ MonoBehaviour:
       - ElementName: Attic_Music
         ObjectType: 4
         guid: 5b0d5d6a9ba03b41b8660c57e7581712
-      Path: Events/Events/Music_Event/Attic_Music
+      Path: Events\Events\Music_Event\Attic_Music
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -243,7 +243,7 @@ MonoBehaviour:
       - ElementName: Basement_Music
         ObjectType: 4
         guid: a269e2ab1bcd9c48bd4bd3a3eebb1fd6
-      Path: Events/Events/Music_Event/Basement_Music
+      Path: Events\Events\Music_Event\Basement_Music
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -266,7 +266,7 @@ MonoBehaviour:
       - ElementName: Basement_music_Layer2
         ObjectType: 3
         guid: b89c2edc69859d4fb7e335df9d489ce7
-      Path: Events/Events/Music_Event/Basement_Music/Basement_music_Layer2
+      Path: Events\Events\Music_Event\Basement_Music\Basement_music_Layer2
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -289,7 +289,7 @@ MonoBehaviour:
       - ElementName: Basement_music_Layer3
         ObjectType: 3
         guid: ddf4ae35fb7a604d97c8e7a2e5f074ab
-      Path: Events/Events/Music_Event/Basement_Music/Basement_music_Layer3
+      Path: Events\Events\Music_Event\Basement_Music\Basement_music_Layer3
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -306,7 +306,7 @@ MonoBehaviour:
       - ElementName: Music_Event
         ObjectType: 4
         guid: fae6229a97fe8640a684020e778066a2
-      Path: Events/Events/Music_Event
+      Path: Events\Events\Music_Event
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -329,7 +329,7 @@ MonoBehaviour:
       - ElementName: Play_Attic_Music_Layer2
         ObjectType: 3
         guid: 79033f27948ee24481c3d154f7c5f2ed
-      Path: Events/Events/Music_Event/Attic_Music/Play_Attic_Music_Layer2
+      Path: Events\Events\Music_Event\Attic_Music\Play_Attic_Music_Layer2
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -352,7 +352,7 @@ MonoBehaviour:
       - ElementName: Play_Attic_Music_Layer3
         ObjectType: 3
         guid: 632fedb17a65814dbf09f185f2490ff6
-      Path: Events/Events/Music_Event/Attic_Music/Play_Attic_Music_Layer3
+      Path: Events\Events\Music_Event\Attic_Music\Play_Attic_Music_Layer3
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -375,7 +375,7 @@ MonoBehaviour:
       - ElementName: Play_Attic_Music_Start
         ObjectType: 3
         guid: 08f7d49c76e8eb43b029e16dddc67fb5
-      Path: Events/Events/Music_Event/Attic_Music/Play_Attic_Music_Start
+      Path: Events\Events\Music_Event\Attic_Music\Play_Attic_Music_Start
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -398,7 +398,7 @@ MonoBehaviour:
       - ElementName: Play_Basement_Start
         ObjectType: 3
         guid: 0a9d9dbbadcaa44cbbe741e92593b725
-      Path: Events/Events/Music_Event/Basement_Music/Play_Basement_Start
+      Path: Events\Events\Music_Event\Basement_Music\Play_Basement_Start
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -418,7 +418,7 @@ MonoBehaviour:
       - ElementName: Play_Bedroom_Music_Phrase_Branching
         ObjectType: 3
         guid: 122af9c9bff20f4aa015e81fb75a6e52
-      Path: Events/Events/Music_Event/Play_Bedroom_Music_Phrase_Branching
+      Path: Events\Events\Music_Event\Play_Bedroom_Music_Phrase_Branching
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -438,7 +438,7 @@ MonoBehaviour:
       - ElementName: Play_Celebrate_Music
         ObjectType: 3
         guid: 07698a9c20964542b262757656630824
-      Path: Events/Events/Music_Event/Play_Celebrate_Music
+      Path: Events\Events\Music_Event\Play_Celebrate_Music
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -458,7 +458,7 @@ MonoBehaviour:
       - ElementName: Play_LH_SFX_Attic_Ambience
         ObjectType: 3
         guid: 58789dc7990ee143b111ae004481bbf7
-      Path: Events/Events/Ambience/Play_LH_SFX_Attic_Ambience
+      Path: Events\Events\Ambience\Play_LH_SFX_Attic_Ambience
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -478,7 +478,7 @@ MonoBehaviour:
       - ElementName: Play_LH_SFX_Basement_Ambience
         ObjectType: 3
         guid: c6a9c176510be140a1e37476ce5fac3a
-      Path: Events/Events/Ambience/Play_LH_SFX_Basement_Ambience
+      Path: Events\Events\Ambience\Play_LH_SFX_Basement_Ambience
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -498,7 +498,7 @@ MonoBehaviour:
       - ElementName: Play_LH_SFX_Bedroom_Ambience
         ObjectType: 3
         guid: a02b8eac6adebe4e942e659953e8306a
-      Path: Events/Events/Ambience/Play_LH_SFX_Bedroom_Ambience
+      Path: Events\Events\Ambience\Play_LH_SFX_Bedroom_Ambience
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -518,7 +518,7 @@ MonoBehaviour:
       - ElementName: Play_Menu_Story_Tutorial_Music
         ObjectType: 3
         guid: 08137dcaa4587a449b84538749468949
-      Path: Events/Events/Music_Event/Play_Menu_Story_Tutorial_Music
+      Path: Events\Events\Music_Event\Play_Menu_Story_Tutorial_Music
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -541,12 +541,12 @@ MonoBehaviour:
       - ElementName: Play_MX_Transition_Bedroom_to_Attic_90bpm
         ObjectType: 3
         guid: 4464ceaed4b9a1489deeb6cff3a94401
-      Path: Events/Events/Music_Event/Attic_Music/Play_MX_Transition_Bedroom_to_Attic_90bpm
+      Path: Events\Events\Music_Event\Attic_Music\Play_MX_Transition_Bedroom_to_Attic_90bpm
       maxAttenuation: 0
       maxDuration: 6.363646
       minDuration: 6.363646
   RtpcWwu:
-  - PhysicalPath: Game Parameters/Default Work Unit.wwu
+  - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Game Parameters
       ObjectType: 5
@@ -554,13 +554,13 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 78bda5d776c86d4c97e993943b0d50c9
-    ParentPath: Game Parameters/Default Work Unit
+    ParentPath: Game Parameters\Default Work Unit
     guid: 78bda5d776c86d4c97e993943b0d50c9
     GuidInternal: 
-    m_lastTime: -8584239441798246914
+    m_lastTime: -8584237612314855958
     List: []
   StateWwu:
-  - PhysicalPath: States/Default Work Unit.wwu
+  - PhysicalPath: States\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: States
       ObjectType: 5
@@ -568,12 +568,12 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 4ea27e79515e824d98a5530c01dfd21b
-    ParentPath: States/Default Work Unit
+    ParentPath: States\Default Work Unit
     guid: 4ea27e79515e824d98a5530c01dfd21b
     GuidInternal: 
-    m_lastTime: -8584239221273921741
+    m_lastTime: -8584237612314249009
     List: []
-  - PhysicalPath: States/Music_State.wwu
+  - PhysicalPath: States\Music_State.wwu
     PathAndIcons:
     - ElementName: States
       ObjectType: 5
@@ -584,10 +584,10 @@ MonoBehaviour:
     - ElementName: Music_State
       ObjectType: 12
       guid: aa990c060b13fb4fa59813553f2513be
-    ParentPath: States/Default Work Unit/Music_State
+    ParentPath: States\Default Work Unit\Music_State
     guid: aa990c060b13fb4fa59813553f2513be
     GuidInternal: 
-    m_lastTime: -8584239221273773876
+    m_lastTime: -8584237612314147695
     List:
     - name: Attic
       guid: 952735ab7d81074b8b56259895f6a9ed
@@ -605,7 +605,7 @@ MonoBehaviour:
       - ElementName: Attic
         ObjectType: 9
         guid: 952735ab7d81074b8b56259895f6a9ed
-      Path: States/Default Work Unit/Music_State/Attic
+      Path: States\Default Work Unit\Music_State\Attic
       values:
       - name: Attic_Layer1
         guid: 5ed31aaa2089ca4c9b3373b0c7415afb
@@ -687,7 +687,7 @@ MonoBehaviour:
       ValueIcons: []
       valuesInternal: []
   SwitchWwu:
-  - PhysicalPath: Switches/Default Work Unit.wwu
+  - PhysicalPath: Switches\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Switches
       ObjectType: 5
@@ -695,13 +695,13 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 56b388c9c4e12544a4266c04964b4bce
-    ParentPath: Switches/Default Work Unit
+    ParentPath: Switches\Default Work Unit
     guid: 56b388c9c4e12544a4266c04964b4bce
     GuidInternal: 
-    m_lastTime: -8584239441798202546
+    m_lastTime: -8584237612384486739
     List: []
   TriggerWwu:
-  - PhysicalPath: Triggers/Default Work Unit.wwu
+  - PhysicalPath: Triggers\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Triggers
       ObjectType: 5
@@ -709,10 +709,10 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 726e7a79f764c543b0fe0053f142f6ec
-    ParentPath: Triggers/Default Work Unit
+    ParentPath: Triggers\Default Work Unit
     guid: 726e7a79f764c543b0fe0053f142f6ec
     GuidInternal: 
-    m_lastTime: -8584239441798200377
+    m_lastTime: -8584237612384223704
     List: []
   ExpandedFileSystemItemIds: 
   ExpandedWaapiItemIds: 05000000060000000700000008000000090000000b0000000d0000000f0000001a0000001b0000001c0000001e0000002000000022000000350000003700000038000000390000003a0000003c00000049020000
