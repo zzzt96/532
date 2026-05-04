@@ -98,3 +98,6 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Wwise SoundBank generated files (binary, can exceed 100MB - exchange via Google Drive instead)
+/Little_Helper_Unity_WwiseProject/GeneratedSoundBanks/
