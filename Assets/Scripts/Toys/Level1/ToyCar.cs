@@ -143,9 +143,14 @@ public class ToyCar : ToyBase
             PlaySound(hitShelfSound);
             Debug.Log("[ToyCar] HIT SHELF!");
             GetComponent<InteractableTag>()?.SetCompleted();
+            
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player != null && player.isPossessing && player.currentToy == this)
+            {
+                player.ExitPossess();
+            }
         }
     }
-
     void Update()
     {
         if (!isActivated || isSliding) return;

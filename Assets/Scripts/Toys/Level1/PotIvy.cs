@@ -19,7 +19,7 @@ public class PotIvy : MonoBehaviour
     // ===============================================
 
     private bool hasBeenHit = false;
-    private AudioSource audioSrc;
+    private AudioSource audioSrc; 
 
     void Start()
     {

@@ -10,7 +10,8 @@ public class Ball : ToyBase
     public KeyCode jumpKey = KeyCode.Space;
     public float jumpHeight = 6f;
     public float jumpSpeed = 5f;
-
+    private bool pendingExitPossess = false;  // 跳跃中撞到东西, 等跳完再退出附身
+    
     [Header("Table Bounds")]
     public float minX = -35f;
     public float maxX = -25f;
@@ -89,13 +90,31 @@ public class Ball : ToyBase
     {
         lineIronDone = true;
         Debug.Log("[Ball] Iron hanger line completed.");
+        
+        if (isJumping)
+            pendingExitPossess = true;
+        else
+            ExitPossessIfActive();
+        
         CheckBothLinesDone();
     }
 
     public void SetPotLineDone()
     {
         linePotDone = true;
-        Debug.Log("[Ball] Plant pot line completed.");
+        Debug.Log($"[Ball] Plant pot line completed. isJumping={isJumping}");
+
+        if (isJumping)
+        {
+            pendingExitPossess = true;
+            // Debug.Log("[Ball] Set pendingExitPossess = true (will exit after jump ends)");
+        }
+        else
+        {
+            // Debug.Log("[Ball] Not jumping, calling ExitPossessIfActive immediately");
+            ExitPossessIfActive();
+        }
+
         CheckBothLinesDone();
     }
 
@@ -108,8 +127,6 @@ public class Ball : ToyBase
             GetComponent<InteractableTag>()?.SetCompleted();
             Debug.Log("[Ball] Both lines completed! Ball locked.");
         }
-        // 只完成一条线时, 不调 SetCompleted, canBePossessed 保持 true
-        // 玩家可以继续靠近 Ball 重新附身, 走另一条线
     }
 
     // ===== 由 PotIvy 外部调用, 触发 Ball 自己的撞盆栽声 =====
@@ -141,6 +158,15 @@ public class Ball : ToyBase
             isJumping = false;
             pos.y = fixedY;
             transform.position = pos;
+
+            Debug.Log($"[Ball] Jump ended. pendingExitPossess={pendingExitPossess}");
+
+            if (pendingExitPossess)
+            {
+                pendingExitPossess = false;
+                // Debug.Log("[Ball] Calling ExitPossessIfActive from UpdateJump end");
+                ExitPossessIfActive();
+            }
         }
     }
 
@@ -225,6 +251,22 @@ public class Ball : ToyBase
             Debug.Log("[Ball] Hit iron hanger!");
             SetIronLineDone();
             // 注意: 这里不调 SetCompleted, 让玩家有机会走另一条线
+        }
+    }
+    
+    void ExitPossessIfActive()
+    {
+        PlayerController player = FindObjectOfType<PlayerController>();
+        Debug.Log($"[Ball] ExitPossessIfActive: player={player}, isPossessing={player?.isPossessing}, currentToy={player?.currentToy}, this={this}");
+    
+        if (player != null && player.isPossessing && player.currentToy == this)
+        {
+            Debug.Log("[Ball] Calling player.ExitPossess()");
+            player.ExitPossess();
+        }
+        else
+        {
+            Debug.Log("[Ball] Conditions not met, NOT exiting possession");
         }
     }
 }
