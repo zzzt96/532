@@ -185,7 +185,7 @@ public class CatNPC : MonoBehaviour
     }
 
     public void GoToRockingChair()
-{
+    {
     if (rockingChairPosition == null || tableEdgeGroundPos == null)
     {
         Debug.LogWarning("[Cat] tableEdgeGroundPos or rockingChairPosition not assigned!");
@@ -196,13 +196,12 @@ public class CatNPC : MonoBehaviour
     float tableY  = catFanTablePosition != null
         ? catFanTablePosition.position.y
         : transform.position.y;
-
-    // 修正猫到桌面高度
+    
     Vector3 corrected = transform.position;
     corrected.y = tableY;
     transform.position = corrected;
 
-    // ===== 第一步: 桌面上走到桌子真实边缘 (不是地面引用点!) =====
+    // ===== 第一步: 桌面上走到桌子真实边缘 =====
     Vector3 tableEdgeOnTable;
     if (catTableEdgeStartJump != null)
     {
@@ -230,26 +229,34 @@ public class CatNPC : MonoBehaviour
             {
                 transform.position = groundPos;
 
-                // ===== 第三步: 在地面走到摇椅前 =====
-                // 走路时 Y 用 tableEdgeGroundPos.y (-1.14, 让走路动画贴地)
-                // 到达后 Y 切换到 catRockingChairArrival.y (0.48, 让坐姿动画贴地)
-
-                float walkY = tableEdgeGroundPos.position.y;  // -1.14, 走路用
-
-                Vector3 finalTarget = new Vector3(
-                    catRockingChairArrival.position.x,
-                    walkY,                                      // 走路阶段用 walkY
-                    catRockingChairArrival.position.z);
+                // ===== 第三步: 在地面走到摇椅前 (走路Y用 catRockingChairArrival) =====
+                Vector3 finalTarget;
+                if (catRockingChairArrival != null)
+                {
+                    finalTarget = new Vector3(
+                        catRockingChairArrival.position.x,
+                        catRockingChairArrival.position.y,  // 走路Y -1.14!!!
+                        catRockingChairArrival.position.z);
+                }
+                else
+                {
+                    Debug.LogWarning("[Cat] catRockingChairArrival not assigned, fallback (may float).");
+                    finalTarget = new Vector3(
+                        rockingChairPosition.position.x,
+                        groundY,
+                        rockingChairPosition.position.z);
+                }
 
                 SetWalkTarget(
                     finalTarget,
                     CatState.WalkToChair,
                     () => {
-                        // ★ 到达瞬间: 切到坐姿前调整 Y 到坐姿贴地高度
+                        // 走路到达后,瞬间把 Y 切换到坐姿贴地 Y! 
+                        // 走路Y=-1.14 → 坐姿Y=0.48
                         Vector3 sitPos = transform.position;
-                        sitPos.y = catRockingChairArrival.position.y;  // 0.48
+                        sitPos.y = rockingChairPosition.position.y;  // 0.48, 坐姿贴地!
                         transform.position = sitPos;
-        
+                        
                         currentState = CatState.SitOnChair;
                         PlayAnim(clipIdle);
                         Level2Manager.Instance?.OnCatOnRockingChair();
